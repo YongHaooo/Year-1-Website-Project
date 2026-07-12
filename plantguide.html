@@ -1,666 +1,518 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Plant Guide — Green Haven</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plant Guide — Green Haven</title>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;0,700;1,500&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;0,700;1,500&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
 
-<style>
-/* ==================================================================
-   GREEN HAVEN — THEME STYLESHEET
-   ==================================================================
-   What is this file for?
-   HTML builds the STRUCTURE of the page (headings, buttons, boxes).
-   This CSS file controls how that structure LOOKS (colors, fonts,
-   spacing, hover effects). Bootstrap already gives us default
-   styling — everything below either fine-tunes Bootstrap's look or
-   adds styling for things Bootstrap doesn't include out of the box.
+  <style>
+    /* ==================================================================
+       GREEN HAVEN — STYLESHEET
+       ================================================================== */
+    :root {
+      --forest: #1b4332;
+      --sage: #74a57f;
+      --parchment: #f7f5ef;
+      --marigold: #d4a017;
+      --text-dark: #223227;
+      --font-display: 'Fraunces', serif;
+      --font-body: 'Work Sans', sans-serif;
+    }
 
-   Explaining this file in your presentation = easy marks for
-   "effective use of CSS".
-   ================================================================== */
+    body {
+      font-family: var(--font-body);
+      color: var(--text-dark);
+      background-color: #ffffff;
+      padding-top: 70px;
+    }
 
+    h1, h2, h3, .navbar-brand {
+      font-family: var(--font-display);
+    }
 
-/* ------------------------------------------------------------------
-   1. DESIGN TOKENS (a.k.a. CSS Variables)
-------------------------------------------------------------------- */
-:root {
-  --forest: #1b4332;      /* deep green  - headings, navbar, footer   */
-  --sage: #74a57f;        /* mid green   - secondary accents          */
-  --parchment: #f7f5ef;   /* warm off-white - section backgrounds     */
-  --marigold: #d4a017;    /* golden accent - buttons, highlights      */
-  --text-dark: #223227;   /* default body text color                 */
+    /* NAVIGATION */
+    .navbar-custom {
+      background-color: var(--parchment);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    }
+    .navbar-custom .navbar-brand {
+      color: var(--forest);
+      font-weight: 700;
+      font-size: 1.4rem;
+    }
+    .navbar-custom .nav-link {
+      color: var(--text-dark);
+      font-weight: 500;
+      margin-left: 0.75rem;
+    }
+    .navbar-custom .nav-link.active,
+    .navbar-custom .nav-link:hover {
+      color: var(--forest);
+      border-bottom: 2px solid var(--marigold);
+    }
+    .nav-login-icon {
+      color: var(--forest);
+      font-size: 1.3rem;
+      margin-left: 0.75rem;
+      line-height: 1;
+      transition: color 0.15s ease;
+    }
+    .nav-login-icon:hover { color: var(--marigold); }
 
-  --font-display: 'Fraunces', serif;    /* used for headings only    */
-  --font-body: 'Work Sans', sans-serif; /* used for normal paragraphs*/
-}
+    /* UTILITY BUTTONS & HEADERS */
+    .eyebrow {
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--marigold);
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+    .btn-hero {
+      background-color: var(--marigold);
+      color: var(--forest);
+      font-weight: 600;
+      border: none;
+      border-radius: 50px;
+      padding: 0.75rem 2rem;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .btn-hero:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+    }
+    .btn-outline-forest {
+      border: 2px solid var(--forest);
+      color: var(--forest);
+      border-radius: 50px;
+      font-weight: 600;
+      padding: 0.5rem 1.5rem;
+      background-color: transparent;
+    }
+    .btn-outline-forest:hover {
+      background-color: var(--forest);
+      color: white;
+    }
 
-body {
-  font-family: var(--font-body);
-  color: var(--text-dark);
-  background-color: #ffffff;
-  padding-top: 70px;
-}
+    /* SECTIONS & CARDS */
+    .bg-light-green { background-color: var(--parchment); }
+    
+    .plant-card {
+      border: none;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+      transition: transform 0.25s ease;
+    }
+    .plant-card:hover { transform: translateY(-6px); }
+    
+    .plant-thumb {
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+      background: linear-gradient(160deg, var(--parchment), #E4EFE7);
+    }
+    .plant-card .card-body { padding: 1.25rem; }
+    .plant-card .plant-category {
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: var(--sage);
+    }
+    .plant-card .card-title {
+      color: var(--forest);
+      font-weight: 600;
+      margin: 0.15rem 0 0.75rem;
+    }
 
-h1, h2, h3, .navbar-brand {
-  font-family: var(--font-display);
-}
+    /* PLANT STATS row item */
+    .plant-stat {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.85rem;
+      padding: 0.3rem 0;
+      border-bottom: 1px solid var(--parchment);
+    }
+    .plant-stat:last-of-type { border-bottom: none; }
+    .plant-stat .stat-label {
+      color: var(--sage);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .plant-stat .stat-value { font-weight: 500; }
 
+    /* RATING DOT METERS */
+    .dot-meter { display: inline-flex; gap: 3px; }
+    .dot-meter span {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background-color: #DCE3D5;
+      display: inline-block;
+    }
+    .dot-meter span.filled { background-color: var(--marigold); }
+    .plant-card .btn-outline-forest { width: 100%; margin-top: 1rem; }
 
-/* ------------------------------------------------------------------
-   2. NAVBAR
-------------------------------------------------------------------- */
-.navbar-custom {
-  background-color: var(--parchment);
-  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
-}
+    /* HERO SEARCH INTERFACE */
+    .guide-header {
+      background: linear-gradient(135deg, var(--forest), #14352654 100%), var(--forest);
+      padding: 3.5rem 1rem 3rem;
+      color: white;
+      text-align: center;
+    }
+    .guide-header h1 { color: white; margin: 0.35rem 0; }
+    .guide-header p { color: #E4EFE7; margin: 0; }
+    
+    .search-wrap {
+      position: relative;
+      max-width: 480px;
+      margin: 2rem auto 0;
+    }
+    .search-wrap i {
+      position: absolute;
+      left: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--sage);
+    }
+    #plantSearch {
+      width: 100%;
+      border: none;
+      border-radius: 50px;
+      padding: 0.75rem 1.25rem 0.75rem 2.75rem;
+      font-family: var(--font-body);
+      font-size: 1rem;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+    }
+    #plantSearch:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(212,160,23,0.45);
+    }
 
-.navbar-custom .navbar-brand {
-  color: var(--forest);
-  font-weight: 700;
-  font-size: 1.4rem;
-}
+    /* FILTER SELECTIONS */
+    .filter-btn {
+      border: 2px solid var(--forest);
+      color: var(--forest);
+      background-color: white;
+      border-radius: 50px;
+      font-weight: 600;
+      padding: 0.4rem 1.25rem;
+      font-size: 0.9rem;
+      transition: all 0.2s ease;
+    }
+    .filter-btn:hover {
+      background-color: var(--sage);
+      border-color: var(--sage);
+      color: white;
+    }
+    .filter-btn.active {
+      background-color: var(--forest);
+      color: white;
+    }
 
-.navbar-custom .nav-link {
-  color: var(--text-dark);
-  font-weight: 500;
-  margin-left: 0.75rem;
-}
+    .empty-state {
+      display: none;
+      text-align: center;
+      padding: 3rem 1rem;
+      color: var(--sage);
+      font-style: italic;
+    }
 
-.navbar-custom .nav-link.active,
-.navbar-custom .nav-link:hover {
-  color: var(--forest);
-  border-bottom: 2px solid var(--marigold);
-}
+    /* POPUP DETAILS MODAL */
+    .plant-modal .modal-content { border: none; border-radius: 16px; overflow: hidden; }
+    .plant-modal .modal-header {
+      background-color: var(--forest);
+      color: white;
+      border-bottom: 3px solid var(--marigold);
+      padding: 1.25rem 1.5rem;
+    }
+    .plant-modal .modal-title { font-family: var(--font-display); font-weight: 600; font-size: 1.4rem; margin: 0; }
+    .plant-modal .modal-sci { font-style: italic; color: #C9DACD; font-size: 0.9rem; margin: 0.15rem 0 0; }
+    .plant-modal .btn-close { filter: invert(1) grayscale(1) brightness(2); }
+    .plant-modal .modal-body { padding: 1.5rem; background-color: var(--parchment); }
+    .plant-modal .modal-section { margin-bottom: 1.15rem; }
+    .plant-modal .modal-section:last-child { margin-bottom: 0; }
+    .plant-modal .modal-section h6 {
+      color: var(--forest);
+      font-weight: 700;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+    .plant-modal .modal-section ul { margin: 0; padding-left: 1.15rem; }
+    .plant-modal .modal-section li { margin-bottom: 0.3rem; }
 
-.nav-login-icon {
-  color: var(--forest);
-  font-size: 1.3rem;
-  margin-left: 0.75rem;
-  line-height: 1;
-  transition: color 0.15s ease;
-}
-.nav-login-icon:hover {
-  color: var(--marigold);
-}
-
-
-/* ------------------------------------------------------------------
-   3. HERO / BUTTON PATTERNS
-------------------------------------------------------------------- */
-.eyebrow {
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--marigold);
-  font-size: 0.9rem;
-  font-weight: 600;
-}
-
-.btn-hero {
-  background-color: var(--marigold);
-  color: var(--forest);
-  font-weight: 600;
-  border: none;
-  border-radius: 50px;
-  padding: 0.75rem 2rem;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-.btn-hero:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(0,0,0,0.25);
-  color: var(--forest);
-}
-
-.btn-outline-forest {
-  border: 2px solid var(--forest);
-  color: var(--forest);
-  border-radius: 50px;
-  font-weight: 600;
-  padding: 0.5rem 1.5rem;
-  background-color: transparent;
-}
-.btn-outline-forest:hover {
-  background-color: var(--forest);
-  color: white;
-}
-
-
-/* ------------------------------------------------------------------
-   4. GENERAL SECTIONS, CARDS
-------------------------------------------------------------------- */
-.section-title {
-  font-weight: 600;
-  color: var(--forest);
-  position: relative;
-}
-
-.bg-light-green {
-  background-color: var(--parchment);
-}
-
-.plant-card {
-  border: none;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.08);
-  transition: transform 0.25s ease;
-}
-.plant-card:hover {
-  transform: translateY(-6px);
-}
-.plant-card img {
-  height: 200px;
-  object-fit: cover;
-}
-
-
-/* ------------------------------------------------------------------
-   5. FOOTER
-------------------------------------------------------------------- */
-.footer {
-  background-color: var(--forest);
-}
-.footer-link {
-  color: var(--parchment);
-  text-decoration: none;
-}
-.footer-link:hover {
-  color: var(--marigold);
-}
-
-
-/* ------------------------------------------------------------------
-   6. BACK-TO-TOP BUTTON
-------------------------------------------------------------------- */
-.back-to-top {
-  position: fixed;
-  bottom: 24px;
-  right: 24px;
-  border-radius: 50%;
-  width: 48px;
-  height: 48px;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-}
-
-
-/* ==================================================================
-   PLANT GUIDE PAGE — ADDITIONS
-   Everything below reuses the tokens and patterns above (same
-   variables, same card/button language) so this page feels like
-   part of the same site instead of a bolt-on.
-   ================================================================== */
-
-.guide-header {
-  background: linear-gradient(135deg, var(--forest), #14352654 100%), var(--forest);
-  padding: 3.5rem 1rem 3rem;
-  color: white;
-  text-align: center;
-}
-.guide-header h1 {
-  color: white;
-  margin: 0.35rem 0 0.4rem;
-}
-.guide-header p {
-  color: #E4EFE7;
-  margin: 0;
-}
-
-.search-wrap {
-  position: relative;
-  max-width: 480px;
-  margin: 2rem auto 0;
-}
-.search-wrap i {
-  position: absolute;
-  left: 18px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--sage);
-}
-#plantSearch {
-  width: 100%;
-  border: none;
-  border-radius: 50px;
-  padding: 0.75rem 1.25rem 0.75rem 2.75rem;
-  font-family: var(--font-body);
-  font-size: 1rem;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.12);
-}
-#plantSearch:focus {
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(212,160,23,0.45);
-}
-
-.filter-btn {
-  border: 2px solid var(--forest);
-  color: var(--forest);
-  background-color: white;
-  border-radius: 50px;
-  font-weight: 600;
-  padding: 0.4rem 1.25rem;
-  font-size: 0.9rem;
-  transition: background-color 0.2s ease, color 0.2s ease;
-}
-.filter-btn:hover {
-  background-color: var(--sage);
-  border-color: var(--sage);
-  color: white;
-}
-.filter-btn.active {
-  background-color: var(--forest);
-  color: white;
-}
-
-.plant-thumb {
-  height: 200px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 4rem;
-  background: linear-gradient(160deg, var(--parchment), #E4EFE7);
-}
-
-.plant-card .card-body {
-  padding: 1.25rem 1.25rem 1.4rem;
-}
-.plant-card .plant-category {
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  color: var(--sage);
-}
-.plant-card .card-title {
-  color: var(--forest);
-  font-weight: 600;
-  margin: 0.15rem 0 0.75rem;
-}
-
-.plant-stat {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 0.85rem;
-  padding: 0.3rem 0;
-  border-bottom: 1px solid var(--parchment);
-}
-.plant-stat:last-of-type { border-bottom: none; }
-.plant-stat .stat-label {
-  color: var(--sage);
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 0.35rem;
-}
-.plant-stat .stat-value { font-weight: 500; }
-
-.dot-meter { display: inline-flex; gap: 3px; }
-.dot-meter span {
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  background-color: #DCE3D5;
-  display: inline-block;
-}
-.dot-meter span.filled { background-color: var(--marigold); }
-
-.plant-card .btn-outline-forest {
-  width: 100%;
-  margin-top: 1rem;
-  padding: 0.5rem;
-  font-size: 0.9rem;
-}
-
-.empty-state {
-  display: none;
-  text-align: center;
-  padding: 3rem 1rem;
-  color: var(--sage);
-  font-style: italic;
-}
-
-.plant-modal .modal-content {
-  border: none;
-  border-radius: 16px;
-  overflow: hidden;
-}
-.plant-modal .modal-header {
-  background-color: var(--forest);
-  color: white;
-  border-bottom: 3px solid var(--marigold);
-  padding: 1.25rem 1.5rem;
-}
-.plant-modal .modal-title {
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: 1.4rem;
-  margin: 0;
-}
-.plant-modal .modal-sci {
-  font-style: italic;
-  color: #C9DACD;
-  font-size: 0.9rem;
-  margin: 0.15rem 0 0;
-}
-.plant-modal .btn-close {
-  filter: invert(1) grayscale(1) brightness(2);
-}
-.plant-modal .modal-body {
-  padding: 1.5rem;
-  background-color: var(--parchment);
-}
-.plant-modal .modal-section { margin-bottom: 1.15rem; }
-.plant-modal .modal-section:last-child { margin-bottom: 0; }
-.plant-modal .modal-section h6 {
-  color: var(--forest);
-  font-weight: 700;
-  font-size: 0.8rem;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-  margin-bottom: 0.5rem;
-}
-.plant-modal .modal-section ul { margin: 0; padding-left: 1.15rem; }
-.plant-modal .modal-section li { margin-bottom: 0.3rem; }
-.plant-modal .modal-section p { margin: 0; }
-</style>
+    /* FOOTER & ACCELERATOR UTILS */
+    .footer { background-color: var(--forest); }
+    .footer-link { color: var(--parchment); text-decoration: none; }
+    
+    .back-to-top {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+  </style>
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg fixed-top navbar-custom">
-  <div class="container">
-    <a class="navbar-brand" href="index.html">
-      <i class="bi bi-flower1"></i> Green Haven
-    </a>
-
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navMenu">
-      <ul class="navbar-nav ms-auto align-items-lg-center">
-        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-        <li class="nav-item"><a class="nav-link active" aria-current="page" href="plantguide.html">Plant Guide</a></li>
-        <li class="nav-item"><a class="nav-link" href="tips.html">Tips</a></li>
-        <li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li>
-        <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            More
-          </a>
-          <ul class="dropdown-menu dropdown-menu-end">
-            <li><a class="dropdown-item" href="index.html#seasons">Seasonal Calendar</a></li>
-            <li><a class="dropdown-item" href="index.html#faq">FAQ</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="index.html#checklist">Free Checklist</a></li>
-          </ul>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-login-icon" href="loginpage.html" aria-label="Log in" title="Log in">
-            <i class="bi bi-person-circle"></i>
-          </a>
-        </li>
-      </ul>
-    </div>
-  </div>
-</nav>
-
-<header class="guide-header">
-  <div class="eyebrow">Browse the collection</div>
-  <h1>Plant Guide</h1>
-  <p>Search or filter to find care instructions for flowers, vegetables, herbs and indoor plants.</p>
-
-  <div class="search-wrap">
-    <i class="bi bi-search"></i>
-    <input type="text" id="plantSearch" placeholder="Search plants… e.g. rose" aria-label="Search plants by name">
-  </div>
-</header>
-
-<section class="bg-light-green py-4">
-  <div class="container text-center">
-    <div class="d-flex flex-wrap justify-content-center gap-2" role="group" aria-label="Filter plants by category">
-      <button class="filter-btn active" data-category="all">All</button>
-      <button class="filter-btn" data-category="flowers">Flowers</button>
-      <button class="filter-btn" data-category="vegetables">Vegetables</button>
-      <button class="filter-btn" data-category="herbs">Herbs</button>
-      <button class="filter-btn" data-category="indoor">Indoor</button>
-    </div>
-  </div>
-</section>
-
-<section class="py-5">
-  <div class="container">
-    <div class="row g-4" id="plantGrid"></div>
-    <p class="empty-state" id="emptyMsg">No plants match your search. Try another name.</p>
-  </div>
-</section>
-
-<div class="modal fade plant-modal" id="plantModal" tabindex="-1" aria-labelledby="plantModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <div>
-          <p class="modal-title" id="modalPlantName">—</p>
-          <p class="modal-sci" id="modalPlantSci">—</p>
-        </div>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  <nav class="navbar navbar-expand-lg fixed-top navbar-custom">
+    <div class="container">
+      <a class="navbar-brand" href="index.html"><i class="bi bi-flower1"></i> Green Haven</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav ms-auto align-items-lg-center">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link active" aria-current="page" href="plantguide.html">Plant Guide</a></li>
+          <li class="nav-item"><a class="nav-link" href="tips.html">Tips</a></li>
+          <li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">More</a>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><a class="dropdown-item" href="index.html#seasons">Seasonal Calendar</a></li>
+              <li><a class="dropdown-item" href="index.html#faq">FAQ</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="index.html#checklist">Free Checklist</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-login-icon" href="loginpage.html" aria-label="Log in" title="Log in">
+              <i class="bi bi-person-circle"></i>
+            </a>
+          </li>
+        </ul>
       </div>
-      <div class="modal-body">
-        <div class="modal-section">
-          <h6>Growing tips</h6>
-          <ul id="modalTips"></ul>
+    </div>
+  </nav>
+
+  <header class="guide-header">
+    <div class="eyebrow">Browse the collection</div>
+    <h1>Plant Guide</h1>
+    <p>Search or filter to find care instructions for flowers, vegetables, herbs and indoor plants.</p>
+    <div class="search-wrap">
+      <i class="bi bi-search"></i>
+      <input type="text" id="plantSearch" placeholder="Search plants… e.g. rose" aria-label="Search plants by name">
+    </div>
+  </header>
+
+  <section class="bg-light-green py-4">
+    <div class="container text-center">
+      <div class="d-flex flex-wrap justify-content-center gap-2" role="group" aria-label="Filter plants by category">
+        <button class="filter-btn active" data-category="all">All</button>
+        <button class="filter-btn" data-category="flowers">Flowers</button>
+        <button class="filter-btn" data-category="vegetables">Vegetables</button>
+        <button class="filter-btn" data-category="herbs">Herbs</button>
+        <button class="filter-btn" data-category="indoor">Indoor</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-5">
+    <div class="container">
+      <div class="row g-4" id="plantGrid"></div>
+      <p class="empty-state" id="emptyMsg">No plants match your search. Try another name.</p>
+    </div>
+  </section>
+
+  <div class="modal fade plant-modal" id="plantModal" tabindex="-1" aria-labelledby="plantModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div>
+            <p class="modal-title" id="modalPlantName">—</p>
+            <p class="modal-sci" id="modalPlantSci">—</p>
+          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-section">
-          <h6>Common problems</h6>
-          <ul id="modalProblems"></ul>
-        </div>
-        <div class="modal-section">
-          <h6>Best soil</h6>
-          <p id="modalSoil">—</p>
+        <div class="modal-body">
+          <div class="modal-section">
+            <h6>Growing tips</h6>
+            <ul id="modalTips"></ul>
+          </div>
+          <div class="modal-section">
+            <h6>Common problems</h6>
+            <ul id="modalProblems"></ul>
+          </div>
+          <div class="modal-section">
+            <h6>Best soil</h6>
+            <p id="modalSoil">—</p>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 
-<footer class="footer text-center py-4">
-  <p class="footer-link mb-0">Green Haven — Plant Guide, compiled for study purposes</p>
-</footer>
+  <footer class="footer text-center py-4">
+    <p class="footer-link mb-0">Green Haven — Plant Guide, compiled for study purposes</p>
+  </footer>
 
-<button class="back-to-top btn btn-hero" id="backToTop" aria-label="Back to top">
-  <i class="bi bi-arrow-up"></i>
-</button>
+  <button class="back-to-top btn btn-hero" id="backToTop" aria-label="Back to top">
+    <i class="bi bi-arrow-up"></i>
+  </button>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
-<script>
-const plants = [
-  { id:1, name:"Rose", category:"flowers", icon:"🌹", difficulty:2, water:2, sun:"Full Sun", season:"Late Spring – Summer",
-    scientific:"Rosa spp.",
-    tips:["Prune in early spring to encourage new blooms","Water at the base to keep foliage dry","Feed monthly with a balanced fertiliser during the growing season"],
-    problems:["Black spot fungus on leaves","Aphids clustering on new buds","Powdery mildew in humid weather"],
-    soil:"Well-drained loam enriched with compost, pH 6.0–6.5." },
-  { id:2, name:"Sunflower", category:"flowers", icon:"🌻", difficulty:1, water:2, sun:"Full Sun", season:"Summer",
-    scientific:"Helianthus annuus",
-    tips:["Sow seeds directly after the last frost","Stake tall varieties against wind","Deadhead spent blooms to prolong flowering"],
-    problems:["Birds and squirrels raiding seed heads","Stem weakness in heavy wind","Powdery mildew late in the season"],
-    soil:"Loose, well-drained soil, pH 6.0–7.5." },
-  { id:3, name:"Tulip", category:"flowers", icon:"🌷", difficulty:1, water:1, sun:"Full Sun", season:"Spring",
-    scientific:"Tulipa gesneriana",
-    tips:["Plant bulbs in autumn, about 15cm deep","Let foliage die back naturally after flowering","Avoid overwatering while dormant"],
-    problems:["Bulb rot in soggy soil","Squirrels digging up bulbs","Tulip fire fungal disease"],
-    soil:"Sandy, well-drained soil, pH 6.0–7.0." },
-  { id:4, name:"Marigold", category:"flowers", icon:"🌼", difficulty:1, water:1, sun:"Full Sun", season:"Summer – Autumn",
-    scientific:"Tagetes spp.",
-    tips:["Pinch growing tips for a bushier plant","Deadhead regularly for continuous blooms","Plant alongside vegetables to help deter pests"],
-    problems:["Spider mites in dry conditions","Root rot from overwatering","Slugs on young seedlings"],
-    soil:"Average, well-drained garden soil." },
-  { id:5, name:"Tomato", category:"vegetables", icon:"🍅", difficulty:2, water:3, sun:"Full Sun", season:"Summer",
-    scientific:"Solanum lycopersicum",
-    tips:["Stake or cage plants early for support","Water deeply and consistently at the roots","Pinch off side suckers on indeterminate varieties"],
-    problems:["Blossom end rot from calcium imbalance","Early blight spotting the lower leaves","Hornworm caterpillars stripping foliage"],
-    soil:"Rich, well-drained loam, pH 6.2–6.8." },
-  { id:6, name:"Carrot", category:"vegetables", icon:"🥕", difficulty:2, water:2, sun:"Full Sun", season:"Spring – Autumn",
-    scientific:"Daucus carota",
-    tips:["Sow seeds directly, thinning to 5cm apart","Keep soil loose and stone-free for straight roots","Water evenly to prevent the roots splitting"],
-    problems:["Forked roots in compacted soil","Carrot fly larvae tunnelling into roots","Green shoulders from sun exposure"],
-    soil:"Deep, loose, sandy soil free of stones." },
-  { id:7, name:"Lettuce", category:"vegetables", icon:"🥬", difficulty:1, water:2, sun:"Partial Sun", season:"Spring – Autumn",
-    scientific:"Lactuca sativa",
-    tips:["Sow successively every two weeks for a steady harvest","Harvest outer leaves to extend the plant's life","Provide afternoon shade in hot weather"],
-    problems:["Bolting to seed in high heat","Slugs and snails on tender leaves","Downy mildew in damp conditions"],
-    soil:"Moist, fertile soil rich in organic matter." },
-  { id:8, name:"Basil", category:"herbs", icon:"🌿", difficulty:1, water:2, sun:"Full Sun", season:"Summer",
-    scientific:"Ocimum basilicum",
-    tips:["Pinch off flower buds to keep leaves tender","Harvest from the top to encourage bushiness","Keep away from cold draughts"],
-    problems:["Fusarium wilt in poorly drained soil","Aphids on new growth","Leaves blacken after cold exposure"],
-    soil:"Rich, moist, well-drained soil." },
-  { id:9, name:"Mint", category:"herbs", icon:"🌱", difficulty:1, water:3, sun:"Partial Sun", season:"Spring – Autumn",
-    scientific:"Mentha spp.",
-    tips:["Grow in a container to stop it spreading","Keep soil consistently moist","Trim regularly to keep growth compact"],
-    problems:["Rust fungus on leaf undersides","Spreads aggressively via runners","Spider mites in dry spells"],
-    soil:"Moist, fertile soil; tolerates a wide pH range." },
-  { id:10, name:"Rosemary", category:"herbs", icon:"🌿", difficulty:2, water:1, sun:"Full Sun", season:"Year-round (mild climates)",
-    scientific:"Salvia rosmarinus",
-    tips:["Let the soil dry out between waterings","Prune after flowering to maintain shape","Grow in a free-draining pot if rainfall is heavy"],
-    problems:["Root rot from overwatering","Powdery mildew in humid, still air","Woody stems if left unpruned for years"],
-    soil:"Sandy, free-draining soil, pH 6.0–7.0." },
-  { id:11, name:"Snake Plant", category:"indoor", icon:"🪴", difficulty:1, water:1, sun:"Low Light", season:"Year-round",
-    scientific:"Dracaena trifasciata",
-    tips:["Water only once the soil is completely dry","Wipe leaves occasionally to keep pores dust-free","Avoid cold draughts near windows"],
-    problems:["Root rot from overwatering","Leaf splitting under low humidity stress","Mealybugs at the leaf bases"],
-    soil:"Well-drained cactus or succulent mix." },
-  { id:12, name:"Pothos", category:"indoor", icon:"🪴", difficulty:1, water:2, sun:"Low Light", season:"Year-round",
-    scientific:"Epipremnum aureum",
-    tips:["Let the top layer of soil dry before watering","Trim trailing vines to encourage fullness","Wipe leaves to help them absorb light"],
-    problems:["Yellowing leaves from overwatering","Brown tips from low humidity","Root rot in waterlogged pots"],
-    soil:"Standard, well-drained potting mix." },
-  { id:13, name:"Peace Lily", category:"indoor", icon:"🪴", difficulty:2, water:2, sun:"Partial Sun", season:"Year-round",
-    scientific:"Spathiphyllum wallisii",
-    tips:["Keep soil lightly moist but never soggy","Mist the leaves occasionally to raise humidity","Watch for wilting as a clear watering cue"],
-    problems:["Brown leaf tips from tap water minerals","Root rot in poorly drained pots","Leaf yellowing from too much direct sun"],
-    soil:"Rich, well-drained potting mix." }
-];
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+  
+  <script>
+    // 1. DATA ACCESS DEFINITIONS (Local Database Store)
+    const plants = [
+      { id: 1, name: "Rose", category: "flowers", icon: "🌹", difficulty: 2, water: 2, sun: "Full Sun", season: "Late Spring – Summer", scientific: "Rosa spp.", tips: ["Prune in early spring to encourage new blooms", "Water at the base to keep foliage dry", "Feed monthly with a balanced fertiliser during the growing season"], problems: ["Black spot fungus on leaves", "Aphids clustering on new buds", "Powdery mildew in humid weather"], soil: "Well-drained loam enriched with compost, pH 6.0–6.5." },
+      { id: 2, name: "Sunflower", category: "flowers", icon: "🌻", difficulty: 1, water: 2, sun: "Full Sun", season: "Summer", scientific: "Helianthus annuus", tips: ["Sow seeds directly after the last frost", "Stake tall varieties against wind", "Deadhead spent blooms to prolong flowering"], problems: ["Birds and squirrels raiding seed heads", "Stem weakness in heavy wind", "Powdery mildew late in the season"], soil: "Loose, well-drained soil, pH 6.0–7.5." },
+      { id: 3, name: "Tulip", category: "flowers", icon: "🌷", difficulty: 1, water: 1, sun: "Full Sun", season: "Spring", scientific: "Tulipa gesneriana", tips: ["Plant bulbs in autumn, about 15cm deep", "Let foliage die back naturally after flowering", "Avoid overwatering while dormant"], problems: ["Bulb rot in soggy soil", "Squirrels digging up bulbs", "Tulip fire fungal disease"], soil: "Sandy, well-drained soil, pH 6.0–7.0." },
+      { id: 4, name: "Marigold", category: "flowers", icon: "🌼", difficulty: 1, water: 1, sun: "Full Sun", season: "Summer – Autumn", scientific: "Tagetes spp.", tips: ["Pinch growing tips for a bushier plant", "Deadhead regularly for continuous blooms", "Plant alongside vegetables to help deter pests"], problems: ["Spider mites in dry conditions", "Root rot from overwatering", "Slugs on young seedlings"], soil: "Average, well-drained garden soil." },
+      { id: 5, name: "Tomato", category: "vegetables", icon: "🍅", difficulty: 2, water: 3, sun: "Full Sun", season: "Summer", scientific: "Solanum lycopersicum", tips: ["Stake or cage plants early for support", "Water deeply and consistently at the roots", "Pinch off side suckers on indeterminate varieties"], problems: ["Blossom end rot from calcium imbalance", "Early blight spotting the lower leaves", "Hornworm caterpillars stripping foliage"], soil: "Rich, well-drained loam, pH 6.2–6.8." },
+      { id: 6, name: "Carrot", category: "vegetables", icon: "🥕", difficulty: 2, water: 2, sun: "Full Sun", season: "Spring – Autumn", scientific: "Daucus carota", tips: ["Sow seeds directly, thinning to 5cm apart", "Keep soil loose and stone-free for straight roots", "Water evenly to prevent the roots splitting"], problems: ["Forked roots in compacted soil", "Carrot fly larvae tunnelling into roots", "Green shoulders from sun exposure"], soil: "Deep, loose, sandy soil free of stones." },
+      { id: 7, name: "Lettuce", category: "vegetables", icon: "🥬", difficulty: 1, water: 2, sun: "Partial Sun", season: "Spring – Autumn", scientific: "Lactuca sativa", tips: ["Sow successively every two weeks for a steady harvest", "Harvest outer leaves to extend the plant's life", "Provide afternoon shade in hot weather"], problems: ["Bolting to seed in high heat", "Slugs and snails on tender leaves", "Downy mildew in damp conditions"], soil: "Moist, fertile soil rich in organic matter." },
+      { id: 8, name: "Basil", category: "herbs", icon: "🌿", difficulty: 1, water: 2, sun: "Full Sun", season: "Summer", scientific: "Ocimum basilicum", tips: ["Pinch off flower buds to keep leaves tender", "Harvest from the top to encourage bushiness", "Keep away from cold draughts"], problems: ["Fusarium wilt in poorly drained soil", "Aphids on new growth", "Leaves blacken after cold exposure"], soil: "Rich, moist, well-drained soil." },
+      { id: 9, name: "Mint", category: "herbs", icon: "🌱", difficulty: 1, water: 3, sun: "Partial Sun", season: "Spring – Autumn", scientific: "Mentha spp.", tips: ["Grow in a container to stop it spreading", "Keep soil consistently moist", "Trim regularly to keep growth compact"], problems: ["Rust fungus on leaf undersides", "Spreads aggressively via runners", "Spider mites in dry spells"], soil: "Moist, fertile soil; tolerates a wide pH range." },
+      { id: 10, name: "Rosemary", category: "herbs", icon: "🌿", difficulty: 2, water: 1, sun: "Full Sun", season: "Year-round (mild climates)", scientific: "Salvia rosmarinus", tips: ["Let the soil dry out between waterings", "Prune after flowering to maintain shape", "Grow in a free-draining pot if rainfall is heavy"], problems: ["Root rot from overwatering", "Powdery mildew in humid, still air", "Woody stems if left unpruned for years"], soil: "Sandy, free-draining soil, pH 6.0–7.0." },
+      { id: 11, name: "Snake Plant", category: "indoor", icon: "🪴", difficulty: 1, water: 1, sun: "Low Light", season: "Year-round", scientific: "Dracaena trifasciata", tips: ["Water only once the soil is completely dry", "Wipe leaves occasionally to keep pores dust-free", "Avoid cold draughts near windows"], problems: ["Root rot from overwatering", "Leaf splitting under low humidity stress", "Mealybugs at the leaf bases"], soil: "Well-drained cactus or succulent mix." },
+      { id: 12, name: "Pothos", category: "indoor", icon: "🪴", difficulty: 1, water: 2, sun: "Low Light", season: "Year-round", scientific: "Epipremnum aureum", tips: ["Let the top layer of soil dry before watering", "Trim trailing vines to encourage fullness", "Wipe leaves to help them absorb light"], problems: ["Yellowing leaves from overwatering", "Brown tips from low humidity", "Root rot in waterlogged pots"], soil: "Standard, well-drained potting mix." },
+      { id: 13, name: "Peace Lily", category: "indoor", icon: "🪴", difficulty: 2, water: 2, sun: "Partial Sun", season: "Year-round", scientific: "Spathiphyllum wallisii", tips: ["Keep soil lightly moist but never soggy", "Mist the leaves occasionally to raise humidity", "Watch for wilting as a clear watering cue"], problems: ["Brown leaf tips from tap water minerals", "Root rot in poorly drained pots", "Leaf yellowing from too much direct sun"], soil: "Rich, well-drained potting mix." }
+    ];
 
-const catLabels = { flowers:"Flowers", vegetables:"Vegetables", herbs:"Herbs", indoor:"Indoor" };
-const diffLabels = { 1:"Easy", 2:"Medium", 3:"Hard" };
-const waterLabels = { 1:"Low", 2:"Medium", 3:"High" };
+    // Key lookup titles for user readability mapping
+    const catLabels = { flowers: "Flowers", vegetables: "Vegetables", herbs: "Herbs", indoor: "Indoor" };
+    const diffLabels = { 1: "Easy", 2: "Medium", 3: "Hard" };
+    const waterLabels = { 1: "Low", 2: "Medium", 3: "High" };
 
-function dotMeter(level, max){
-  let dots = "";
-  for(let i = 1; i <= max; i++){
-    dots += `<span class="${i <= level ? 'filled' : ''}"></span>`;
-  }
-  return `<span class="dot-meter">${dots}</span>`;
-}
+    // 2. ELEMENT SELECTORS
+    const grid = document.getElementById("plantGrid");
+    const searchInput = document.getElementById("plantSearch");
+    const filterBtns = document.querySelectorAll(".filter-btn");
+    const emptyMsg = document.getElementById("emptyMsg");
+    const backToTopBtn = document.getElementById("backToTop");
+    let activeCategory = "all";
 
-const grid = document.getElementById("plantGrid");
+    // 3. UI GENERATORS
+    // Simple loop that returns dot indicator markup (e.g., Level 2 out of 3 displays 2 filled dots)
+    function createDotMeter(level, max = 3) {
+      let dotsHtml = "";
+      for (let i = 1; i <= max; i++) {
+        dotsHtml += `<span class="${i <= level ? 'filled' : ''}"></span>`;
+      }
+      return `<span class="dot-meter">${dotsHtml}</span>`;
+    }
 
-function buildCard(plant){
-  const col = document.createElement("div");
-  col.className = "col-12 col-sm-6 col-lg-4 col-xl-3 plant-item";
-  col.dataset.category = plant.category;
-  col.dataset.name = plant.name.toLowerCase();
+    // Takes a plant object configuration and constructs its grid card layout
+    function buildPlantCard(plant) {
+      const col = document.createElement("div");
+      col.className = "col-12 col-sm-6 col-lg-4 col-xl-3 plant-item";
+      col.dataset.category = plant.category;
+      col.dataset.name = plant.name.toLowerCase();
 
-  col.innerHTML = `
-    <div class="card plant-card h-100">
-      <div class="plant-thumb" aria-hidden="true">${plant.icon}</div>
-      <div class="card-body">
-        <div class="plant-category">${catLabels[plant.category]}</div>
-        <h3 class="card-title h5">${plant.name}</h3>
-
-        <div class="plant-stat">
-          <span class="stat-label"><i class="bi bi-bar-chart-steps"></i>Difficulty</span>
-          <span class="stat-value">${dotMeter(plant.difficulty, 3)} ${diffLabels[plant.difficulty]}</span>
+      col.innerHTML = `
+        <div class="card plant-card h-100">
+          <div class="plant-thumb" aria-hidden="true">${plant.icon}</div>
+          <div class="card-body">
+            <div class="plant-category">${catLabels[plant.category]}</div>
+            <h3 class="card-title h5">${plant.name}</h3>
+            <div class="plant-stat">
+              <span class="stat-label"><i class="bi bi-bar-chart-steps"></i>Difficulty</span>
+              <span class="stat-value">${createDotMeter(plant.difficulty)} ${diffLabels[plant.difficulty]}</span>
+            </div>
+            <div class="plant-stat">
+              <span class="stat-label"><i class="bi bi-droplet-half"></i>Water</span>
+              <span class="stat-value">${createDotMeter(plant.water)} ${waterLabels[plant.water]}</span>
+            </div>
+            <div class="plant-stat">
+              <span class="stat-label"><i class="bi bi-sun"></i>Sunlight</span>
+              <span class="stat-value">${plant.sun}</span>
+            </div>
+            <div class="plant-stat">
+              <span class="stat-label"><i class="bi bi-calendar3"></i>Season</span>
+              <span class="stat-value">${plant.season}</span>
+            </div>
+            <button class="btn btn-outline-forest" data-plant-id="${plant.id}">Learn More</button>
+          </div>
         </div>
-        <div class="plant-stat">
-          <span class="stat-label"><i class="bi bi-droplet-half"></i>Water</span>
-          <span class="stat-value">${dotMeter(plant.water, 3)} ${waterLabels[plant.water]}</span>
-        </div>
-        <div class="plant-stat">
-          <span class="stat-label"><i class="bi bi-sun"></i>Sunlight</span>
-          <span class="stat-value">${plant.sun}</span>
-        </div>
-        <div class="plant-stat">
-          <span class="stat-label"><i class="bi bi-calendar3"></i>Season</span>
-          <span class="stat-value">${plant.season}</span>
-        </div>
+      `;
+      return col;
+    }
 
-        <button class="btn btn-outline-forest" data-plant-id="${plant.id}">Learn More</button>
-      </div>
-    </div>
-  `;
-  return col;
-}
+    // Render the dataset items to screen inside our structural viewport grid container
+    plants.forEach(plant => grid.appendChild(buildPlantCard(plant)));
 
-plants.forEach(plant => grid.appendChild(buildCard(plant)));
+    // 4. FILTERING PIPELINE CONTROLLER
+    function applyFilters() {
+      const searchKeyword = searchInput.value.trim().toLowerCase();
+      const plantCards = document.querySelectorAll(".plant-item");
+      let visibleCount = 0;
 
-const searchInput = document.getElementById("plantSearch");
-const filterBtns = document.querySelectorAll(".filter-btn");
-const emptyMsg = document.getElementById("emptyMsg");
-let activeCategory = "all";
+      plantCards.forEach(card => {
+        const matchesCategory = (activeCategory === "all") || (card.dataset.category === activeCategory);
+        const matchesSearch = card.dataset.name.includes(searchKeyword);
 
-function applyFilters(){
-  const query = searchInput.value.trim().toLowerCase();
-  const items = document.querySelectorAll(".plant-item");
-  let visibleCount = 0;
+        if (matchesCategory && matchesSearch) {
+          card.style.display = ""; // Makes card visible
+          visibleCount++;
+        } else {
+          card.style.display = "none"; // Hides card
+        }
+      });
 
-  items.forEach(item => {
-    const matchesCategory = activeCategory === "all" || item.dataset.category === activeCategory;
-    const matchesSearch = item.dataset.name.includes(query);
-    const show = matchesCategory && matchesSearch;
-    item.style.display = show ? "" : "none";
-    if(show) visibleCount++;
-  });
+      // Toggle text warning notice if results equal absolute zero
+      emptyMsg.style.display = (visibleCount === 0) ? "block" : "none";
+    }
 
-  emptyMsg.style.display = visibleCount === 0 ? "block" : "none";
-}
+    // Search and Category Button Listeners
+    searchInput.addEventListener("input", applyFilters);
 
-searchInput.addEventListener("input", applyFilters);
+    filterBtns.forEach(btn => {
+      btn.addEventListener("click", () => {
+        filterBtns.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        activeCategory = btn.dataset.category;
+        applyFilters();
+      });
+    });
 
-filterBtns.forEach(btn => {
-  btn.addEventListener("click", () => {
-    filterBtns.forEach(b => b.classList.remove("active"));
-    btn.classList.add("active");
-    activeCategory = btn.dataset.category;
-    applyFilters();
-  });
-});
+    // 5. MODAL DETAILED VIEW LAYER HANDLER
+    const bootstrapPlantModal = new bootstrap.Modal(document.getElementById("plantModal"));
 
-const plantModalEl = document.getElementById("plantModal");
-const plantModal = new bootstrap.Modal(plantModalEl);
+    grid.addEventListener("click", (event) => {
+      const targetButton = event.target.closest("[data-plant-id]");
+      if (!targetButton) return;
 
-grid.addEventListener("click", (e) => {
-  const btn = e.target.closest("[data-plant-id]");
-  if(!btn) return;
-  const plant = plants.find(p => p.id === Number(btn.dataset.plantId));
-  if(!plant) return;
+      const selectedPlantId = Number(targetButton.dataset.plantId);
+      const foundPlant = plants.find(p => p.id === selectedPlantId);
+      if (!foundPlant) return;
 
-  document.getElementById("modalPlantName").textContent = plant.name;
-  document.getElementById("modalPlantSci").textContent = plant.scientific;
-  document.getElementById("modalSoil").textContent = plant.soil;
+      // Mount properties directly to the text interface components
+      document.getElementById("modalPlantName").textContent = foundPlant.name;
+      document.getElementById("modalPlantSci").textContent = foundPlant.scientific;
+      document.getElementById("modalSoil").textContent = foundPlant.soil;
 
-  document.getElementById("modalTips").innerHTML = plant.tips.map(t => `<li>${t}</li>`).join("");
-  document.getElementById("modalProblems").innerHTML = plant.problems.map(p => `<li>${p}</li>`).join("");
+      // Render standard mapped collection iterations into standard raw markup line lists safely
+      document.getElementById("modalTips").innerHTML = foundPlant.tips.map(tip => `<li>${tip}</li>`).join("");
+      document.getElementById("modalProblems").innerHTML = foundPlant.problems.map(prob => `<li>${prob}</li>`).join("");
 
-  plantModal.show();
-});
+      bootstrapPlantModal.show();
+    });
 
-const backToTop = document.getElementById("backToTop");
-window.addEventListener("scroll", () => {
-  backToTop.style.display = window.scrollY > 400 ? "flex" : "none";
-});
-backToTop.addEventListener("click", () => {
-  window.scrollTo({ top: 0, behavior: "smooth" });
-});
-</script>
+    // 6. GENERAL UTILITIES (Back To Top Toggle)
+    window.addEventListener("scroll", () => {
+      backToTopBtn.style.display = (window.scrollY > 400) ? "flex" : "none";
+    });
+    backToTopBtn.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  </script>
 </body>
 </html>
