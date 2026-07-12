@@ -292,3 +292,14 @@ h1, h2, h3, .navbar-brand {
   z-index: 1000;       /* makes sure this button floats ABOVE other content,
                            instead of getting hidden behind it          */
 }
+
+.nav-login-icon {
+  color: var(--forest);
+  font-size: 1.3rem;
+  margin-left: 0.75rem;
+  line-height: 1;
+  transition: color 0.15s ease;
+}
+.nav-login-icon:hover {
+  color: var(--marigold);
+}
