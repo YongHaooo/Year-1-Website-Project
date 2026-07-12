@@ -162,10 +162,7 @@ h1, h2, h3, .navbar-brand {
 .btn-hero:hover {
   transform: translateY(-2px); /* moves the button UP by 2 pixels    */
   box-shadow: 0 6px 16px rgba(0,0,0,0.25); /* adds a soft drop-shadow beneath it */
-  color: var(); /* NOTE: this used to reference a variable called
-                            --green, which was never defined anywhere above
-                            (a typo bug). Fixed here to use our real
-                            --forest variable instead. */
+  color: var(--forest);
 }
 
 /* A second button style — outlined instead of filled, used for
@@ -304,15 +301,83 @@ h1, h2, h3, .navbar-brand {
   color: var(--marigold);
 }
 
-    .back-to-top {
-      position: fixed;
-      bottom: 24px;
-      right: 24px;
-      border-radius: 50%;
-      width: 48px;
-      height: 48px;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 1000;
-    }
+
+/* ==================================================================
+   7. GALLERY PAGE
+   ==================================================================
+   Everything below is specific to gallery.html: the smaller page
+   banner, the "upload your own photo" card, and the photo grid +
+   lightbox. It reuses the same design tokens (colors/fonts) as the
+   rest of the site so it feels like part of the same theme.
+   ================================================================== */
+
+/* Smaller version of the homepage hero, used as the page banner on
+   every "inner" page (like Gallery) instead of the full-height one. */
+.gallery-hero {
+  min-height: 40vh;
+  background:
+    linear-gradient(rgba(27,67,50,0.72), rgba(27,67,50,0.72)),
+    url('https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=1600') center/cover no-repeat;
+}
+
+/* ---- Upload card ---- */
+.upload-card {
+  border: none;
+  border-radius: 20px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+
+/* The big clickable/droppable box where a visitor picks their photo.
+   Dashed border is a common visual convention for "drop a file here". */
+.upload-dropzone {
+  border: 2px dashed var(--sage);
+  border-radius: 16px;
+  padding: 2rem;
+  cursor: pointer;
+  background-color: var(--parchment);
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+  min-height: 160px;
+}
+.upload-dropzone:hover,
+.upload-dropzone.dragover {
+  background-color: #eef4ee;
+  border-color: var(--forest);
+}
+.upload-icon {
+  font-size: 2.2rem;
+  color: var(--forest);
+  margin-bottom: 0.5rem;
+}
+/* Once a photo is chosen, we swap the icon/text prompt for a small
+   thumbnail preview of the actual file the visitor picked. */
+.upload-dropzone img#previewImg {
+  max-height: 140px;
+  border-radius: 10px;
+  margin-top: 0.75rem;
+  object-fit: cover;
+}
+
+/* ---- Gallery grid cards (reuses the same "lift on hover" feel as
+   the plant-card and benefit-card styles above) ---- */
+.gallery-card {
+  border: none;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  cursor: pointer;
+}
+.gallery-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.14);
+}
+.gallery-card img {
+  height: 220px;
+  object-fit: cover;
+}
+
+#lightboxImg {
+  max-height: 60vh;
+  width: 100%;
+  object-fit: cover;
+}
