@@ -357,27 +357,3 @@ h1, h2, h3, .navbar-brand {
   object-fit: cover;
 }
 
-/* ---- Gallery grid cards (reuses the same "lift on hover" feel as
-   the plant-card and benefit-card styles above) ---- */
-.gallery-card {
-  border: none;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.08);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-  cursor: pointer;
-}
-.gallery-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 10px 24px rgba(0,0,0,0.14);
-}
-.gallery-card img {
-  height: 220px;
-  object-fit: cover;
-}
-
-#lightboxImg {
-  max-height: 60vh;
-  width: 100%;
-  object-fit: cover;
-}
