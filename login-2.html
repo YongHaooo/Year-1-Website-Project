@@ -11,44 +11,38 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 
-  <!-- Site stylesheet (reuses navbar-custom, btn-hero, section-title, etc.) -->
+  <!-- Site stylesheet — same file the homepage uses, so navbar,
+       footer, buttons and the login icon all match automatically. -->
   <link rel="stylesheet" href="style.css">
 
   <!-- ============================================================
-       FALLBACK / PAGE-SPECIFIC STYLES
-       These variables mirror the palette already implied by the
-       site's class names (forest green + warm cream). If style.css
-       is present these mostly get overridden by it; if not, the
-       page still looks intentional on its own.
+       PAGE-SPECIFIC STYLES
+       Only the things style.css doesn't already cover: the centered
+       login card itself. Uses the SAME variables style.css defines
+       (--forest, --sage, --parchment, --marigold) instead of a
+       separate palette, so this page can't drift out of sync with
+       the rest of the site.
        ============================================================ -->
   <style>
-    :root {
-      --gh-forest: #2f5233;
-      --gh-forest-dark: #203a24;
-      --gh-cream: #f7f4ec;
-      --gh-gold: #d9a441;
-    }
-
     body {
-      font-family: 'Work Sans', sans-serif;
-      background-color: var(--gh-cream);
+      background-color: var(--parchment);
     }
 
-    h1, h2, h3, .login-title {
-      font-family: 'Fraunces', serif;
+    .login-title {
+      font-family: var(--font-display);
     }
 
     /* Full-height centered stage for the login card */
     .login-stage {
-      min-height: 100vh;
+      min-height: calc(100vh - 70px);
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 6rem 1rem 3rem;
+      padding: 3rem 1rem;
       background:
-        radial-gradient(circle at 15% 20%, rgba(47,82,51,0.08), transparent 45%),
-        radial-gradient(circle at 85% 80%, rgba(217,164,65,0.10), transparent 40%),
-        var(--gh-cream);
+        radial-gradient(circle at 15% 20%, rgba(27,67,50,0.08), transparent 45%),
+        radial-gradient(circle at 85% 80%, rgba(212,160,23,0.10), transparent 40%),
+        var(--parchment);
     }
 
     .login-card {
@@ -57,7 +51,7 @@
       background: #fff;
       border: none;
       border-radius: 1rem;
-      box-shadow: 0 1.5rem 3rem rgba(32, 58, 36, 0.12);
+      box-shadow: 0 1.5rem 3rem rgba(27,67,50,0.12);
       padding: 2.5rem 2rem;
     }
 
@@ -65,8 +59,8 @@
       width: 56px;
       height: 56px;
       border-radius: 50%;
-      background: rgba(47,82,51,0.1);
-      color: var(--gh-forest);
+      background: rgba(27,67,50,0.1);
+      color: var(--forest);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -78,32 +72,34 @@
       text-align: center;
       font-weight: 700;
       font-size: 1.75rem;
-      color: var(--gh-forest-dark);
+      color: var(--forest);
       margin-bottom: 0.25rem;
     }
 
     .login-subtitle {
       text-align: center;
-      color: #6c7a6d;
+      color: var(--text-dark);
+      opacity: 0.7;
       font-size: 0.95rem;
       margin-bottom: 1.75rem;
     }
 
     .form-control:focus {
-      border-color: var(--gh-forest);
-      box-shadow: 0 0 0 0.2rem rgba(47,82,51,0.15);
+      border-color: var(--forest);
+      box-shadow: 0 0 0 0.2rem rgba(27,67,50,0.15);
     }
 
     .btn-login {
-      background-color: var(--gh-forest);
-      border-color: var(--gh-forest);
+      background-color: var(--forest);
+      border-color: var(--forest);
       color: #fff;
       font-weight: 600;
       padding: 0.65rem 1rem;
+      border-radius: 50px;
     }
     .btn-login:hover {
-      background-color: var(--gh-forest-dark);
-      border-color: var(--gh-forest-dark);
+      background-color: #143526;
+      border-color: #143526;
       color: #fff;
     }
 
@@ -129,6 +125,7 @@
       background: #fff;
       font-weight: 500;
       color: #3d3d3d;
+      border-radius: 50px;
     }
     .btn-social:hover {
       background: #faf9f5;
@@ -138,18 +135,20 @@
       text-align: center;
       font-size: 0.9rem;
       margin-top: 1.5rem;
-      color: #6c7a6d;
+      color: var(--text-dark);
+      opacity: 0.7;
     }
     .login-footer-text a {
-      color: var(--gh-forest);
+      color: var(--forest);
       font-weight: 600;
       text-decoration: none;
+      opacity: 1;
     }
     .login-footer-text a:hover { text-decoration: underline; }
 
     .forgot-link {
       font-size: 0.85rem;
-      color: var(--gh-forest);
+      color: var(--forest);
       text-decoration: none;
     }
     .forgot-link:hover { text-decoration: underline; }
@@ -158,7 +157,10 @@
 <body>
 
   <!-- ============================================================
-       NAVBAR — same structure as index.html for consistency
+       NAVBAR — identical structure to index.html, so this page
+       feels like part of the same site instead of a bolt-on.
+       "Home" links back to index.html; the login icon on the right
+       marks this as the current page.
        ============================================================ -->
   <nav class="navbar navbar-expand-lg fixed-top navbar-custom">
     <div class="container">
@@ -171,12 +173,27 @@
       <div class="collapse navbar-collapse" id="navMenu">
         <ul class="navbar-nav ms-auto align-items-lg-center">
           <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-          <li class="nav-item"><a class="nav-link" href="plant-guide.html">Plant Guide</a></li>
+          <li class="nav-item"><a class="nav-link" href="plantguide.html">Plant Guide</a></li>
           <li class="nav-item"><a class="nav-link" href="tips.html">Tips</a></li>
           <li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li>
           <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              More
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><a class="dropdown-item" href="index.html#seasons">Seasonal Calendar</a></li>
+              <li><a class="dropdown-item" href="index.html#faq">FAQ</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="index.html#checklist">Free Checklist</a></li>
+            </ul>
+          </li>
+
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="login.html">Log In</a>
+            <a class="nav-login-icon" href="loginpage.html" aria-label="Log in" aria-current="page" title="Log in">
+              <i class="bi bi-person-circle"></i>
+            </a>
           </li>
         </ul>
       </div>
