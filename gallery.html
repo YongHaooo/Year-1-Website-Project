@@ -1,1 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gallery | Green Haven</title>
 
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-lg fixed-top navbar-custom">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <i class="bi bi-flower1"></i> Green Haven
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav ms-auto align-items-lg-center">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="plantguide.html">Plant Guide</a></li>
+          <li class="nav-item"><a class="nav-link" href="Flea-market.html">Flea-market</a></li>
+          <li class="nav-item"><a class="nav-link active" aria-current="page" href="gallery.html">Gallery</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">More</a>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><a class="dropdown-item" href="index.html#seasons">Seasonal Calendar</a></li>
+              <li><a class="dropdown-item" href="index.html#faq">FAQ</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="index.html#checklist">Free Checklist</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-login-icon" href="loginpage.html" aria-label="Log in" title="Log in">
+              <i class="bi bi-person-circle"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Small page-header banner, same visual language as the homepage hero -->
+  <header class="gallery-hero d-flex align-items-center">
+    <div class="container text-center text-white">
+      <p class="eyebrow">Grown by our community</p>
+      <h1 class="display-4 fw-bold">The Garden Gallery</h1>
+      <p class="lead mb-0">See what other beginner gardeners are growing — and share your own.</p>
+    </div>
+  </header>
+
+  <!-- ============== ADD YOUR OWN PHOTO ============== -->
+  <section class="py-5 bg-light-green" id="upload">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="card upload-card">
+            <div class="card-body p-4 p-md-5">
+              <h2 class="section-title text-center mb-2">Share Your Garden</h2>
+              <p class="text-center text-muted mb-4">Add a photo of your own plant — it'll appear in the gallery below, right on this device.</p>
+
+              <form id="uploadForm">
+                <label for="photoInput" class="upload-dropzone d-flex flex-column align-items-center justify-content-center text-center mb-3" id="dropzone">
+                  <i class="bi bi-cloud-arrow-up upload-icon"></i>
+                  <span class="fw-semibold">Click to choose a photo</span>
+                  <span class="text-muted small">or drag and drop it here (JPG / PNG)</span>
+                  <img id="previewImg" class="d-none" alt="Preview of selected photo">
+                </label>
+                <input class="d-none" type="file" id="photoInput" accept="image/*" required>
+
+                <div class="row g-3">
+                  <div class="col-md-7">
+                    <input type="text" class="form-control" id="plantName" placeholder="Plant name (e.g. Tomato)" required>
+                  </div>
+                  <div class="col-md-5">
+                    <input type="text" class="form-control" id="growerName" placeholder="Your name">
+                  </div>
+                </div>
+
+                <div class="text-center mt-4">
+                  <button type="submit" class="btn btn-hero btn-lg">
+                    <i class="bi bi-upload"></i> Add to Gallery
+                  </button>
+                </div>
+                <p id="uploadMsg" class="text-center small mt-3 mb-0"></p>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== GALLERY GRID ============== -->
+  <section class="py-5">
+    <div class="container">
+      <h2 class="section-title text-center mb-3">From Our Community</h2>
+
+      <ul class="nav nav-pills justify-content-center mb-5" id="galleryFilters">
+        <li class="nav-item"><button class="nav-link active" data-filter="all">All</button></li>
+        <li class="nav-item"><button class="nav-link" data-filter="community">Community</button></li>
+        <li class="nav-item"><button class="nav-link" data-filter="mine">My Photos</button></li>
+      </ul>
+
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4" id="galleryGrid">
+        <!-- Seed/community photos + user-added photos are rendered here by main.js's gallery script -->
+      </div>
+
+      <p class="text-center text-muted mt-4 d-none" id="emptyState">No photos yet — be the first to add one above!</p>
+    </div>
+  </section>
+
+  <!-- Lightbox modal for viewing a photo larger -->
+  <div class="modal fade" id="lightboxModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-header border-0">
+          <h5 class="modal-title" id="lightboxTitle">Plant</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body pt-0">
+          <img id="lightboxImg" src="" alt="" class="img-fluid rounded mb-3">
+          <p class="mb-1"><strong id="lightboxGrower"></strong></p>
+          <button type="button" class="btn btn-sm btn-outline-danger d-none" id="lightboxDelete">
+            <i class="bi bi-trash"></i> Remove this photo
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer text-center text-white py-4">
+    <div class="container">
+      <p class="small mb-0">&copy; 2026 Green Haven.</p>
+    </div>
+  </footer>
+
+  <button id="backToTop" class="btn btn-hero back-to-top" title="Back to top">
+    <i class="bi bi-arrow-up"></i>
+  </button>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="main.js"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+      /* ---------- back-to-top button (same behavior as homepage) ---------- */
+      const backToTopBtn = document.getElementById("backToTop");
+      window.addEventListener("scroll", function () {
+        backToTopBtn.style.display = window.scrollY > 400 ? "flex" : "none";
+      });
+      backToTopBtn.addEventListener("click", function () {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+
+      /* ==================================================================
+         GALLERY LOGIC
+         ==================================================================
+         - "community" photos are a fixed starter set (hosted images), so
+           the gallery never looks empty for a new visitor.
+         - "mine" photos are whatever the visitor uploads from their own
+           device. They're read into the page as base64 image data and
+           saved in the browser's localStorage, so they're still there
+           next time this visitor opens the page on this same device.
+           (They are NOT uploaded to a server — this is a front-end-only
+           demo gallery.)
+      ================================================================== */
+
+      const STORAGE_KEY = "greenHavenGalleryPhotos";
+
+      const communityPhotos = [
+        { id: "c1", src: "https://images.unsplash.com/photo-1592150621744-aca64f48394a?w=600", name: "Cherry Tomatoes", grower: "Sarah", type: "community" },
+        { id: "c2", src: "https://images.unsplash.com/photo-1597305877032-0668b3c6413a?w=600", name: "Basil", grower: "Marcus", type: "community" },
+        { id: "c3", src: "https://images.unsplash.com/photo-1509587584298-0f3b3a3a1797?w=600", name: "Succulent Bowl", grower: "Priya", type: "community" },
+        { id: "c4", src: "https://images.unsplash.com/photo-1462530260150-162092dbf011?w=600", name: "Marigolds", grower: "Diego", type: "community" },
+        { id: "c6", src: "https://images.unsplash.com/photo-1466781783364-36c955e42a7f?w=600", name: "Lavender Patch", grower: "Tom", type: "community" }
+      ];
+
+      function getMyPhotos() {
+        try {
+          return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+        } catch (e) {
+          return [];
+        }
+      }
+
+      function saveMyPhotos(photos) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(photos));
+      }
+
+      function allPhotos() {
+        return [...getMyPhotos(), ...communityPhotos];
+      }
+
+      function escapeHtml(str) {
+        const div = document.createElement("div");
+        div.textContent = str;
+        return div.innerHTML;
+      }
+
+      function renderGallery(filter = "all") {
+        const grid = document.getElementById("galleryGrid");
+        const emptyState = document.getElementById("emptyState");
+        const photos = allPhotos().filter(p => filter === "all" || p.type === filter);
+
+        grid.innerHTML = "";
+        emptyState.classList.toggle("d-none", photos.length > 0);
+
+        photos.forEach(photo => {
+          const col = document.createElement("div");
+          col.className = "col";
+          col.innerHTML = `
+            <div class="card gallery-card h-100" role="button" data-id="${photo.id}">
+              <div class="position-relative">
+                <img src="${photo.src}" class="card-img-top" alt="${escapeHtml(photo.name)}">
+                ${photo.type === "mine" ? '<span class="badge bg-warning text-dark position-absolute top-0 end-0 m-2">Mine</span>' : ''}
+              </div>
+              <div class="card-body">
+                <h5 class="card-title mb-1">${escapeHtml(photo.name)}</h5>
+                <p class="card-text small text-muted mb-0"><i class="bi bi-person-fill"></i> ${escapeHtml(photo.grower || "Anonymous")}</p>
+              </div>
+            </div>`;
+          grid.appendChild(col);
+        });
+
+        // open lightbox on card click
+        grid.querySelectorAll(".gallery-card").forEach(card => {
+          card.addEventListener("click", () => openLightbox(card.dataset.id));
+        });
+      }
+
+      function openLightbox(id) {
+        const photo = allPhotos().find(p => p.id === id);
+        if (!photo) return;
+
+        document.getElementById("lightboxImg").src = photo.src;
+        document.getElementById("lightboxImg").alt = photo.name;
+        document.getElementById("lightboxTitle").textContent = photo.name;
+        document.getElementById("lightboxGrower").textContent = "Shared by " + (photo.grower || "Anonymous");
+
+        const deleteBtn = document.getElementById("lightboxDelete");
+        if (photo.type === "mine") {
+          deleteBtn.classList.remove("d-none");
+          deleteBtn.onclick = () => {
+            const remaining = getMyPhotos().filter(p => p.id !== id);
+            saveMyPhotos(remaining);
+            bootstrap.Modal.getInstance(document.getElementById("lightboxModal")).hide();
+            renderGallery(currentFilter);
+          };
+        } else {
+          deleteBtn.classList.add("d-none");
+          deleteBtn.onclick = null;
+        }
+
+        new bootstrap.Modal(document.getElementById("lightboxModal")).show();
+      }
+
+      /* ---------- filter pills ---------- */
+      let currentFilter = "all";
+      document.querySelectorAll("#galleryFilters .nav-link").forEach(btn => {
+        btn.addEventListener("click", () => {
+          document.querySelectorAll("#galleryFilters .nav-link").forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+          currentFilter = btn.dataset.filter;
+          renderGallery(currentFilter);
+        });
+      });
+
+      /* ---------- upload form ---------- */
+      const photoInput = document.getElementById("photoInput");
+      const dropzone = document.getElementById("dropzone");
+      const previewImg = document.getElementById("previewImg");
+      const uploadForm = document.getElementById("uploadForm");
+      const uploadMsg = document.getElementById("uploadMsg");
+
+      dropzone.addEventListener("click", () => photoInput.click());
+
+      photoInput.addEventListener("change", () => {
+        const file = photoInput.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = e => {
+          previewImg.src = e.target.result;
+          previewImg.classList.remove("d-none");
+        };
+        reader.readAsDataURL(file);
+      });
+
+      // basic drag-and-drop support on the dropzone
+      ["dragover", "dragleave", "drop"].forEach(evt => {
+        dropzone.addEventListener(evt, e => e.preventDefault());
+      });
+      dropzone.addEventListener("dragover", () => dropzone.classList.add("dragover"));
+      dropzone.addEventListener("dragleave", () => dropzone.classList.remove("dragover"));
+      dropzone.addEventListener("drop", e => {
+        dropzone.classList.remove("dragover");
+        if (e.dataTransfer.files.length) {
+          photoInput.files = e.dataTransfer.files;
+          photoInput.dispatchEvent(new Event("change"));
+        }
+      });
+
+      uploadForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+        const file = photoInput.files[0];
+        const name = document.getElementById("plantName").value.trim();
+        const grower = document.getElementById("growerName").value.trim();
+
+        if (!file) {
+          uploadMsg.textContent = "Please choose a photo first.";
+          uploadMsg.className = "text-center small mt-3 text-danger";
+          return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = e => {
+          const myPhotos = getMyPhotos();
+          myPhotos.unshift({
+            id: "mine-" + Date.now(),
+            src: e.target.result,
+            name: name || "My Plant",
+            grower: grower || "Me",
+            type: "mine"
+          });
+          saveMyPhotos(myPhotos);
+
+          uploadForm.reset();
+          previewImg.classList.add("d-none");
+          uploadMsg.textContent = "Added! Scroll down to see it in the gallery.";
+          uploadMsg.className = "text-center small mt-3 text-success";
+
+          renderGallery(currentFilter);
+        };
+        reader.readAsDataURL(file);
+      });
+
+      /* ---------- initial render ---------- */
+      renderGallery("all");
+    });
+  </script>
+</body>
+</html>
