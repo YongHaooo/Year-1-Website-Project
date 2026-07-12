@@ -32,6 +32,12 @@
        - "active" class   -> highlights the current page
        - Includes a DROPDOWN menu (Bootstrap component #2) for
          "Resources", so the nav itself demonstrates two components.
+       - The login icon lives as the LAST item in the same navbar-nav
+         list as everything else — that's what makes it line up on
+         the right and collapse into the hamburger menu correctly.
+         (It only works as a nav item when it's INSIDE the <ul>; sitting
+         outside the <nav> entirely, like a loose <li>, won't render
+         as part of the bar at all.)
        ============================================================ -->
   <nav class="navbar navbar-expand-lg fixed-top navbar-custom">
     <div class="container">
@@ -47,7 +53,7 @@
       <div class="collapse navbar-collapse" id="navMenu">
         <ul class="navbar-nav ms-auto align-items-lg-center">
           <li class="nav-item"><a class="nav-link active" aria-current="page" href="index.html">Home</a></li>
-          <li class="nav-item"><a class="nav-link" href="plant-guide.html">Plant Guide</a></li>
+          <li class="nav-item"><a class="nav-link" href="plantguide.html">Plant Guide</a></li>
           <li class="nav-item"><a class="nav-link" href="tips.html">Tips</a></li>
           <li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li>
           <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
@@ -65,6 +71,14 @@
               <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" href="#checklist">Free Checklist</a></li>
             </ul>
+          </li>
+
+          <!-- LOGIN ICON: links to login.html, styled with .nav-login-icon
+               from style.css. Sits last so it lands on the far right. -->
+          <li class="nav-item">
+            <a class="nav-login-icon" href="loginpage.html" aria-label="Log in" title="Log in">
+              <i class="bi bi-person-circle"></i>
+            </a>
           </li>
         </ul>
       </div>
@@ -489,7 +503,7 @@
       <p class="mb-2"><i class="bi bi-flower1"></i> Green Haven</p>
       <p class="mb-2">
         <a href="index.html" class="footer-link">Home</a> ·
-        <a href="plant-guide.html" class="footer-link">Plant Guide</a> ·
+        <a href="plantguide.html" class="footer-link">Plant Guide</a> ·
         <a href="contact.html" class="footer-link">Contact</a>
       </p>
       <p class="small mb-0">&copy; 2026 Green Haven. Made with care for beginner gardeners.</p>
