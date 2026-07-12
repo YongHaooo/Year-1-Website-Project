@@ -1,0 +1,294 @@
+/* ==================================================================
+   GREEN HAVEN — THEME STYLESHEET
+   ==================================================================
+   What is this file for?
+   HTML builds the STRUCTURE of the page (headings, buttons, boxes).
+   This CSS file controls how that structure LOOKS (colors, fonts,
+   spacing, hover effects). Bootstrap already gives us default
+   styling — everything below either fine-tunes Bootstrap's look or
+   adds styling for things Bootstrap doesn't include out of the box.
+
+   Explaining this file in your presentation = easy marks for
+   "effective use of CSS".
+   ================================================================== */
+
+
+/* ------------------------------------------------------------------
+   1. DESIGN TOKENS (a.k.a. CSS Variables)
+   ------------------------------------------------------------------
+   Think of this block like a box of labelled paint cans sitting on a
+   shelf. Instead of typing the color code "#1b4332" every single
+   time we want that shade of green, we give it a nickname ONE time
+   here — "--forest" — and then reuse that nickname everywhere else
+   in the file by writing var(--forest).
+
+   Why bother? Two big reasons:
+   1) Consistency — every section automatically uses the exact same
+      greens/golds, so the whole site "matches" without us having to
+      manually copy color codes around.
+   2) Easy changes — if you decide the green should be a shade
+      darker, you only edit it in this ONE spot, and it updates
+      everywhere on the whole site automatically.
+
+   :root just means "the whole page can see these variables."
+------------------------------------------------------------------- */
+:root {
+  --forest: #1b4332;      /* deep green  - headings, navbar, footer   */
+  --sage: #74a57f;        /* mid green   - secondary accents          */
+  --parchment: #f7f5ef;   /* warm off-white - section backgrounds     */
+  --marigold: #d4a017;    /* golden accent - buttons, highlights      */
+  --text-dark: #223227;   /* default body text color                 */
+
+  --font-display: 'Fraunces', serif;    /* used for headings only    */
+  --font-body: 'Work Sans', sans-serif; /* used for normal paragraphs*/
+}
+
+/* The <body> tag wraps the ENTIRE visible page, so styling it here
+   sets the "default" look that every other element inherits from,
+   unless we override it later. */
+body {
+  font-family: var(--font-body);   /* use our body font everywhere by default */
+  color: var(--text-dark);         /* default text color                      */
+  background-color: #ffffff;       /* plain white page background             */
+
+  /* Our navbar is "fixed-top" (stuck to the top of the screen, see
+     the HTML file). Without this next line, the hero section would
+     be hidden UNDERNEATH the navbar when the page first loads. This
+     padding pushes all the page content down just enough to clear it. */
+  padding-top: 70px;
+}
+
+/* Apply our chosen "display" font to every heading and the logo text,
+   so they all feel like they belong to the same brand. */
+h1, h2, h3, .navbar-brand {
+  font-family: var(--font-display);
+}
+
+
+/* ------------------------------------------------------------------
+   2. NAVBAR
+   ------------------------------------------------------------------
+   Bootstrap gives the navbar its basic behavior (the hamburger menu,
+   the collapsing on mobile, etc). Here we're just repainting its
+   colors to match our garden theme instead of Bootstrap's defaults.
+------------------------------------------------------------------- */
+.navbar-custom {
+  background-color: var(--parchment);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06); /* a very soft shadow underneath the bar */
+}
+
+.navbar-custom .navbar-brand {
+  color: var(--forest);
+  font-weight: 700;   /* 700 = bold */
+  font-size: 1.4rem;  /* "rem" is a relative unit; 1.4rem = 1.4x the default text size */
+}
+
+.navbar-custom .nav-link {
+  color: var(--text-dark);
+  font-weight: 500;       /* slightly bold, but lighter than the logo */
+  margin-left: 0.75rem;   /* adds a bit of breathing room between menu links */
+}
+
+/* This rule fires in TWO situations:
+   (a) .active     -> the link for whatever page you're currently on
+   (b) :hover      -> whenever the mouse is resting on top of a link
+   Both get the same treatment: turn green and get a gold underline,
+   so it's obvious to the user where they are / what they're pointing at. */
+.navbar-custom .nav-link.active,
+.navbar-custom .nav-link:hover {
+  color: var(--forest);
+  border-bottom: 2px solid var(--marigold);
+}
+
+
+/* ------------------------------------------------------------------
+   3. HERO SECTION (the big banner at the top of the homepage)
+   ------------------------------------------------------------------
+   This is plain CSS rather than a Bootstrap component, because we
+   needed a custom full-screen photo background, which Bootstrap
+   doesn't provide a ready-made class for.
+------------------------------------------------------------------- */
+.hero {
+  min-height: 90vh; /* "vh" = viewport height. 90vh means "90% of the
+                        visible browser window's height," so the hero
+                        always feels big regardless of screen size. */
+
+  /* This next property is doing TWO things stacked on top of each
+     other, separated by the comma:
+       1) linear-gradient(...)  -> a solid dark-green, semi-transparent
+          color tint (the "rgba" numbers include an opacity of 0.72,
+          meaning it's 72% solid, 28% see-through).
+       2) url('...')            -> the actual photo underneath.
+     Layering the dark tint OVER the photo is what keeps our white
+     text easy to read — a photo alone is often too busy/bright for
+     white text to stand out clearly on its own. This is a common,
+     accessible technique called a "scrim" or "overlay". */
+  background:
+    linear-gradient(rgba(27,67,50,0.72), rgba(27,67,50,0.72)),
+    url('https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=1600') center/cover no-repeat;
+}
+
+/* The small uppercase label above the big headline
+   (e.g. "A COMMUNITY FOR BEGINNER GARDENERS") */
+.eyebrow {
+  letter-spacing: 2px;        /* adds a little space between each letter */
+  text-transform: uppercase;  /* forces the text to show as CAPITAL letters */
+  color: var(--marigold);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+/* Bootstrap's default button colors are blue/gray/etc. Since our
+   "Start Exploring" button needed a custom gold color that matches
+   our theme, we wrote our own class instead of using a built-in
+   Bootstrap button color. */
+.btn-hero {
+  background-color: var(--marigold);
+  color: var(--forest);
+  font-weight: 600;
+  border: none;
+  border-radius: 50px;   /* a large radius like this makes a "pill" shape */
+  padding: 0.75rem 2rem; /* top/bottom padding, then left/right padding */
+
+  /* "transition" tells the browser: "if certain properties change
+     (like on hover, below), don't snap instantly — animate smoothly
+     over 0.2 seconds instead." */
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* :hover = "only apply these styles while the mouse is over the button."
+   Together with the transition above, this creates a small, smooth
+   "lift up" animation whenever someone hovers the button. */
+.btn-hero:hover {
+  transform: translateY(-2px); /* moves the button UP by 2 pixels    */
+  box-shadow: 0 6px 16px rgba(0,0,0,0.25); /* adds a soft drop-shadow beneath it */
+  color: var(); /* NOTE: this used to reference a variable called
+                            --green, which was never defined anywhere above
+                            (a typo bug). Fixed here to use our real
+                            --forest variable instead. */
+}
+
+/* A second button style — outlined instead of filled, used for
+   less "urgent" actions like "See All Plants". */
+.btn-outline-forest {
+  border: 2px solid var(--forest);
+  color: var(--forest);
+  border-radius: 50px;
+  font-weight: 600;
+  padding: 0.5rem 1.5rem;
+}
+.btn-outline-forest:hover {
+  background-color: var(--forest); /* fills solid green on hover */
+  color: white;
+}
+
+/* The "Seed / Sprout / Bloom" row underneath the hero button.
+   flex-direction: column stacks the icon ABOVE its text label,
+   instead of side-by-side. */
+.growth-step {
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;  /* centers the icon + text horizontally */
+  gap: 0.4rem;           /* small space between the icon and its label */
+  font-size: 0.9rem;
+}
+.stage-icon {
+  font-size: 1.6rem;
+  color: var(--marigold);
+}
+
+
+/* ------------------------------------------------------------------
+   4. GENERAL SECTIONS, CARDS
+   ------------------------------------------------------------------ */
+
+/* Shared style for every big section heading, like
+   "Why People Love Gardening" or "Featured Plants". */
+.section-title {
+  font-weight: 600;
+  color: var(--forest);
+  position: relative;
+}
+
+/* A soft background color used to visually separate one section
+   from the plain-white sections around it (like alternating stripes
+   on a page, which helps guide the eye down the page). */
+.bg-light-green {
+  background-color: var(--parchment);
+}
+
+/* ---- Benefit cards (Stress Relief, Better Air Quality, etc.) ---- */
+.benefit-card {
+  border: none;                              /* remove Bootstrap's default thin border */
+  border-radius: 16px;                       /* rounded corners            */
+  box-shadow: 0 4px 14px rgba(0,0,0,0.06);   /* soft shadow so it "lifts" off the page */
+  transition: transform 0.25s ease, box-shadow 0.25s ease; /* smooth hover animation */
+}
+.benefit-card:hover {
+  transform: translateY(-6px);               /* the card floats upward on hover        */
+  box-shadow: 0 10px 24px rgba(0,0,0,0.12);  /* shadow gets bigger/softer to sell the "lift" */
+}
+.benefit-icon {
+  font-size: 2rem;
+  color: var(--sage);
+  margin-bottom: 0.75rem;
+}
+
+/* ---- Plant cards (Rose, Sunflower, Lavender...) ---- */
+.plant-card {
+  border: none;
+  border-radius: 16px;
+  overflow: hidden;   /* important! this clips the image corners so they
+                          respect the card's rounded border-radius above */
+  box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+  transition: transform 0.25s ease;
+}
+.plant-card:hover {
+  transform: translateY(-6px);
+}
+.plant-card img {
+  height: 200px;        /* forces every photo to the same height, even if
+                            the original images are different sizes     */
+  object-fit: cover;    /* crops the image neatly to fill that height,
+                            instead of stretching/squashing it           */
+}
+
+
+/* ------------------------------------------------------------------
+   5. FOOTER
+   ------------------------------------------------------------------ */
+.footer {
+  background-color: var(--forest);
+}
+.footer-link {
+  color: var(--parchment);
+  text-decoration: none;   /* removes the default underline on links */
+}
+.footer-link:hover {
+  color: var(--marigold);
+}
+
+
+/* ------------------------------------------------------------------
+   6. BACK-TO-TOP BUTTON
+   ------------------------------------------------------------------
+   This button lives in the HTML the whole time, but starts out
+   invisible (display: none). It's our main.js file (see that file's
+   comments) that changes this "display" value to make it appear
+   once the user has scrolled down the page.
+------------------------------------------------------------------- */
+.back-to-top {
+  position: fixed;   /* stays in the same spot on screen even while
+                         the rest of the page scrolls underneath it   */
+  bottom: 24px;
+  right: 24px;
+  border-radius: 50%;  /* 50% radius on a square-ish button = a circle */
+  width: 48px;
+  height: 48px;
+  display: none;       /* hidden by default — JavaScript turns this on */
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;       /* makes sure this button floats ABOVE other content,
+                           instead of getting hidden behind it          */
+}
