@@ -337,6 +337,7 @@ h1, h2, h3, .navbar-brand {
   background-color: var(--parchment);
   transition: background-color 0.2s ease, border-color 0.2s ease;
   min-height: 160px;
+  outline: none;
 }
 .upload-dropzone:hover,
 .upload-dropzone.dragover {
@@ -355,5 +356,10 @@ h1, h2, h3, .navbar-brand {
   border-radius: 10px;
   margin-top: 0.75rem;
   object-fit: cover;
+}
+
+.upload-dropzone:focus,
+  #photoInput:focus {
+  outline: none;
 }
 
