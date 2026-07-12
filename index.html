@@ -5,51 +5,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Green Haven | Grow Your Garden, Grow Your Happiness</title>
 
-  <!-- ============================================================
-       BOOTSTRAP 5 (via CDN)
-       This single stylesheet is what gives us the grid, navbar,
-       cards, carousel, accordion, modal, tabs, badges, progress
-       bars, toasts, dropdowns and tooltips used all over this page.
-       ============================================================ -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
-  <!-- Bootstrap Icons — small leaf / sun / drop / etc. icons -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 
-  <!-- Google Fonts: a botanical serif for headings, a clean sans for body text -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 
-  <!-- Our own CSS file (theme colors, custom layout tweaks) -->
   <link rel="stylesheet" href="style.css">
+
+  <style>
+
+  </style>
 </head>
 <body>
 
-  <!-- ============================================================
-       NAVBAR (Bootstrap component #1)
-       - navbar-expand-lg -> collapses into a hamburger on small screens
-       - fixed-top        -> sticky navigation across all pages
-       - "active" class   -> highlights the current page
-       - Includes a DROPDOWN menu (Bootstrap component #2) for
-         "Resources", so the nav itself demonstrates two components.
-       - The login icon lives as the LAST item in the same navbar-nav
-         list as everything else — that's what makes it line up on
-         the right and collapse into the hamburger menu correctly.
-         (It only works as a nav item when it's INSIDE the <ul>; sitting
-         outside the <nav> entirely, like a loose <li>, won't render
-         as part of the bar at all.)
-       ============================================================ -->
   <nav class="navbar navbar-expand-lg fixed-top navbar-custom">
     <div class="container">
       <a class="navbar-brand" href="index.html">
         <i class="bi bi-flower1"></i> Green Haven
       </a>
-
-      <!-- Hamburger toggle button for mobile view -->
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
         <span class="navbar-toggler-icon"></span>
       </button>
-
       <div class="collapse navbar-collapse" id="navMenu">
         <ul class="navbar-nav ms-auto align-items-lg-center">
           <li class="nav-item"><a class="nav-link active" aria-current="page" href="index.html">Home</a></li>
@@ -57,14 +34,8 @@
           <li class="nav-item"><a class="nav-link" href="tips.html">Tips</a></li>
           <li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li>
           <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-
-          <!-- DROPDOWN: a menu item that opens a small list of links
-               when clicked. data-bs-toggle="dropdown" is the only
-               thing Bootstrap needs to make this work automatically. -->
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              More
-            </a>
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">More</a>
             <ul class="dropdown-menu dropdown-menu-end">
               <li><a class="dropdown-item" href="#seasons">Seasonal Calendar</a></li>
               <li><a class="dropdown-item" href="#faq">FAQ</a></li>
@@ -72,9 +43,6 @@
               <li><a class="dropdown-item" href="#checklist">Free Checklist</a></li>
             </ul>
           </li>
-
-          <!-- LOGIN ICON: links to login.html, styled with .nav-login-icon
-               from style.css. Sits last so it lands on the far right. -->
           <li class="nav-item">
             <a class="nav-login-icon" href="loginpage.html" aria-label="Log in" title="Log in">
               <i class="bi bi-person-circle"></i>
@@ -85,220 +53,116 @@
     </div>
   </nav>
 
-  <!-- ============================================================
-       HERO SECTION
-       Plain HTML/CSS (not a Bootstrap component) since it needs a
-       custom full-bleed background image + overlay. The 3-step
-       "seed / sprout / bloom" row IS Bootstrap's grid.
-       ============================================================ -->
   <header class="hero d-flex align-items-center">
     <div class="container text-center text-white">
       <p class="eyebrow">A community for beginner gardeners</p>
       <h1 class="display-3 fw-bold">Grow Your Garden,<br>Grow Your Happiness</h1>
       <p class="lead mb-4">Simple guides, honest tips, and a friendly place to start.</p>
       <a href="plant-guide.html" class="btn btn-lg btn-hero">Start Exploring <i class="bi bi-arrow-right"></i></a>
-
       <div class="row justify-content-center mt-5 growth-row">
         <div class="col-4 col-md-3">
-          <div class="growth-step">
-            <i class="bi bi-circle-fill stage-icon"></i>
-            <span>1. Seed</span>
-          </div>
+          <div class="growth-step"><i class="bi bi-circle-fill stage-icon"></i><span>1. Seed</span></div>
         </div>
         <div class="col-4 col-md-3">
-          <div class="growth-step">
-            <i class="bi bi-flower2 stage-icon"></i>
-            <span>2. Sprout</span>
-          </div>
+          <div class="growth-step"><i class="bi bi-flower2 stage-icon"></i><span>2. Sprout</span></div>
         </div>
         <div class="col-4 col-md-3">
-          <div class="growth-step">
-            <i class="bi bi-flower3 stage-icon"></i>
-            <span>3. Bloom</span>
-          </div>
+          <div class="growth-step"><i class="bi bi-flower3 stage-icon"></i><span>3. Bloom</span></div>
         </div>
       </div>
     </div>
   </header>
 
-  <!-- ============================================================
-       ALERT (Bootstrap component #3)
-       A dismissible banner. "alert-dismissible fade show" plus the
-       small close <button> is all Bootstrap needs — no JS required
-       for the close/fade animation, it's built in.
-       ============================================================ -->
   <div class="container mt-4">
     <div class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
-      <i class="bi bi-calendar-check me-2"></i>
-      <strong>It's tomato season!</strong> Check the seasonal calendar below to see what to plant this month.
+      <i class="bi bi-calendar-check me-2"></i><strong>It's tomato season!</strong> Check the seasonal calendar below.
       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
   </div>
 
-  <!-- ============================================================
-       BENEFITS SECTION — Bootstrap Cards (#4) inside a responsive
-       grid (#5). row-cols-1 / row-cols-md-4 -> 1 card per row on
-       phones, 4 cards per row on medium+ screens.
-       ============================================================ -->
   <section class="py-5 section-benefits">
     <div class="container">
       <h2 class="section-title text-center mb-5">Why People Love Gardening</h2>
       <div class="row row-cols-1 row-cols-md-4 g-4">
-
         <div class="col">
           <div class="card benefit-card h-100 text-center">
-            <div class="card-body">
-              <i class="bi bi-emoji-smile benefit-icon"></i>
-              <h5 class="card-title">Stress Relief</h5>
-              <p class="card-text">A calm, screen-free hobby that slows your day down.</p>
-            </div>
+            <div class="card-body"><i class="bi bi-emoji-smile benefit-icon"></i><h5 class="card-title">Stress Relief</h5><p class="card-text">A calm, screen-free hobby.</p></div>
           </div>
         </div>
-
         <div class="col">
           <div class="card benefit-card h-100 text-center">
-            <div class="card-body">
-              <i class="bi bi-wind benefit-icon"></i>
-              <h5 class="card-title">Better Air Quality</h5>
-              <p class="card-text">Plants naturally freshen the air in your home.</p>
-            </div>
+            <div class="card-body"><i class="bi bi-wind benefit-icon"></i><h5 class="card-title">Better Air</h5><p class="card-text">Plants freshen the air.</p></div>
           </div>
         </div>
-
         <div class="col">
           <div class="card benefit-card h-100 text-center">
-            <div class="card-body">
-              <i class="bi bi-basket benefit-icon"></i>
-              <h5 class="card-title">Grow Fresh Food</h5>
-              <p class="card-text">Nothing beats a tomato you grew yourself.</p>
-            </div>
+            <div class="card-body"><i class="bi bi-basket benefit-icon"></i><h5 class="card-title">Fresh Food</h5><p class="card-text">Grow your own tomatoes.</p></div>
           </div>
         </div>
-
         <div class="col">
           <div class="card benefit-card h-100 text-center">
-            <div class="card-body">
-              <i class="bi bi-globe-asia-australia benefit-icon"></i>
-              <h5 class="card-title">Help Nature</h5>
-              <p class="card-text">Every plant supports local bees and birds.</p>
-            </div>
+            <div class="card-body"><i class="bi bi-globe-asia-australia benefit-icon"></i><h5 class="card-title">Help Nature</h5><p class="card-text">Supports bees and birds.</p></div>
           </div>
         </div>
-
       </div>
     </div>
   </section>
 
-  <!-- ============================================================
-       SEASONAL SPOTLIGHT — Bootstrap Nav Pills / Tabs (#6) + a
-       Table (#7) inside each tab pane.
-       nav-pills + data-bs-toggle="pill" makes clicking a tab swap
-       the visible content below, with zero custom JS needed.
-       ============================================================ -->
   <section class="py-5 bg-light-green" id="seasons">
     <div class="container">
       <h2 class="section-title text-center mb-4">Seasonal Spotlight</h2>
-      <p class="text-center text-muted mb-4">Tap a season to see what's best to plant right now.</p>
-
-      <!-- The clickable pill buttons -->
-      <ul class="nav nav-pills justify-content-center mb-4" id="seasonTabs" role="tablist">
-        <li class="nav-item" role="presentation">
-          <button class="nav-link active" data-bs-toggle="pill" data-bs-target="#spring" type="button">Spring</button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button class="nav-link" data-bs-toggle="pill" data-bs-target="#summer" type="button">Summer</button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button class="nav-link" data-bs-toggle="pill" data-bs-target="#rainy" type="button">Rainy</button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button class="nav-link" data-bs-toggle="pill" data-bs-target="#indoor" type="button">Indoor</button>
-        </li>
+      <ul class="nav nav-pills justify-content-center mb-4" id="seasonTabs">
+        <li class="nav-item"><button class="nav-link active" data-bs-toggle="pill" data-bs-target="#spring">Spring</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#summer">Summer</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#rainy">Rainy</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#indoor">Indoor</button></li>
       </ul>
-
-      <!-- The content that swaps depending on which pill is active -->
       <div class="tab-content">
-
         <div class="tab-pane fade show active" id="spring">
           <table class="table table-striped align-middle bg-white">
-            <thead>
-              <tr><th>Best Plant</th><th>Water</th><th>Tip</th></tr>
-            </thead>
-            <tbody>
-              <tr><td>Tomatoes</td><td>Every 2 days</td><td>Sow directly after the last cold spell.</td></tr>
-            </tbody>
+            <thead><tr><th>Best Plant</th><th>Water</th><th>Tip</th></tr></thead>
+            <tbody><tr><td>Tomatoes</td><td>Every 2 days</td><td>Sow directly after frost.</td></tr></tbody>
           </table>
         </div>
-
         <div class="tab-pane fade" id="summer">
           <table class="table table-striped align-middle bg-white">
-            <thead>
-              <tr><th>Best Plant</th><th>Water</th><th>Tip</th></tr>
-            </thead>
-            <tbody>
-              <tr><td>Sunflowers</td><td>Daily, early morning</td><td>Give them a spot with full sun all day.</td></tr>
-            </tbody>
+            <thead><tr><th>Best Plant</th><th>Water</th><th>Tip</th></tr></thead>
+            <tbody><tr><td>Sunflowers</td><td>Daily</td><td>Give full sun all day.</td></tr></tbody>
           </table>
         </div>
-
         <div class="tab-pane fade" id="rainy">
           <table class="table table-striped align-middle bg-white">
-            <thead>
-              <tr><th>Best Plant</th><th>Water</th><th>Tip</th></tr>
-            </thead>
-            <tbody>
-              <tr><td>Herbs</td><td>Only if soil is dry</td><td>Watch for root rot — don't overwater.</td></tr>
-            </tbody>
+            <thead><tr><th>Best Plant</th><th>Water</th><th>Tip</th></tr></thead>
+            <tbody><tr><td>Herbs</td><td>When dry</td><td>Watch out for root rot.</td></tr></tbody>
           </table>
         </div>
-
         <div class="tab-pane fade" id="indoor">
           <table class="table table-striped align-middle bg-white">
-            <thead>
-              <tr><th>Best Plant</th><th>Water</th><th>Tip</th></tr>
-            </thead>
-            <tbody>
-              <tr><td>Succulents</td><td>Every 1–2 weeks</td><td>Bright indirect light works best.</td></tr>
-            </tbody>
+            <thead><tr><th>Best Plant</th><th>Water</th><th>Tip</th></tr></thead>
+            <tbody><tr><td>Succulents</td><td>1–2 weeks</td><td>Bright indirect light.</td></tr></tbody>
           </table>
         </div>
-
       </div>
     </div>
   </section>
 
-  <!-- ============================================================
-       FEATURED PLANTS — Cards again, now with:
-       - BADGES (#8) showing difficulty, positioned over the photo
-       - PROGRESS BARS (#9) showing "beginner friendliness"
-       - TOOLTIPS (#10) on the small icons (hover to see a label)
-       ============================================================ -->
   <section class="py-5">
     <div class="container">
       <h2 class="section-title text-center mb-5">Featured Plants</h2>
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
-
         <div class="col">
           <div class="card plant-card h-100">
             <div class="position-relative">
               <img src="https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=500" class="card-img-top" alt="Rose">
-              <!-- Badge sits on top of the image using Bootstrap's position helpers -->
               <span class="badge bg-warning text-dark position-absolute top-0 end-0 m-2">Medium</span>
             </div>
             <div class="card-body">
               <h5 class="card-title">Rose</h5>
-              <p class="card-text small text-muted">
-                <i class="bi bi-sun" data-bs-toggle="tooltip" title="Needs full sun"></i> &nbsp;
-                <i class="bi bi-droplet" data-bs-toggle="tooltip" title="Water weekly"></i>
-              </p>
-              <p class="small mb-1">Beginner friendliness</p>
-              <div class="progress" role="progressbar" aria-label="Beginner friendliness" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">
-                <div class="progress-bar progress-bar-forest" style="width: 60%">60%</div>
-              </div>
+              <p class="card-text small text-muted"><i class="bi bi-sun" title="Full sun"></i> <i class="bi bi-droplet" title="Weekly"></i></p>
+              <div class="progress"><div class="progress-bar" style="width: 60%">60%</div></div>
             </div>
           </div>
         </div>
-
         <div class="col">
           <div class="card plant-card h-100">
             <div class="position-relative">
@@ -307,18 +171,11 @@
             </div>
             <div class="card-body">
               <h5 class="card-title">Sunflower</h5>
-              <p class="card-text small text-muted">
-                <i class="bi bi-sun" data-bs-toggle="tooltip" title="Needs full sun"></i> &nbsp;
-                <i class="bi bi-droplet" data-bs-toggle="tooltip" title="Water twice a week"></i>
-              </p>
-              <p class="small mb-1">Beginner friendliness</p>
-              <div class="progress" role="progressbar" aria-label="Beginner friendliness" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100">
-                <div class="progress-bar progress-bar-forest" style="width: 90%">90%</div>
-              </div>
+              <p class="card-text small text-muted"><i class="bi bi-sun" title="Full sun"></i> <i class="bi bi-droplet" title="Twice weekly"></i></p>
+              <div class="progress"><div class="progress-bar" style="width: 90%">90%</div></div>
             </div>
           </div>
         </div>
-
         <div class="col">
           <div class="card plant-card h-100">
             <div class="position-relative">
@@ -327,202 +184,99 @@
             </div>
             <div class="card-body">
               <h5 class="card-title">Lavender</h5>
-              <p class="card-text small text-muted">
-                <i class="bi bi-sun" data-bs-toggle="tooltip" title="Needs full sun"></i> &nbsp;
-                <i class="bi bi-droplet" data-bs-toggle="tooltip" title="Water sparingly"></i>
-              </p>
-              <p class="small mb-1">Beginner friendliness</p>
-              <div class="progress" role="progressbar" aria-label="Beginner friendliness" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100">
-                <div class="progress-bar progress-bar-forest" style="width: 85%">85%</div>
-              </div>
+              <p class="card-text small text-muted"><i class="bi bi-sun" title="Full sun"></i> <i class="bi bi-droplet" title="Sparingly"></i></p>
+              <div class="progress"><div class="progress-bar" style="width: 85%">85%</div></div>
             </div>
           </div>
         </div>
-
       </div>
-      <div class="text-center mt-4">
-        <a href="plant-guide.html" class="btn btn-outline-forest">See All Plants</a>
-      </div>
+      <div class="text-center mt-4"><a href="plant-guide.html" class="btn btn-outline-forest">See All Plants</a></div>
     </div>
   </section>
 
-  <!-- ============================================================
-       TESTIMONIAL — Bootstrap Carousel (#11)
-       ============================================================ -->
   <section class="py-5 bg-light-green">
     <div class="container">
-      <h2 class="section-title text-center mb-5">What Our Community Says</h2>
-
       <div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-indicators">
-          <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="0" class="active"></button>
-          <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="1"></button>
-        </div>
-
         <div class="carousel-inner text-center">
-          <div class="carousel-item active">
-            <p class="fs-4 fst-italic">"This website helped me grow my first tomatoes!"</p>
-            <p class="text-muted">★★★★★ — Sarah</p>
-          </div>
-          <div class="carousel-item">
-            <p class="fs-4 fst-italic">"Finally a gardening guide made for total beginners."</p>
-            <p class="text-muted">★★★★★ — Marcus</p>
-          </div>
+          <div class="carousel-item active"><p class="fs-4 fst-italic">"Helped grow my first tomatoes!"</p><p class="text-muted">★★★★★ — Sarah</p></div>
+          <div class="carousel-item"><p class="fs-4 fst-italic">"Gardening guide made for beginners."</p><p class="text-muted">★★★★★ — Marcus</p></div>
         </div>
-
-        <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon"></span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next">
-          <span class="carousel-control-next-icon"></span>
-        </button>
       </div>
     </div>
   </section>
 
-  <!-- ============================================================
-       FAQ — Bootstrap Accordion (#12)
-       Only one answer is open at a time because every item shares
-       data-bs-parent pointing back to the same accordion container.
-       ============================================================ -->
   <section class="py-5" id="faq">
     <div class="container">
       <h2 class="section-title text-center mb-5">Quick Answers</h2>
-
       <div class="accordion" id="faqAccordion">
-
         <div class="accordion-item">
-          <h2 class="accordion-header">
-            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
-              Do I need a garden to start?
-            </button>
-          </h2>
-          <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
-            <div class="accordion-body">Not at all — a sunny windowsill and a few pots are enough to begin.</div>
-          </div>
+          <h2 class="accordion-header"><button class="accordion-button" data-bs-toggle="collapse" data-bs-target="#faq1">Do I need a garden?</button></h2>
+          <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion"><div class="accordion-body">A sunny windowsill is enough!</div></div>
         </div>
-
-        <div class="accordion-item">
-          <h2 class="accordion-header">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
-              How often should I water?
-            </button>
-          </h2>
-          <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-            <div class="accordion-body">It depends on the plant — check the water icon on each plant card, or visit our full Plant Guide.</div>
-          </div>
-        </div>
-
-        <div class="accordion-item">
-          <h2 class="accordion-header">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
-              Why does my plant look droopy?
-            </button>
-          </h2>
-          <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-            <div class="accordion-body">Usually it's overwatering or too little light — both are easy fixes once you know which one it is.</div>
-          </div>
-        </div>
-
       </div>
     </div>
   </section>
 
-  <!-- ============================================================
-       CHECKLIST CTA — button that opens a MODAL (#13). The modal
-       itself contains a LIST GROUP (#14) and a form that shows a
-       SPINNER (#15) briefly, then triggers a TOAST (#16).
-       ============================================================ -->
   <section class="py-5 bg-light-green text-center" id="checklist">
     <div class="container">
       <h2 class="section-title mb-3">New to Gardening?</h2>
-      <p class="text-muted mb-4">Grab our free beginner checklist before you start.</p>
-
-      <!-- data-bs-toggle="modal" + data-bs-target is all it takes to
-           open the modal below — no JavaScript required for this part. -->
       <button type="button" class="btn btn-hero btn-lg" data-bs-toggle="modal" data-bs-target="#checklistModal">
         <i class="bi bi-clipboard-check"></i> Get the Free Checklist
       </button>
     </div>
   </section>
 
-  <!-- The modal itself: hidden until the button above opens it -->
   <div class="modal fade" id="checklistModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title"><i class="bi bi-clipboard-check"></i> Beginner Checklist</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <h5 class="modal-title">Beginner Checklist</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body">
-          <p>Everything on this list before your first plant:</p>
-
-          <!-- LIST GROUP: a clean, styled list -->
           <ul class="list-group list-group-flush mb-3">
-            <li class="list-group-item"><i class="bi bi-check2-circle text-success me-2"></i>A pot with drainage holes</li>
-            <li class="list-group-item"><i class="bi bi-check2-circle text-success me-2"></i>Good quality potting soil</li>
-            <li class="list-group-item"><i class="bi bi-check2-circle text-success me-2"></i>A sunny spot (at least 4 hours of light)</li>
-            <li class="list-group-item"><i class="bi bi-check2-circle text-success me-2"></i>A watering can or bottle</li>
+            <li class="list-group-item">A pot with drainage holes</li>
+            <li class="list-group-item">Good quality soil</li>
           </ul>
-
-          <!-- Small form so the modal also demonstrates form input -->
-          <form id="checklistForm">
-            <div class="mb-3">
-              <label for="checklistEmail" class="form-label">Email us your checklist copy</label>
-              <input type="email" class="form-control" id="checklistEmail" placeholder="you@example.com" required>
-            </div>
-            <button type="submit" class="btn btn-hero w-100" id="checklistSubmitBtn">
-              <!-- This spinner starts hidden; main.js reveals it briefly on submit -->
-              <span class="spinner-border spinner-border-sm d-none" id="checklistSpinner" role="status" aria-hidden="true"></span>
-              Send it to me
-            </button>
-          </form>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- TOAST: a small temporary notification, positioned bottom-right.
-       Stays hidden (no "show" class) until main.js tells it to appear. -->
-  <div class="toast-container position-fixed bottom-0 end-0 p-3">
-    <div id="confirmToast" class="toast" role="alert">
-      <div class="toast-header">
-        <i class="bi bi-check-circle-fill text-success me-2"></i>
-        <strong class="me-auto">Green Haven</strong>
-        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-      </div>
-      <div class="toast-body">Checklist sent! Check your inbox. 🌱</div>
-    </div>
-  </div>
-
-  <!-- ============================================================
-       FOOTER
-       ============================================================ -->
   <footer class="footer text-center text-white py-4">
     <div class="container">
-      <p class="mb-2"><i class="bi bi-flower1"></i> Green Haven</p>
-      <p class="mb-2">
-        <a href="index.html" class="footer-link">Home</a> ·
-        <a href="plantguide.html" class="footer-link">Plant Guide</a> ·
-        <a href="contact.html" class="footer-link">Contact</a>
-      </p>
-      <p class="small mb-0">&copy; 2026 Green Haven. Made with care for beginner gardeners.</p>
+      <p class="small mb-0">&copy; 2026 Green Haven.</p>
     </div>
   </footer>
 
-  <!-- Back-to-top button: small vanilla JS interaction -->
   <button id="backToTop" class="btn btn-hero back-to-top" title="Back to top">
     <i class="bi bi-arrow-up"></i>
   </button>
 
-  <!-- ============================================================
-       BOOTSTRAP JS BUNDLE — required for the navbar toggler,
-       carousel, accordion, modal, toast, dropdown and tooltips to
-       actually work (includes Popper for positioning).
-       ============================================================ -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-  <!-- Our own small script for back-to-top, tooltips, and the modal/toast demo -->
   <script src="main.js"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const backToTopBtn = document.getElementById("backToTop");
+
+      // Show/hide button on scroll
+      window.addEventListener("scroll", function () {
+        if (window.scrollY > 400) {
+          backToTopBtn.style.display = "flex";
+        } else {
+          backToTopBtn.style.display = "none";
+        }
+      });
+
+      // Smooth scroll back to top on click
+      backToTopBtn.addEventListener("click", function () {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth"
+        });
+      });
+    });
+  </script>
 </body>
 </html>
