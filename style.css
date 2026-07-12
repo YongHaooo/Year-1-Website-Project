@@ -303,3 +303,16 @@ h1, h2, h3, .navbar-brand {
 .nav-login-icon:hover {
   color: var(--marigold);
 }
+
+    .back-to-top {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
