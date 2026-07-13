@@ -31,6 +31,13 @@
   object-fit: cover;
 }
 
+.gallery-card .card-desc {
+  /* clamp long descriptions to 2 lines so cards stay a consistent height */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 #lightboxImg {
   max-height: 60vh;
   width: 100%;
@@ -109,6 +116,9 @@
                   <div class="col-md-5">
                     <input type="text" class="form-control" id="growerName" placeholder="Your name">
                   </div>
+                  <div class="col-12">
+                    <textarea class="form-control" id="plantDesc" rows="2" maxlength="140" placeholder="Short description (e.g. Grew this from seed on my balcony!)"></textarea>
+                  </div>
                 </div>
 
                 <div class="text-center mt-4">
@@ -155,6 +165,7 @@
         <div class="modal-body pt-0">
           <img id="lightboxImg" src="" alt="" class="img-fluid rounded mb-3">
           <p class="mb-1"><strong id="lightboxGrower"></strong></p>
+          <p class="text-muted mb-3" id="lightboxDesc"></p>
           <button type="button" class="btn btn-sm btn-outline-danger d-none" id="lightboxDelete">
             <i class="bi bi-trash"></i> Remove this photo
           </button>
@@ -199,16 +210,18 @@
            next time this visitor opens the page on this same device.
            (They are NOT uploaded to a server — this is a front-end-only
            demo gallery.)
+         - Each photo now also carries a short "desc" (description)
+           field, shown on its card and in the lightbox.
       ================================================================== */
 
       const STORAGE_KEY = "greenHavenGalleryPhotos";
 
       const communityPhotos = [
-        { id: "c1", src: "https://images.unsplash.com/photo-1592150621744-aca64f48394a?w=600", name: "Cherry Tomatoes", grower: "Sarah", type: "community" },
-        { id: "c2", src: "https://images.unsplash.com/photo-1597305877032-0668b3c6413a?w=600", name: "Basil", grower: "Marcus", type: "community" },
-        { id: "c3", src: "https://images.unsplash.com/photo-1509587584298-0f3b3a3a1797?w=600", name: "Succulent Bowl", grower: "Priya", type: "community" },
-        { id: "c4", src: "https://images.unsplash.com/photo-1462530260150-162092dbf011?w=600", name: "Marigolds", grower: "Diego", type: "community" },
-        { id: "c6", src: "https://images.unsplash.com/photo-1466781783364-36c955e42a7f?w=600", name: "Lavender Patch", grower: "Tom", type: "community" }
+        { id: "c1", src: "https://images.unsplash.com/photo-1546094096-0df4bcaaa337?w=600", name: "Cherry Tomatoes", grower: "Sarah", desc: "Sweet little tomatoes grown on a sunny balcony.", type: "community" },
+        { id: "c2", src: "https://images.unsplash.com/photo-1500420254515-0faefa2dac99?w=600", name: "Basil", grower: "Marcus", desc: "Fresh basil for pasta night, ready in weeks.", type: "community" },
+        { id: "c3", src: "https://images.unsplash.com/photo-1496062031456-07b8f162a322?w=600", name: "Rose", grower: "Priya", desc: "A classic rose bush, blooming all summer long.", type: "community" },
+        { id: "c4", src: "https://images.unsplash.com/photo-1535189487909-a262ad10c165?w=600", name: "Parsley", grower: "Diego", desc: "Curly parsley that keeps coming back after every trim.", type: "community" },
+        { id: "c6", src: "https://images.unsplash.com/photo-1668975937560-ba3b1a4ac175?w=600", name: "Cactus", grower: "Tom", desc: "A hardy little cactus that barely needs watering.", type: "community" }
       ];
 
       function getMyPhotos() {
@@ -252,7 +265,8 @@
               </div>
               <div class="card-body">
                 <h5 class="card-title mb-1">${escapeHtml(photo.name)}</h5>
-                <p class="card-text small text-muted mb-0"><i class="bi bi-person-fill"></i> ${escapeHtml(photo.grower || "Anonymous")}</p>
+                <p class="card-text small text-muted mb-1"><i class="bi bi-person-fill"></i> ${escapeHtml(photo.grower || "Anonymous")}</p>
+                ${photo.desc ? `<p class="card-text small card-desc mb-0">${escapeHtml(photo.desc)}</p>` : ''}
               </div>
             </div>`;
           grid.appendChild(col);
@@ -272,6 +286,7 @@
         document.getElementById("lightboxImg").alt = photo.name;
         document.getElementById("lightboxTitle").textContent = photo.name;
         document.getElementById("lightboxGrower").textContent = "Shared by " + (photo.grower || "Anonymous");
+        document.getElementById("lightboxDesc").textContent = photo.desc || "";
 
         const deleteBtn = document.getElementById("lightboxDelete");
         if (photo.type === "mine") {
@@ -340,6 +355,7 @@
         const file = photoInput.files[0];
         const name = document.getElementById("plantName").value.trim();
         const grower = document.getElementById("growerName").value.trim();
+        const desc = document.getElementById("plantDesc").value.trim();
 
         if (!file) {
           uploadMsg.textContent = "Please choose a photo first.";
@@ -355,6 +371,7 @@
             src: e.target.result,
             name: name || "My Plant",
             grower: grower || "Me",
+            desc: desc,
             type: "mine"
           });
           saveMyPhotos(myPhotos);
