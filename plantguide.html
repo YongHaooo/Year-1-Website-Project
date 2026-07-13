@@ -1,66 +1,295 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Gallery | Green Haven</title>
-
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plant Guide — Green Haven</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;0,700;1,500&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
 
   <style>
-    .gallery-card {
-  border: none;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.08);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-  cursor: pointer;
-}
-.gallery-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 10px 24px rgba(0,0,0,0.14);
-}
-.gallery-card img {
-  height: 220px;
-  object-fit: cover;
-}
+    /* ==================================================================
+       GREEN HAVEN — STYLESHEET
+       ================================================================== */
+    :root {
+      --forest: #1b4332;
+      --sage: #74a57f;
+      --parchment: #f7f5ef;
+      --marigold: #d4a017;
+      --text-dark: #223227;
+      --font-display: 'Fraunces', serif;
+      --font-body: 'Work Sans', sans-serif;
+    }
 
-.gallery-card .card-desc {
-  /* clamp long descriptions to 2 lines so cards stay a consistent height */
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
+    body {
+      font-family: var(--font-body);
+      color: var(--text-dark);
+      background-color: #ffffff;
+      padding-top: 70px;
+    }
 
-#lightboxImg {
-  max-height: 60vh;
-  width: 100%;
-  object-fit: cover;
-}
+    h1, h2, h3, .navbar-brand {
+      font-family: var(--font-display);
+    }
+
+    /* NAVIGATION */
+    .navbar-custom {
+      background-color: var(--parchment);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    }
+    .navbar-custom .navbar-brand {
+      color: var(--forest);
+      font-weight: 700;
+      font-size: 1.4rem;
+    }
+    .navbar-custom .nav-link {
+      color: var(--text-dark);
+      font-weight: 500;
+      margin-left: 0.75rem;
+    }
+    .navbar-custom .nav-link.active,
+    .navbar-custom .nav-link:hover {
+      color: var(--forest);
+      border-bottom: 2px solid var(--marigold);
+    }
+    .nav-login-icon {
+      color: var(--forest);
+      font-size: 1.3rem;
+      margin-left: 0.75rem;
+      line-height: 1;
+      transition: color 0.15s ease;
+    }
+    .nav-login-icon:hover { color: var(--marigold); }
+
+    /* UTILITY BUTTONS & HEADERS */
+    .eyebrow {
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--marigold);
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+    .btn-hero {
+      background-color: var(--marigold);
+      color: var(--forest);
+      font-weight: 600;
+      border: none;
+      border-radius: 50px;
+      padding: 0.75rem 2rem;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .btn-hero:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+    }
+    .btn-outline-forest {
+      border: 2px solid var(--forest);
+      color: var(--forest);
+      border-radius: 50px;
+      font-weight: 600;
+      padding: 0.5rem 1.5rem;
+      background-color: transparent;
+    }
+    .btn-outline-forest:hover {
+      background-color: var(--forest);
+      color: white;
+    }
+
+    /* SECTIONS & CARDS */
+    .bg-light-green { background-color: var(--parchment); }
+    
+    .plant-card {
+      border: none;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+      transition: transform 0.25s ease;
+    }
+    .plant-card:hover { transform: translateY(-6px); }
+    
+    .plant-thumb {
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+      background: linear-gradient(160deg, var(--parchment), #E4EFE7);
+    }
+    .plant-card .card-body { padding: 1.25rem; }
+    .plant-card .plant-category {
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: var(--sage);
+    }
+    .plant-card .card-title {
+      color: var(--forest);
+      font-weight: 600;
+      margin: 0.15rem 0 0.75rem;
+    }
+
+    /* PLANT STATS row item */
+    .plant-stat {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.85rem;
+      padding: 0.3rem 0;
+      border-bottom: 1px solid var(--parchment);
+    }
+    .plant-stat:last-of-type { border-bottom: none; }
+    .plant-stat .stat-label {
+      color: var(--sage);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .plant-stat .stat-value { font-weight: 500; }
+
+    /* RATING DOT METERS */
+    .dot-meter { display: inline-flex; gap: 3px; }
+    .dot-meter span {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background-color: #DCE3D5;
+      display: inline-block;
+    }
+    .dot-meter span.filled { background-color: var(--marigold); }
+    .plant-card .btn-outline-forest { width: 100%; margin-top: 1rem; }
+
+    /* HERO SEARCH INTERFACE */
+    .guide-header {
+      background: linear-gradient(135deg, var(--forest), #14352654 100%), var(--forest);
+      padding: 3.5rem 1rem 3rem;
+      color: white;
+      text-align: center;
+    }
+    .guide-header h1 { color: white; margin: 0.35rem 0; }
+    .guide-header p { color: #E4EFE7; margin: 0; }
+    
+    .search-wrap {
+      position: relative;
+      max-width: 480px;
+      margin: 2rem auto 0;
+    }
+    .search-wrap i {
+      position: absolute;
+      left: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--sage);
+    }
+    #plantSearch {
+      width: 100%;
+      border: none;
+      border-radius: 50px;
+      padding: 0.75rem 1.25rem 0.75rem 2.75rem;
+      font-family: var(--font-body);
+      font-size: 1rem;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+    }
+    #plantSearch:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(212,160,23,0.45);
+    }
+
+    /* FILTER SELECTIONS */
+    .filter-btn {
+      border: 2px solid var(--forest);
+      color: var(--forest);
+      background-color: white;
+      border-radius: 50px;
+      font-weight: 600;
+      padding: 0.4rem 1.25rem;
+      font-size: 0.9rem;
+      transition: all 0.2s ease;
+    }
+    .filter-btn:hover {
+      background-color: var(--sage);
+      border-color: var(--sage);
+      color: white;
+    }
+    .filter-btn.active {
+      background-color: var(--forest);
+      color: white;
+    }
+
+    .empty-state {
+      display: none;
+      text-align: center;
+      padding: 3rem 1rem;
+      color: var(--sage);
+      font-style: italic;
+    }
+
+    /* POPUP DETAILS MODAL */
+    .plant-modal .modal-content { border: none; border-radius: 16px; overflow: hidden; }
+    .plant-modal .modal-header {
+      background-color: var(--forest);
+      color: white;
+      border-bottom: 3px solid var(--marigold);
+      padding: 1.25rem 1.5rem;
+    }
+    .plant-modal .modal-title { font-family: var(--font-display); font-weight: 600; font-size: 1.4rem; margin: 0; }
+    .plant-modal .modal-sci { font-style: italic; color: #C9DACD; font-size: 0.9rem; margin: 0.15rem 0 0; }
+    .plant-modal .btn-close { filter: invert(1) grayscale(1) brightness(2); }
+    .plant-modal .modal-body { padding: 1.5rem; background-color: var(--parchment); }
+    .plant-modal .modal-section { margin-bottom: 1.15rem; }
+    .plant-modal .modal-section:last-child { margin-bottom: 0; }
+    .plant-modal .modal-section h6 {
+      color: var(--forest);
+      font-weight: 700;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+    .plant-modal .modal-section ul { margin: 0; padding-left: 1.15rem; }
+    .plant-modal .modal-section li { margin-bottom: 0.3rem; }
+
+    /* Google search link at the bottom of the modal */
+    .modal-google-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--forest);
+      font-weight: 600;
+      text-decoration: none;
+      border-top: 1px solid rgba(27,67,50,0.15);
+      padding-top: 1rem;
+      width: 100%;
+    }
+    .modal-google-link:hover {
+      color: var(--marigold);
+      text-decoration: underline;
+    }
+
+    /* FOOTER & ACCELERATOR UTILS */
+    .footer { background-color: var(--forest); }
+    .footer-link { color: var(--parchment); text-decoration: none; }
+    
+
   </style>
+
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
   <nav class="navbar navbar-expand-lg fixed-top navbar-custom">
     <div class="container">
-      <a class="navbar-brand" href="index.html">
-        <i class="bi bi-flower1"></i> Green Haven
-      </a>
+      <a class="navbar-brand" href="index.html"><i class="bi bi-flower1"></i> Green Haven</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navMenu">
         <ul class="navbar-nav ms-auto align-items-lg-center">
           <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-          <li class="nav-item"><a class="nav-link" href="plantguide.html">Plant Guide</a></li>
+          <li class="nav-item"><a class="nav-link active" aria-current="page" href="plantguide.html">Plant Guide</a></li>
           <li class="nav-item"><a class="nav-link" href="Flea-market.html">Flea-market</a></li>
-          <li class="nav-item"><a class="nav-link active" aria-current="page" href="gallery.html">Gallery</a></li>
+          <li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li>
           <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">More</a>
@@ -81,313 +310,222 @@
     </div>
   </nav>
 
-  <!-- Small page-header banner, same visual language as the homepage hero -->
-  <header class="gallery-hero d-flex align-items-center">
-    <div class="container text-center text-white">
-      <p class="eyebrow">Grown by our community</p>
-      <h1 class="display-4 fw-bold">The Garden Gallery</h1>
-      <p class="lead mb-0">See what other beginner gardeners are growing — and share your own.</p>
+  <header class="guide-header">
+    <div class="eyebrow">Browse the collection</div>
+    <h1>Plant Guide</h1>
+    <p>Search or filter to find care instructions for flowers, vegetables, herbs and indoor plants.</p>
+    <div class="search-wrap">
+      <i class="bi bi-search"></i>
+      <input type="text" id="plantSearch" placeholder="Search plants… e.g. rose" aria-label="Search plants by name">
     </div>
   </header>
 
-  <!-- ============== ADD YOUR OWN PHOTO ============== -->
-  <section class="py-5 bg-light-green" id="upload">
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-lg-8">
-          <div class="card upload-card">
-            <div class="card-body p-4 p-md-5">
-              <h2 class="section-title text-center mb-2">Share Your Garden</h2>
-              <p class="text-center text-muted mb-4">Add a photo of your own plant — it'll appear in the gallery below, right on this device.</p>
-
-              <form id="uploadForm">
-                <label for="photoInput" class="upload-dropzone d-flex flex-column align-items-center justify-content-center text-center mb-3" id="dropzone">
-                  <i class="bi bi-cloud-arrow-up upload-icon"></i>
-                  <span class="fw-semibold">Click to choose a photo</span>
-                  <span class="text-muted small">or drag and drop it here (JPG / PNG)</span>
-                  <img id="previewImg" class="d-none" alt="Preview of selected photo">
-                </label>
-                <input class="d-none" type="file" id="photoInput" accept="image/*" required>
-
-                <div class="row g-3">
-                  <div class="col-md-7">
-                    <input type="text" class="form-control" id="plantName" placeholder="Plant name (e.g. Tomato)" required>
-                  </div>
-                  <div class="col-md-5">
-                    <input type="text" class="form-control" id="growerName" placeholder="Your name">
-                  </div>
-                  <div class="col-12">
-                    <textarea class="form-control" id="plantDesc" rows="2" maxlength="140" placeholder="Short description (e.g. Grew this from seed on my balcony!)"></textarea>
-                  </div>
-                </div>
-
-                <div class="text-center mt-4">
-                  <button type="submit" class="btn btn-hero btn-lg">
-                    <i class="bi bi-upload"></i> Add to Gallery
-                  </button>
-                </div>
-                <p id="uploadMsg" class="text-center small mt-3 mb-0"></p>
-              </form>
-            </div>
-          </div>
-        </div>
+  <section class="bg-light-green py-4">
+    <div class="container text-center">
+      <div class="d-flex flex-wrap justify-content-center gap-2" role="group" aria-label="Filter plants by category">
+        <button class="filter-btn active" data-category="all">All</button>
+        <button class="filter-btn" data-category="flowers">Flowers</button>
+        <button class="filter-btn" data-category="vegetables">Vegetables</button>
+        <button class="filter-btn" data-category="herbs">Herbs</button>
+        <button class="filter-btn" data-category="indoor">Indoor</button>
       </div>
     </div>
   </section>
 
-  <!-- ============== GALLERY GRID ============== -->
   <section class="py-5">
     <div class="container">
-      <h2 class="section-title text-center mb-3">From Our Community</h2>
-
-      <ul class="nav nav-pills justify-content-center mb-5" id="galleryFilters">
-        <li class="nav-item"><button class="nav-link active" data-filter="all">All</button></li>
-        <li class="nav-item"><button class="nav-link" data-filter="community">Community</button></li>
-        <li class="nav-item"><button class="nav-link" data-filter="mine">My Photos</button></li>
-      </ul>
-
-      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4" id="galleryGrid">
-        <!-- Seed/community photos + user-added photos are rendered here by main.js's gallery script -->
-      </div>
-
-      <p class="text-center text-muted mt-4 d-none" id="emptyState">No photos yet — be the first to add one above!</p>
+      <div class="row g-4" id="plantGrid"></div>
+      <p class="empty-state" id="emptyMsg">No plants match your search. Try another name.</p>
     </div>
   </section>
 
-  <!-- Lightbox modal for viewing a photo larger -->
-  <div class="modal fade" id="lightboxModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
+  <div class="modal fade plant-modal" id="plantModal" tabindex="-1" aria-labelledby="plantModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
-        <div class="modal-header border-0">
-          <h5 class="modal-title" id="lightboxTitle">Plant</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        <div class="modal-header">
+          <div>
+            <p class="modal-title" id="modalPlantName">—</p>
+            <p class="modal-sci" id="modalPlantSci">—</p>
+          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-body pt-0">
-          <img id="lightboxImg" src="" alt="" class="img-fluid rounded mb-3">
-          <p class="mb-1"><strong id="lightboxGrower"></strong></p>
-          <p class="text-muted mb-3" id="lightboxDesc"></p>
-          <button type="button" class="btn btn-sm btn-outline-danger d-none" id="lightboxDelete">
-            <i class="bi bi-trash"></i> Remove this photo
-          </button>
+        <div class="modal-body">
+          <div class="modal-section">
+            <h6>Growing tips</h6>
+            <ul id="modalTips"></ul>
+          </div>
+          <div class="modal-section">
+            <h6>Common problems</h6>
+            <ul id="modalProblems"></ul>
+          </div>
+          <div class="modal-section">
+            <h6>Best soil</h6>
+            <p id="modalSoil">—</p>
+          </div>
+          <a href="#" id="modalGoogleLink" class="modal-google-link" target="_blank" rel="noopener noreferrer">
+            <i class="bi bi-google"></i> Search for this plant on Google
+          </a>
         </div>
       </div>
     </div>
   </div>
 
-  <footer class="footer text-center text-white py-4">
-    <div class="container">
-      <p class="small mb-0">&copy; 2026 Green Haven.</p>
-    </div>
+  <footer class="footer text-center py-4">
+    <p class="footer-link mb-0">Green Haven — Plant Guide, compiled for study purposes</p>
   </footer>
 
-  <button id="backToTop" class="btn btn-hero back-to-top" title="Back to top">
+  <button class="back-to-top btn btn-hero" id="backToTop" aria-label="Back to top">
     <i class="bi bi-arrow-up"></i>
   </button>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="main.js"></script>
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+  
   <script>
-    document.addEventListener("DOMContentLoaded", function () {
+    // 1. DATA ACCESS DEFINITIONS (Local Database Store)
+    const plants = [
+      { id: 1, name: "Rose", category: "flowers", icon: "🌹", difficulty: 2, water: 2, sun: "Full Sun", season: "Late Spring – Summer", scientific: "Rosa spp.", tips: ["Prune in early spring to encourage new blooms", "Water at the base to keep foliage dry", "Feed monthly with a balanced fertiliser during the growing season"], problems: ["Black spot fungus on leaves", "Aphids clustering on new buds", "Powdery mildew in humid weather"], soil: "Well-drained loam enriched with compost, pH 6.0–6.5." },
+      { id: 2, name: "Sunflower", category: "flowers", icon: "🌻", difficulty: 1, water: 2, sun: "Full Sun", season: "Summer", scientific: "Helianthus annuus", tips: ["Sow seeds directly after the last frost", "Stake tall varieties against wind", "Deadhead spent blooms to prolong flowering"], problems: ["Birds and squirrels raiding seed heads", "Stem weakness in heavy wind", "Powdery mildew late in the season"], soil: "Loose, well-drained soil, pH 6.0–7.5." },
+      { id: 3, name: "Tulip", category: "flowers", icon: "🌷", difficulty: 1, water: 1, sun: "Full Sun", season: "Spring", scientific: "Tulipa gesneriana", tips: ["Plant bulbs in autumn, about 15cm deep", "Let foliage die back naturally after flowering", "Avoid overwatering while dormant"], problems: ["Bulb rot in soggy soil", "Squirrels digging up bulbs", "Tulip fire fungal disease"], soil: "Sandy, well-drained soil, pH 6.0–7.0." },
+      { id: 4, name: "Marigold", category: "flowers", icon: "🌼", difficulty: 1, water: 1, sun: "Full Sun", season: "Summer – Autumn", scientific: "Tagetes spp.", tips: ["Pinch growing tips for a bushier plant", "Deadhead regularly for continuous blooms", "Plant alongside vegetables to help deter pests"], problems: ["Spider mites in dry conditions", "Root rot from overwatering", "Slugs on young seedlings"], soil: "Average, well-drained garden soil." },
+      { id: 5, name: "Tomato", category: "vegetables", icon: "🍅", difficulty: 2, water: 3, sun: "Full Sun", season: "Summer", scientific: "Solanum lycopersicum", tips: ["Stake or cage plants early for support", "Water deeply and consistently at the roots", "Pinch off side suckers on indeterminate varieties"], problems: ["Blossom end rot from calcium imbalance", "Early blight spotting the lower leaves", "Hornworm caterpillars stripping foliage"], soil: "Rich, well-drained loam, pH 6.2–6.8." },
+      { id: 6, name: "Carrot", category: "vegetables", icon: "🥕", difficulty: 2, water: 2, sun: "Full Sun", season: "Spring – Autumn", scientific: "Daucus carota", tips: ["Sow seeds directly, thinning to 5cm apart", "Keep soil loose and stone-free for straight roots", "Water evenly to prevent the roots splitting"], problems: ["Forked roots in compacted soil", "Carrot fly larvae tunnelling into roots", "Green shoulders from sun exposure"], soil: "Deep, loose, sandy soil free of stones." },
+      { id: 7, name: "Lettuce", category: "vegetables", icon: "🥬", difficulty: 1, water: 2, sun: "Partial Sun", season: "Spring – Autumn", scientific: "Lactuca sativa", tips: ["Sow successively every two weeks for a steady harvest", "Harvest outer leaves to extend the plant's life", "Provide afternoon shade in hot weather"], problems: ["Bolting to seed in high heat", "Slugs and snails on tender leaves", "Downy mildew in damp conditions"], soil: "Moist, fertile soil rich in organic matter." },
+      { id: 8, name: "Basil", category: "herbs", icon: "🌿", difficulty: 1, water: 2, sun: "Full Sun", season: "Summer", scientific: "Ocimum basilicum", tips: ["Pinch off flower buds to keep leaves tender", "Harvest from the top to encourage bushiness", "Keep away from cold draughts"], problems: ["Fusarium wilt in poorly drained soil", "Aphids on new growth", "Leaves blacken after cold exposure"], soil: "Rich, moist, well-drained soil." },
+      { id: 9, name: "Mint", category: "herbs", icon: "🌱", difficulty: 1, water: 3, sun: "Partial Sun", season: "Spring – Autumn", scientific: "Mentha spp.", tips: ["Grow in a container to stop it spreading", "Keep soil consistently moist", "Trim regularly to keep growth compact"], problems: ["Rust fungus on leaf undersides", "Spreads aggressively via runners", "Spider mites in dry spells"], soil: "Moist, fertile soil; tolerates a wide pH range." },
+      { id: 10, name: "Rosemary", category: "herbs", icon: "🌿", difficulty: 2, water: 1, sun: "Full Sun", season: "Year-round (mild climates)", scientific: "Salvia rosmarinus", tips: ["Let the soil dry out between waterings", "Prune after flowering to maintain shape", "Grow in a free-draining pot if rainfall is heavy"], problems: ["Root rot from overwatering", "Powdery mildew in humid, still air", "Woody stems if left unpruned for years"], soil: "Sandy, free-draining soil, pH 6.0–7.0." },
+      { id: 11, name: "Snake Plant", category: "indoor", icon: "🪴", difficulty: 1, water: 1, sun: "Low Light", season: "Year-round", scientific: "Dracaena trifasciata", tips: ["Water only once the soil is completely dry", "Wipe leaves occasionally to keep pores dust-free", "Avoid cold draughts near windows"], problems: ["Root rot from overwatering", "Leaf splitting under low humidity stress", "Mealybugs at the leaf bases"], soil: "Well-drained cactus or succulent mix." },
+      { id: 12, name: "Pothos", category: "indoor", icon: "🪴", difficulty: 1, water: 2, sun: "Low Light", season: "Year-round", scientific: "Epipremnum aureum", tips: ["Let the top layer of soil dry before watering", "Trim trailing vines to encourage fullness", "Wipe leaves to help them absorb light"], problems: ["Yellowing leaves from overwatering", "Brown tips from low humidity", "Root rot in waterlogged pots"], soil: "Standard, well-drained potting mix." },
+      { id: 13, name: "Peace Lily", category: "indoor", icon: "🪴", difficulty: 2, water: 2, sun: "Partial Sun", season: "Year-round", scientific: "Spathiphyllum wallisii", tips: ["Keep soil lightly moist but never soggy", "Mist the leaves occasionally to raise humidity", "Watch for wilting as a clear watering cue"], problems: ["Brown leaf tips from tap water minerals", "Root rot in poorly drained pots", "Leaf yellowing from too much direct sun"], soil: "Rich, well-drained potting mix." }
+    ];
 
-      /* ---------- back-to-top button (same behavior as homepage) ---------- */
-      const backToTopBtn = document.getElementById("backToTop");
-      window.addEventListener("scroll", function () {
-        backToTopBtn.style.display = window.scrollY > 400 ? "flex" : "none";
-      });
-      backToTopBtn.addEventListener("click", function () {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      });
+    // Key lookup titles for user readability mapping
+    const catLabels = { flowers: "Flowers", vegetables: "Vegetables", herbs: "Herbs", indoor: "Indoor" };
+    const diffLabels = { 1: "Easy", 2: "Medium", 3: "Hard" };
+    const waterLabels = { 1: "Low", 2: "Medium", 3: "High" };
 
-      /* ==================================================================
-         GALLERY LOGIC
-         ==================================================================
-         - "community" photos are a fixed starter set (hosted images), so
-           the gallery never looks empty for a new visitor.
-         - "mine" photos are whatever the visitor uploads from their own
-           device. They're read into the page as base64 image data and
-           saved in the browser's localStorage, so they're still there
-           next time this visitor opens the page on this same device.
-           (They are NOT uploaded to a server — this is a front-end-only
-           demo gallery.)
-         - Each photo now also carries a short "desc" (description)
-           field, shown on its card and in the lightbox.
-      ================================================================== */
+    // 2. ELEMENT SELECTORS
+    const grid = document.getElementById("plantGrid");
+    const searchInput = document.getElementById("plantSearch");
+    const filterBtns = document.querySelectorAll(".filter-btn");
+    const emptyMsg = document.getElementById("emptyMsg");
+    const backToTopBtn = document.getElementById("backToTop");
+    let activeCategory = "all";
 
-      const STORAGE_KEY = "greenHavenGalleryPhotos";
-
-      const communityPhotos = [
-        { id: "c1", src: "https://images.unsplash.com/photo-1546094096-0df4bcaaa337?w=600", name: "Cherry Tomatoes", grower: "Sarah", desc: "Sweet little tomatoes grown on a sunny balcony.", type: "community" },
-        { id: "c2", src: "https://images.unsplash.com/photo-1500420254515-0faefa2dac99?w=600", name: "Basil", grower: "Marcus", desc: "Fresh basil for pasta night, ready in weeks.", type: "community" },
-        { id: "c3", src: "https://images.unsplash.com/photo-1496062031456-07b8f162a322?w=600", name: "Rose", grower: "Priya", desc: "A classic rose bush, blooming all summer long.", type: "community" },
-        { id: "c4", src: "https://images.unsplash.com/photo-1535189487909-a262ad10c165?w=600", name: "Parsley", grower: "Diego", desc: "Curly parsley that keeps coming back after every trim.", type: "community" },
-        { id: "c6", src: "https://images.unsplash.com/photo-1668975937560-ba3b1a4ac175?w=600", name: "Cactus", grower: "Tom", desc: "A hardy little cactus that barely needs watering.", type: "community" }
-      ];
-
-      function getMyPhotos() {
-        try {
-          return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-        } catch (e) {
-          return [];
-        }
+    // 3. UI GENERATORS
+    // Simple loop that returns dot indicator markup (e.g., Level 2 out of 3 displays 2 filled dots)
+    function createDotMeter(level, max = 3) {
+      let dotsHtml = "";
+      for (let i = 1; i <= max; i++) {
+        dotsHtml += `<span class="${i <= level ? 'filled' : ''}"></span>`;
       }
+      return `<span class="dot-meter">${dotsHtml}</span>`;
+    }
 
-      function saveMyPhotos(photos) {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(photos));
-      }
+    // Takes a plant object configuration and constructs its grid card layout
+    function buildPlantCard(plant) {
+      const col = document.createElement("div");
+      col.className = "col-12 col-sm-6 col-lg-4 col-xl-3 plant-item";
+      col.dataset.category = plant.category;
+      col.dataset.name = plant.name.toLowerCase();
 
-      function allPhotos() {
-        return [...getMyPhotos(), ...communityPhotos];
-      }
+      col.innerHTML = `
+        <div class="card plant-card h-100">
+          <div class="plant-thumb" aria-hidden="true">${plant.icon}</div>
+          <div class="card-body">
+            <div class="plant-category">${catLabels[plant.category]}</div>
+            <h3 class="card-title h5">${plant.name}</h3>
+            <div class="plant-stat">
+              <span class="stat-label"><i class="bi bi-bar-chart-steps"></i>Difficulty</span>
+              <span class="stat-value">${createDotMeter(plant.difficulty)} ${diffLabels[plant.difficulty]}</span>
+            </div>
+            <div class="plant-stat">
+              <span class="stat-label"><i class="bi bi-droplet-half"></i>Water</span>
+              <span class="stat-value">${createDotMeter(plant.water)} ${waterLabels[plant.water]}</span>
+            </div>
+            <div class="plant-stat">
+              <span class="stat-label"><i class="bi bi-sun"></i>Sunlight</span>
+              <span class="stat-value">${plant.sun}</span>
+            </div>
+            <div class="plant-stat">
+              <span class="stat-label"><i class="bi bi-calendar3"></i>Season</span>
+              <span class="stat-value">${plant.season}</span>
+            </div>
+            <button class="btn btn-outline-forest" data-plant-id="${plant.id}">Learn More</button>
+          </div>
+        </div>
+      `;
+      return col;
+    }
 
-      function escapeHtml(str) {
-        const div = document.createElement("div");
-        div.textContent = str;
-        return div.innerHTML;
-      }
+    // Render the dataset items to screen inside our structural viewport grid container
+    plants.forEach(plant => grid.appendChild(buildPlantCard(plant)));
 
-      function renderGallery(filter = "all") {
-        const grid = document.getElementById("galleryGrid");
-        const emptyState = document.getElementById("emptyState");
-        const photos = allPhotos().filter(p => filter === "all" || p.type === filter);
+    // 4. FILTERING PIPELINE CONTROLLER
+    function applyFilters() {
+      const searchKeyword = searchInput.value.trim().toLowerCase();
+      const plantCards = document.querySelectorAll(".plant-item");
+      let visibleCount = 0;
 
-        grid.innerHTML = "";
-        emptyState.classList.toggle("d-none", photos.length > 0);
+      plantCards.forEach(card => {
+        const matchesCategory = (activeCategory === "all") || (card.dataset.category === activeCategory);
+        const matchesSearch = card.dataset.name.includes(searchKeyword);
 
-        photos.forEach(photo => {
-          const col = document.createElement("div");
-          col.className = "col";
-          col.innerHTML = `
-            <div class="card gallery-card h-100" role="button" data-id="${photo.id}">
-              <div class="position-relative">
-                <img src="${photo.src}" class="card-img-top" alt="${escapeHtml(photo.name)}">
-                ${photo.type === "mine" ? '<span class="badge bg-warning text-dark position-absolute top-0 end-0 m-2">Mine</span>' : ''}
-              </div>
-              <div class="card-body">
-                <h5 class="card-title mb-1">${escapeHtml(photo.name)}</h5>
-                <p class="card-text small text-muted mb-1"><i class="bi bi-person-fill"></i> ${escapeHtml(photo.grower || "Anonymous")}</p>
-                ${photo.desc ? `<p class="card-text small card-desc mb-0">${escapeHtml(photo.desc)}</p>` : ''}
-              </div>
-            </div>`;
-          grid.appendChild(col);
-        });
-
-        // open lightbox on card click
-        grid.querySelectorAll(".gallery-card").forEach(card => {
-          card.addEventListener("click", () => openLightbox(card.dataset.id));
-        });
-      }
-
-      function openLightbox(id) {
-        const photo = allPhotos().find(p => p.id === id);
-        if (!photo) return;
-
-        document.getElementById("lightboxImg").src = photo.src;
-        document.getElementById("lightboxImg").alt = photo.name;
-        document.getElementById("lightboxTitle").textContent = photo.name;
-        document.getElementById("lightboxGrower").textContent = "Shared by " + (photo.grower || "Anonymous");
-        document.getElementById("lightboxDesc").textContent = photo.desc || "";
-
-        const deleteBtn = document.getElementById("lightboxDelete");
-        if (photo.type === "mine") {
-          deleteBtn.classList.remove("d-none");
-          deleteBtn.onclick = () => {
-            const remaining = getMyPhotos().filter(p => p.id !== id);
-            saveMyPhotos(remaining);
-            bootstrap.Modal.getInstance(document.getElementById("lightboxModal")).hide();
-            renderGallery(currentFilter);
-          };
+        if (matchesCategory && matchesSearch) {
+          card.style.display = ""; // Makes card visible
+          visibleCount++;
         } else {
-          deleteBtn.classList.add("d-none");
-          deleteBtn.onclick = null;
-        }
-
-        new bootstrap.Modal(document.getElementById("lightboxModal")).show();
-      }
-
-      /* ---------- filter pills ---------- */
-      let currentFilter = "all";
-      document.querySelectorAll("#galleryFilters .nav-link").forEach(btn => {
-        btn.addEventListener("click", () => {
-          document.querySelectorAll("#galleryFilters .nav-link").forEach(b => b.classList.remove("active"));
-          btn.classList.add("active");
-          currentFilter = btn.dataset.filter;
-          renderGallery(currentFilter);
-        });
-      });
-
-      /* ---------- upload form ---------- */
-      const photoInput = document.getElementById("photoInput");
-      const dropzone = document.getElementById("dropzone");
-      const previewImg = document.getElementById("previewImg");
-      const uploadForm = document.getElementById("uploadForm");
-      const uploadMsg = document.getElementById("uploadMsg");
-
-      dropzone.addEventListener("click", () => photoInput.click());
-
-      photoInput.addEventListener("change", () => {
-        const file = photoInput.files[0];
-        if (!file) return;
-        const reader = new FileReader();
-        reader.onload = e => {
-          previewImg.src = e.target.result;
-          previewImg.classList.remove("d-none");
-        };
-        reader.readAsDataURL(file);
-      });
-
-      // basic drag-and-drop support on the dropzone
-      ["dragover", "dragleave", "drop"].forEach(evt => {
-        dropzone.addEventListener(evt, e => e.preventDefault());
-      });
-      dropzone.addEventListener("dragover", () => dropzone.classList.add("dragover"));
-      dropzone.addEventListener("dragleave", () => dropzone.classList.remove("dragover"));
-      dropzone.addEventListener("drop", e => {
-        dropzone.classList.remove("dragover");
-        if (e.dataTransfer.files.length) {
-          photoInput.files = e.dataTransfer.files;
-          photoInput.dispatchEvent(new Event("change"));
+          card.style.display = "none"; // Hides card
         }
       });
 
-      uploadForm.addEventListener("submit", function (e) {
-        e.preventDefault();
-        const file = photoInput.files[0];
-        const name = document.getElementById("plantName").value.trim();
-        const grower = document.getElementById("growerName").value.trim();
-        const desc = document.getElementById("plantDesc").value.trim();
+      // Toggle text warning notice if results equal absolute zero
+      emptyMsg.style.display = (visibleCount === 0) ? "block" : "none";
+    }
 
-        if (!file) {
-          uploadMsg.textContent = "Please choose a photo first.";
-          uploadMsg.className = "text-center small mt-3 text-danger";
-          return;
-        }
+    // Search and Category Button Listeners
+    searchInput.addEventListener("input", applyFilters);
 
-        const reader = new FileReader();
-        reader.onload = e => {
-          const myPhotos = getMyPhotos();
-          myPhotos.unshift({
-            id: "mine-" + Date.now(),
-            src: e.target.result,
-            name: name || "My Plant",
-            grower: grower || "Me",
-            desc: desc,
-            type: "mine"
-          });
-          saveMyPhotos(myPhotos);
-
-          uploadForm.reset();
-          previewImg.classList.add("d-none");
-          uploadMsg.textContent = "Added! Scroll down to see it in the gallery.";
-          uploadMsg.className = "text-center small mt-3 text-success";
-
-          renderGallery(currentFilter);
-        };
-        reader.readAsDataURL(file);
+    filterBtns.forEach(btn => {
+      btn.addEventListener("click", () => {
+        filterBtns.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        activeCategory = btn.dataset.category;
+        applyFilters();
       });
+    });
 
-      /* ---------- initial render ---------- */
-      renderGallery("all");
+    // 5. MODAL DETAILED VIEW LAYER HANDLER
+    const bootstrapPlantModal = new bootstrap.Modal(document.getElementById("plantModal"));
+
+    grid.addEventListener("click", (event) => {
+      const targetButton = event.target.closest("[data-plant-id]");
+      if (!targetButton) return;
+
+      const selectedPlantId = Number(targetButton.dataset.plantId);
+      const foundPlant = plants.find(p => p.id === selectedPlantId);
+      if (!foundPlant) return;
+
+      // Mount properties directly to the text interface components
+      document.getElementById("modalPlantName").textContent = foundPlant.name;
+      document.getElementById("modalPlantSci").textContent = foundPlant.scientific;
+      document.getElementById("modalSoil").textContent = foundPlant.soil;
+
+      // Render standard mapped collection iterations into standard raw markup line lists safely
+      document.getElementById("modalTips").innerHTML = foundPlant.tips.map(tip => `<li>${tip}</li>`).join("");
+      document.getElementById("modalProblems").innerHTML = foundPlant.problems.map(prob => `<li>${prob}</li>`).join("");
+
+      // Build a Google search link for this plant using its common name
+      document.getElementById("modalGoogleLink").href = `https://www.google.com/search?q=${encodeURIComponent(foundPlant.name)}`;
+
+      bootstrapPlantModal.show();
+    });
+
+    // 6. GENERAL UTILITIES (Back To Top Toggle)
+    window.addEventListener("scroll", () => {
+      backToTopBtn.style.display = (window.scrollY > 400) ? "flex" : "none";
+    });
+    backToTopBtn.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
     });
   </script>
 </body>
