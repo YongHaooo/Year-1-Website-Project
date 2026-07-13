@@ -250,6 +250,23 @@
     .plant-modal .modal-section ul { margin: 0; padding-left: 1.15rem; }
     .plant-modal .modal-section li { margin-bottom: 0.3rem; }
 
+    /* Google search link at the bottom of the modal */
+    .modal-google-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--forest);
+      font-weight: 600;
+      text-decoration: none;
+      border-top: 1px solid rgba(27,67,50,0.15);
+      padding-top: 1rem;
+      width: 100%;
+    }
+    .modal-google-link:hover {
+      color: var(--marigold);
+      text-decoration: underline;
+    }
+
     /* FOOTER & ACCELERATOR UTILS */
     .footer { background-color: var(--forest); }
     .footer-link { color: var(--parchment); text-decoration: none; }
@@ -345,6 +362,9 @@
             <h6>Best soil</h6>
             <p id="modalSoil">—</p>
           </div>
+          <a href="#" id="modalGoogleLink" class="modal-google-link" target="_blank" rel="noopener noreferrer">
+            <i class="bi bi-google"></i> Search for this plant on Google
+          </a>
         </div>
       </div>
     </div>
@@ -493,6 +513,9 @@
       // Render standard mapped collection iterations into standard raw markup line lists safely
       document.getElementById("modalTips").innerHTML = foundPlant.tips.map(tip => `<li>${tip}</li>`).join("");
       document.getElementById("modalProblems").innerHTML = foundPlant.problems.map(prob => `<li>${prob}</li>`).join("");
+
+      // Build a Google search link for this plant using its common name
+      document.getElementById("modalGoogleLink").href = `https://www.google.com/search?q=${encodeURIComponent(foundPlant.name)}`;
 
       bootstrapPlantModal.show();
     });
