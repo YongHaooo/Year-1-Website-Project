@@ -58,6 +58,13 @@
     }
     .nav-login-icon:hover { color: var(--gh-gold); }
 
+    /* ---------- Breadcrumb ---------- */
+    .breadcrumb-row { background: #fff; border-bottom: 1px solid var(--gh-border); padding: .5rem 0; }
+    .breadcrumb { margin-bottom: 0; font-size: .85rem; }
+    .breadcrumb-item a { color: var(--gh-forest); text-decoration: none; }
+    .breadcrumb-item a:hover { text-decoration: underline; }
+    .breadcrumb-item.active { color: #888; }
+
     /* ---------- Sell bar (sits below the fixed navbar) ---------- */
     .sell-bar {
       background: var(--gh-forest);
@@ -115,7 +122,21 @@
     }
     .cat-pill:hover { border-color: var(--gh-forest); }
 
-    /* ---------- Listing cards ---------- */
+    /* ---------- Sort / toolbar row ---------- */
+    .toolbar-row { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .75rem; }
+    .results-badge { background: rgba(47,82,51,.1); color: var(--gh-forest-dark); font-weight: 600; }
+    #sortDropdownBtn {
+      border-color: var(--gh-border);
+      background: #fff;
+      color: var(--gh-forest-dark);
+      font-weight: 600;
+    }
+    #sortDropdownBtn:hover, #sortDropdownBtn:focus { border-color: var(--gh-forest); }
+    .dropdown-item.active, .dropdown-item:active {
+      background: var(--gh-forest);
+    }
+
+    /* ---------- Listing cards (Bootstrap .card, restyled) ---------- */
     .listing-card {
       border: 1px solid var(--gh-border);
       border-radius: .75rem;
@@ -123,10 +144,15 @@
       background: #fff;
       transition: box-shadow .15s ease, transform .15s ease;
       height: 100%;
+      cursor: pointer;
     }
     .listing-card:hover {
       box-shadow: 0 .75rem 1.5rem rgba(32,58,36,.10);
       transform: translateY(-2px);
+    }
+    .listing-card:focus-visible {
+      outline: 2px solid var(--gh-forest);
+      outline-offset: 2px;
     }
     .listing-seller {
       display: flex; align-items: center; gap: .5rem;
@@ -141,12 +167,9 @@
     .seller-name { font-weight: 600; color: #333; }
     .seller-time { color: var(--gh-forest); font-size: .78rem; }
     .listing-img-wrap { position: relative; }
-    .listing-img-wrap img { width: 100%; height: 190px; object-fit: cover; display: block; }
+    .listing-img-wrap .card-img-top { width: 100%; aspect-ratio: 1 / 1; height: auto; object-fit: cover; display: block; }
     .verified-badge {
       position: absolute; top: .5rem; right: .5rem;
-      background: rgba(32,58,36,.85);
-      color: #fff; font-size: .68rem; font-weight: 600;
-      padding: .25rem .55rem; border-radius: .35rem;
     }
     .listing-body { padding: .75rem .9rem .9rem; }
     .listing-title {
@@ -155,11 +178,36 @@
       overflow: hidden; min-height: 2.5em; margin-bottom: .35rem;
     }
     .listing-price { font-weight: 700; font-size: 1.05rem; color: var(--gh-forest-dark); }
-    .listing-condition { font-size: .8rem; color: #777; margin-bottom: .4rem; }
+    .listing-condition.badge { font-weight: 500; }
     .listing-likes { font-size: .82rem; color: #777; display: flex; align-items: center; gap: .3rem; }
+    .btn-view-details {
+      font-size: .78rem;
+      color: var(--gh-forest);
+      border-color: var(--gh-forest);
+    }
+    .btn-view-details:hover { background: var(--gh-forest); color: #fff; }
 
     .section-heading {
       font-weight: 700; color: var(--gh-forest-dark); margin: 0;
+    }
+
+    .no-results {
+      display: none;
+      text-align: center;
+      padding: 3rem 1rem;
+      color: #777;
+    }
+
+    /* ---------- Details modal ---------- */
+    #listingModal .modal-content { border-radius: .9rem; overflow: hidden; border: none; }
+    #listingModal .modal-header { border-bottom: 1px solid var(--gh-border); }
+    #listingModal .modal-img { width: 100%; max-height: 340px; object-fit: cover; border-radius: .6rem; }
+    #listingModal .modal-price { font-size: 1.6rem; font-weight: 700; color: var(--gh-forest-dark); }
+    #listingModal .list-group-item { border-color: var(--gh-border); font-size: .9rem; }
+    #listingModal .modal-seller-avatar {
+      width: 42px; height: 42px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-weight: 700; font-size: 1rem; flex-shrink: 0;
     }
   </style>
 </head>
@@ -212,7 +260,21 @@
   <div class="sell-bar">
     <div class="container d-flex justify-content-between align-items-center flex-wrap gap-2">
       <span class="sell-bar-label">Buy and sell plants, tools, and more with fellow gardeners.</span>
-      <button class="btn btn-sell px-3"><i class="bi bi-plus-lg me-1"></i>Sell an Item</button>
+      <button class="btn btn-sell px-3" data-bs-toggle="modal" data-bs-target="#sellModal"><i class="bi bi-plus-lg me-1"></i>Sell an Item</button>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       BREADCRUMB
+       ============================================================ -->
+  <div class="breadcrumb-row">
+    <div class="container">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Flea-market</li>
+        </ol>
+      </nav>
     </div>
   </div>
 
@@ -223,19 +285,19 @@
     <div class="container d-flex flex-column flex-md-row gap-2">
       <div class="input-group flex-grow-1">
         <span class="input-group-text bg-white border-end-0"><i class="bi bi-search"></i></span>
-        <input type="text" class="form-control border-start-0" placeholder="Search for plants, tools, pots...">
+        <input type="text" id="searchInput" class="form-control border-start-0" placeholder="Search for plants, tools, pots...">
       </div>
       <div class="input-group" style="max-width: 260px;">
         <span class="input-group-text bg-white border-end-0"><i class="bi bi-geo-alt"></i></span>
-        <select class="form-select border-start-0">
-          <option>All Locations</option>
-          <option>North</option>
-          <option>South</option>
-          <option>East</option>
-          <option>West</option>
+        <select id="locationSelect" class="form-select border-start-0">
+          <option value="all">All Locations</option>
+          <option value="North">North</option>
+          <option value="South">South</option>
+          <option value="East">East</option>
+          <option value="West">West</option>
         </select>
       </div>
-      <button class="btn btn-market-search px-4">Search</button>
+      <button id="searchBtn" class="btn btn-market-search px-4">Search</button>
     </div>
   </div>
 
@@ -243,14 +305,15 @@
        CATEGORY PILLS
        ============================================================ -->
   <div class="container category-row">
-    <div class="d-flex gap-2 overflow-auto pb-2">
-      <button class="cat-pill active">Succulents</button>
-      <button class="cat-pill">Houseplants</button>
-      <button class="cat-pill">Herbs &amp; Vegetables</button>
-      <button class="cat-pill">Pots &amp; Planters</button>
-      <button class="cat-pill">Tools &amp; Equipment</button>
-      <button class="cat-pill">Seeds</button>
-      <button class="cat-pill">Soil &amp; Compost</button>
+    <div class="d-flex gap-2 overflow-auto pb-2" id="categoryRow">
+      <button class="cat-pill active" data-category="all">All Categories</button>
+      <button class="cat-pill" data-category="Succulents">Succulents</button>
+      <button class="cat-pill" data-category="Houseplants">Houseplants</button>
+      <button class="cat-pill" data-category="Herbs &amp; Vegetables">Herbs &amp; Vegetables</button>
+      <button class="cat-pill" data-category="Pots &amp; Planters">Pots &amp; Planters</button>
+      <button class="cat-pill" data-category="Tools &amp; Equipment">Tools &amp; Equipment</button>
+      <button class="cat-pill" data-category="Seeds">Seeds</button>
+      <button class="cat-pill" data-category="Soil &amp; Compost">Soil &amp; Compost</button>
     </div>
   </div>
 
@@ -258,12 +321,37 @@
        LISTING GRID
        ============================================================ -->
   <div class="container py-4">
-    <h2 class="section-heading h5 mb-3">Fresh Listings</h2>
 
-    <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 g-3">
+    <div class="toolbar-row mb-3">
+      <div class="d-flex align-items-center gap-2">
+        <h2 class="section-heading h5 mb-0">Fresh Listings</h2>
+        <span class="badge results-badge rounded-pill" id="resultsCount">10 items</span>
+      </div>
 
-      <div class="col">
-        <div class="listing-card">
+      <div class="dropdown">
+        <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="sortDropdownBtn" data-bs-toggle="dropdown" aria-expanded="false">
+          <i class="bi bi-arrow-down-up me-1"></i><span id="sortLabel">Sort: Newest</span>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="sortDropdownBtn">
+          <li><a class="dropdown-item sort-option active" href="#" data-sort="newest">Newest First</a></li>
+          <li><a class="dropdown-item sort-option" href="#" data-sort="price-asc">Price: Low to High</a></li>
+          <li><a class="dropdown-item sort-option" href="#" data-sort="price-desc">Price: High to Low</a></li>
+          <li><a class="dropdown-item sort-option" href="#" data-sort="likes-desc">Most Liked</a></li>
+          <li><a class="dropdown-item sort-option" href="#" data-sort="title-asc">Title: A to Z</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="row row-cols-2 row-cols-sm-3 row-cols-md-3 row-cols-lg-4 g-3" id="listingGrid">
+
+      <div class="col listing-col" data-category="Succulents" data-location="North" data-price="12" data-likes="18" data-minutes="4" data-title="Assorted Succulent in Ceramic Pot, 3in">
+        <div class="card listing-card" tabindex="0" role="button"
+             data-title="Assorted Succulent in Ceramic Pot, 3in"
+             data-price="S$12" data-category="Succulents" data-location="North"
+             data-condition="Brand new" data-likes="18" data-time="4 minutes ago"
+             data-seller="mossygarden" data-avatar-bg="#2f5233" data-avatar-initials="MG"
+             data-img="https://images.unsplash.com/photo-1567440140538-b4ca8765ce75?w=500"
+             data-desc="A cheerful little trio of assorted succulents planted in a glazed ceramic pot. Low-maintenance and perfect for a sunny windowsill or desk. Comes with drainage hole and saucer.">
           <div class="listing-seller">
             <div class="seller-avatar" style="background:#2f5233;">MG</div>
             <div>
@@ -272,20 +360,31 @@
             </div>
           </div>
           <div class="listing-img-wrap">
-            <img src="https://images.unsplash.com/photo-1567440140538-b4ca8765ce75?w=500" alt="Succulent in ceramic pot">
-            <span class="verified-badge">Verified Seller</span>
+            <img class="card-img-top" src="https://images.unsplash.com/photo-1567440140538-b4ca8765ce75?w=500" alt="Succulent in ceramic pot">
+            <span class="badge bg-dark bg-opacity-75 verified-badge"><i class="bi bi-patch-check-fill"></i> Verified Seller</span>
           </div>
-          <div class="listing-body">
-            <div class="listing-title">Assorted Succulent in Ceramic Pot, 3in</div>
-            <div class="listing-price">S$12</div>
-            <div class="listing-condition">Brand new</div>
-            <div class="listing-likes"><i class="bi bi-heart"></i> 18</div>
+          <div class="card-body listing-body">
+            <div class="listing-title card-title">Assorted Succulent in Ceramic Pot, 3in</div>
+            <div class="d-flex justify-content-between align-items-center mb-1">
+              <span class="listing-price">S$12</span>
+              <span class="badge bg-light text-dark border listing-condition">Brand new</span>
+            </div>
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="listing-likes"><i class="bi bi-heart"></i> 18</div>
+              <button type="button" class="btn btn-outline-secondary btn-sm btn-view-details">View details</button>
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="col">
-        <div class="listing-card">
+      <div class="col listing-col" data-category="Houseplants" data-location="East" data-price="45" data-likes="132" data-minutes="9" data-title="Monstera Deliciosa in Terracotta Pot">
+        <div class="card listing-card" tabindex="0" role="button"
+             data-title="Monstera Deliciosa in Terracotta Pot"
+             data-price="S$45" data-category="Houseplants" data-location="East"
+             data-condition="Like new" data-likes="132" data-time="9 minutes ago"
+             data-seller="the.plant.pot" data-avatar-bg="#d9a441" data-avatar-initials="TP"
+             data-img="https://images.unsplash.com/photo-1762755647813-017e128a4ba0?w=500"
+             data-desc="Healthy Monstera deliciosa with several fenestrated leaves, potted in a classic terracotta planter. Thriving in indirect light. Minor cosmetic scuff on the pot rim, plant itself is in great shape.">
           <div class="listing-seller">
             <div class="seller-avatar" style="background:#d9a441;">TP</div>
             <div>
@@ -294,20 +393,31 @@
             </div>
           </div>
           <div class="listing-img-wrap">
-            <img src="https://images.unsplash.com/photo-1762755647813-017e128a4ba0?w=500" alt="Monstera in terracotta pot">
-            <span class="verified-badge">Verified Seller</span>
+            <img class="card-img-top" src="https://images.unsplash.com/photo-1762755647813-017e128a4ba0?w=500" alt="Monstera in terracotta pot">
+            <span class="badge bg-dark bg-opacity-75 verified-badge"><i class="bi bi-patch-check-fill"></i> Verified Seller</span>
           </div>
-          <div class="listing-body">
-            <div class="listing-title">Monstera Deliciosa in Terracotta Pot</div>
-            <div class="listing-price">S$45</div>
-            <div class="listing-condition">Like new</div>
-            <div class="listing-likes"><i class="bi bi-heart"></i> 132</div>
+          <div class="card-body listing-body">
+            <div class="listing-title card-title">Monstera Deliciosa in Terracotta Pot</div>
+            <div class="d-flex justify-content-between align-items-center mb-1">
+              <span class="listing-price">S$45</span>
+              <span class="badge bg-light text-dark border listing-condition">Like new</span>
+            </div>
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="listing-likes"><i class="bi bi-heart"></i> 132</div>
+              <button type="button" class="btn btn-outline-secondary btn-sm btn-view-details">View details</button>
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="col">
-        <div class="listing-card">
+      <div class="col listing-col" data-category="Houseplants" data-location="South" data-price="60" data-likes="47" data-minutes="12" data-title="Bundle of 5 Assorted Potted Plants">
+        <div class="card listing-card" tabindex="0" role="button"
+             data-title="Bundle of 5 Assorted Potted Plants"
+             data-price="S$60" data-category="Houseplants" data-location="South"
+             data-condition="Brand new" data-likes="47" data-time="12 minutes ago"
+             data-seller="rootsandkeep" data-avatar-bg="#7a5c3e" data-avatar-initials="RK"
+             data-img="https://images.unsplash.com/photo-1520157646479-22f25713523d?w=500"
+             data-desc="A ready-made bundle of 5 assorted potted houseplants, great for filling out a room or starting a collection. Mix of easy-care varieties suitable for beginners. All pots included.">
           <div class="listing-seller">
             <div class="seller-avatar" style="background:#7a5c3e;">RK</div>
             <div>
@@ -316,20 +426,31 @@
             </div>
           </div>
           <div class="listing-img-wrap">
-            <img src="https://images.unsplash.com/photo-1520157646479-22f25713523d?w=500" alt="Assorted potted plants">
-            <span class="verified-badge">Verified Seller</span>
+            <img class="card-img-top" src="https://images.unsplash.com/photo-1520157646479-22f25713523d?w=500" alt="Assorted potted plants">
+            <span class="badge bg-dark bg-opacity-75 verified-badge"><i class="bi bi-patch-check-fill"></i> Verified Seller</span>
           </div>
-          <div class="listing-body">
-            <div class="listing-title">Bundle of 5 Assorted Potted Plants</div>
-            <div class="listing-price">S$60</div>
-            <div class="listing-condition">Brand new</div>
-            <div class="listing-likes"><i class="bi bi-heart"></i> 47</div>
+          <div class="card-body listing-body">
+            <div class="listing-title card-title">Bundle of 5 Assorted Potted Plants</div>
+            <div class="d-flex justify-content-between align-items-center mb-1">
+              <span class="listing-price">S$60</span>
+              <span class="badge bg-light text-dark border listing-condition">Brand new</span>
+            </div>
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="listing-likes"><i class="bi bi-heart"></i> 47</div>
+              <button type="button" class="btn btn-outline-secondary btn-sm btn-view-details">View details</button>
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="col">
-        <div class="listing-card">
+      <div class="col listing-col" data-category="Seeds" data-location="West" data-price="8" data-likes="22" data-minutes="15" data-title="Sunflower Seedlings, Pack of 6">
+        <div class="card listing-card" tabindex="0" role="button"
+             data-title="Sunflower Seedlings, Pack of 6"
+             data-price="S$8" data-category="Seeds" data-location="West"
+             data-condition="Brand new" data-likes="22" data-time="15 minutes ago"
+             data-seller="sunnybackyard" data-avatar-bg="#4c7a4f" data-avatar-initials="SB"
+             data-img="https://images.unsplash.com/photo-1470509037663-253afd7f0f51?w=500"
+             data-desc="Six young sunflower seedlings, hardened off and ready to transplant into the garden or a large container. Grown from open-pollinated seed, no pesticides used.">
           <div class="listing-seller">
             <div class="seller-avatar" style="background:#4c7a4f;">SB</div>
             <div>
@@ -338,20 +459,31 @@
             </div>
           </div>
           <div class="listing-img-wrap">
-            <img src="https://images.unsplash.com/photo-1470509037663-253afd7f0f51?w=500" alt="Sunflower seedling">
-            <span class="verified-badge">Verified Seller</span>
+            <img class="card-img-top" src="https://images.unsplash.com/photo-1470509037663-253afd7f0f51?w=500" alt="Sunflower seedling">
+            <span class="badge bg-dark bg-opacity-75 verified-badge"><i class="bi bi-patch-check-fill"></i> Verified Seller</span>
           </div>
-          <div class="listing-body">
-            <div class="listing-title">Sunflower Seedlings, Pack of 6</div>
-            <div class="listing-price">S$8</div>
-            <div class="listing-condition">Brand new</div>
-            <div class="listing-likes"><i class="bi bi-heart"></i> 22</div>
+          <div class="card-body listing-body">
+            <div class="listing-title card-title">Sunflower Seedlings, Pack of 6</div>
+            <div class="d-flex justify-content-between align-items-center mb-1">
+              <span class="listing-price">S$8</span>
+              <span class="badge bg-light text-dark border listing-condition">Brand new</span>
+            </div>
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="listing-likes"><i class="bi bi-heart"></i> 22</div>
+              <button type="button" class="btn btn-outline-secondary btn-sm btn-view-details">View details</button>
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="col">
-        <div class="listing-card">
+      <div class="col listing-col" data-category="Herbs &amp; Vegetables" data-location="North" data-price="16" data-likes="65" data-minutes="20" data-title="Potted Lavender, Fully Bloomed">
+        <div class="card listing-card" tabindex="0" role="button"
+             data-title="Potted Lavender, Fully Bloomed"
+             data-price="S$16" data-category="Herbs &amp; Vegetables" data-location="North"
+             data-condition="Like new" data-likes="65" data-time="20 minutes ago"
+             data-seller="lavenderfields" data-avatar-bg="#8a4f7d" data-avatar-initials="LF"
+             data-img="https://images.unsplash.com/photo-1466781783364-36c955e42a7f?w=500"
+             data-desc="Fully bloomed lavender plant in its pot, fragrant and buzzing with pollinators. Great for a sunny patio or as a fresh cut-flower source. Watered lightly, needs well-drained soil.">
           <div class="listing-seller">
             <div class="seller-avatar" style="background:#8a4f7d;">LF</div>
             <div>
@@ -360,20 +492,31 @@
             </div>
           </div>
           <div class="listing-img-wrap">
-            <img src="https://images.unsplash.com/photo-1466781783364-36c955e42a7f?w=500" alt="Lavender plant">
-            <span class="verified-badge">Verified Seller</span>
+            <img class="card-img-top" src="https://images.unsplash.com/photo-1466781783364-36c955e42a7f?w=500" alt="Lavender plant">
+            <span class="badge bg-dark bg-opacity-75 verified-badge"><i class="bi bi-patch-check-fill"></i> Verified Seller</span>
           </div>
-          <div class="listing-body">
-            <div class="listing-title">Potted Lavender, Fully Bloomed</div>
-            <div class="listing-price">S$16</div>
-            <div class="listing-condition">Like new</div>
-            <div class="listing-likes"><i class="bi bi-heart"></i> 65</div>
+          <div class="card-body listing-body">
+            <div class="listing-title card-title">Potted Lavender, Fully Bloomed</div>
+            <div class="d-flex justify-content-between align-items-center mb-1">
+              <span class="listing-price">S$16</span>
+              <span class="badge bg-light text-dark border listing-condition">Like new</span>
+            </div>
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="listing-likes"><i class="bi bi-heart"></i> 65</div>
+              <button type="button" class="btn btn-outline-secondary btn-sm btn-view-details">View details</button>
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="col">
-        <div class="listing-card">
+      <div class="col listing-col" data-category="Succulents" data-location="South" data-price="20" data-likes="9" data-minutes="60" data-title="Mini Succulent Starter Pack of 4">
+        <div class="card listing-card" tabindex="0" role="button"
+             data-title="Mini Succulent Starter Pack of 4"
+             data-price="S$20" data-category="Succulents" data-location="South"
+             data-condition="Brand new" data-likes="9" data-time="1 hour ago"
+             data-seller="mossygarden" data-avatar-bg="#2f5233" data-avatar-initials="MG"
+             data-img="https://images.unsplash.com/photo-1567440140538-b4ca8765ce75?w=500"
+             data-desc="Four small starter succulents in 2-inch nursery pots, ideal for beginners or building a mini succulent garden. Easy to repot into your own containers.">
           <div class="listing-seller">
             <div class="seller-avatar" style="background:#2f5233;">MG</div>
             <div>
@@ -382,20 +525,31 @@
             </div>
           </div>
           <div class="listing-img-wrap">
-            <img src="https://images.unsplash.com/photo-1567440140538-b4ca8765ce75?w=500" alt="Small succulent pack">
-            <span class="verified-badge">Verified Seller</span>
+            <img class="card-img-top" src="https://images.unsplash.com/photo-1567440140538-b4ca8765ce75?w=500" alt="Small succulent pack">
+            <span class="badge bg-dark bg-opacity-75 verified-badge"><i class="bi bi-patch-check-fill"></i> Verified Seller</span>
           </div>
-          <div class="listing-body">
-            <div class="listing-title">Mini Succulent Starter Pack of 4</div>
-            <div class="listing-price">S$20</div>
-            <div class="listing-condition">Brand new</div>
-            <div class="listing-likes"><i class="bi bi-heart"></i> 9</div>
+          <div class="card-body listing-body">
+            <div class="listing-title card-title">Mini Succulent Starter Pack of 4</div>
+            <div class="d-flex justify-content-between align-items-center mb-1">
+              <span class="listing-price">S$20</span>
+              <span class="badge bg-light text-dark border listing-condition">Brand new</span>
+            </div>
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="listing-likes"><i class="bi bi-heart"></i> 9</div>
+              <button type="button" class="btn btn-outline-secondary btn-sm btn-view-details">View details</button>
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="col">
-        <div class="listing-card">
+      <div class="col listing-col" data-category="Pots &amp; Planters" data-location="East" data-price="35" data-likes="51" data-minutes="120" data-title="Set of 6 Terracotta Planters, Mixed Sizes">
+        <div class="card listing-card" tabindex="0" role="button"
+             data-title="Set of 6 Terracotta Planters, Mixed Sizes"
+             data-price="S$35" data-category="Pots &amp; Planters" data-location="East"
+             data-condition="Brand new" data-likes="51" data-time="2 hours ago"
+             data-seller="terracottaco" data-avatar-bg="#c0622b" data-avatar-initials="TC"
+             data-img="https://images.unsplash.com/photo-1520157646479-22f25713523d?w=500"
+             data-desc="Set of 6 unglazed terracotta planters in mixed sizes, from 4in to 10in. Classic breathable clay, great drainage. Perfect for repotting a whole shelf of plants at once.">
           <div class="listing-seller">
             <div class="seller-avatar" style="background:#c0622b;">TC</div>
             <div>
@@ -404,20 +558,31 @@
             </div>
           </div>
           <div class="listing-img-wrap">
-            <img src="https://images.unsplash.com/photo-1520157646479-22f25713523d?w=500" alt="Plant stall pots">
-            <span class="verified-badge">Verified Seller</span>
+            <img class="card-img-top" src="https://images.unsplash.com/photo-1520157646479-22f25713523d?w=500" alt="Plant stall pots">
+            <span class="badge bg-dark bg-opacity-75 verified-badge"><i class="bi bi-patch-check-fill"></i> Verified Seller</span>
           </div>
-          <div class="listing-body">
-            <div class="listing-title">Set of 6 Terracotta Planters, Mixed Sizes</div>
-            <div class="listing-price">S$35</div>
-            <div class="listing-condition">Brand new</div>
-            <div class="listing-likes"><i class="bi bi-heart"></i> 51</div>
+          <div class="card-body listing-body">
+            <div class="listing-title card-title">Set of 6 Terracotta Planters, Mixed Sizes</div>
+            <div class="d-flex justify-content-between align-items-center mb-1">
+              <span class="listing-price">S$35</span>
+              <span class="badge bg-light text-dark border listing-condition">Brand new</span>
+            </div>
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="listing-likes"><i class="bi bi-heart"></i> 51</div>
+              <button type="button" class="btn btn-outline-secondary btn-sm btn-view-details">View details</button>
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="col">
-        <div class="listing-card">
+      <div class="col listing-col" data-category="Houseplants" data-location="West" data-price="70" data-likes="88" data-minutes="180" data-title="Large Monstera, Well-Established Roots">
+        <div class="card listing-card" tabindex="0" role="button"
+             data-title="Large Monstera, Well-Established Roots"
+             data-price="S$70" data-category="Houseplants" data-location="West"
+             data-condition="Like new" data-likes="88" data-time="3 hours ago"
+             data-seller="sunnybackyard" data-avatar-bg="#4c7a4f" data-avatar-initials="SB"
+             data-img="https://images.unsplash.com/photo-1762755647813-017e128a4ba0?w=500"
+             data-desc="Large, mature Monstera with a well-established root system in a nursery pot. Multiple big fenestrated leaves and a new leaf unfurling. Will need a bigger decorative pot soon.">
           <div class="listing-seller">
             <div class="seller-avatar" style="background:#4c7a4f;">SB</div>
             <div>
@@ -426,20 +591,31 @@
             </div>
           </div>
           <div class="listing-img-wrap">
-            <img src="https://images.unsplash.com/photo-1762755647813-017e128a4ba0?w=500" alt="Monstera plant second">
-            <span class="verified-badge">Verified Seller</span>
+            <img class="card-img-top" src="https://images.unsplash.com/photo-1762755647813-017e128a4ba0?w=500" alt="Monstera plant second">
+            <span class="badge bg-dark bg-opacity-75 verified-badge"><i class="bi bi-patch-check-fill"></i> Verified Seller</span>
           </div>
-          <div class="listing-body">
-            <div class="listing-title">Large Monstera, Well-Established Roots</div>
-            <div class="listing-price">S$70</div>
-            <div class="listing-condition">Like new</div>
-            <div class="listing-likes"><i class="bi bi-heart"></i> 88</div>
+          <div class="card-body listing-body">
+            <div class="listing-title card-title">Large Monstera, Well-Established Roots</div>
+            <div class="d-flex justify-content-between align-items-center mb-1">
+              <span class="listing-price">S$70</span>
+              <span class="badge bg-light text-dark border listing-condition">Like new</span>
+            </div>
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="listing-likes"><i class="bi bi-heart"></i> 88</div>
+              <button type="button" class="btn btn-outline-secondary btn-sm btn-view-details">View details</button>
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="col">
-        <div class="listing-card">
+      <div class="col listing-col" data-category="Herbs &amp; Vegetables" data-location="South" data-price="14" data-likes="6" data-minutes="300" data-title="Dwarf Sunflower Pot, Great for Balconies">
+        <div class="card listing-card" tabindex="0" role="button"
+             data-title="Dwarf Sunflower Pot, Great for Balconies"
+             data-price="S$14" data-category="Herbs &amp; Vegetables" data-location="South"
+             data-condition="Brand new" data-likes="6" data-time="5 hours ago"
+             data-seller="lavenderfields" data-avatar-bg="#8a4f7d" data-avatar-initials="LF"
+             data-img="https://images.unsplash.com/photo-1470509037663-253afd7f0f51?w=500"
+             data-desc="Compact dwarf sunflower already potted and blooming, ideal for a balcony rail or small patio table. Stays under 40cm tall, needs full sun.">
           <div class="listing-seller">
             <div class="seller-avatar" style="background:#8a4f7d;">LF</div>
             <div>
@@ -448,20 +624,31 @@
             </div>
           </div>
           <div class="listing-img-wrap">
-            <img src="https://images.unsplash.com/photo-1470509037663-253afd7f0f51?w=500" alt="Sunflower bunch">
-            <span class="verified-badge">Verified Seller</span>
+            <img class="card-img-top" src="https://images.unsplash.com/photo-1470509037663-253afd7f0f51?w=500" alt="Sunflower bunch">
+            <span class="badge bg-dark bg-opacity-75 verified-badge"><i class="bi bi-patch-check-fill"></i> Verified Seller</span>
           </div>
-          <div class="listing-body">
-            <div class="listing-title">Dwarf Sunflower Pot, Great for Balconies</div>
-            <div class="listing-price">S$14</div>
-            <div class="listing-condition">Brand new</div>
-            <div class="listing-likes"><i class="bi bi-heart"></i> 6</div>
+          <div class="card-body listing-body">
+            <div class="listing-title card-title">Dwarf Sunflower Pot, Great for Balconies</div>
+            <div class="d-flex justify-content-between align-items-center mb-1">
+              <span class="listing-price">S$14</span>
+              <span class="badge bg-light text-dark border listing-condition">Brand new</span>
+            </div>
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="listing-likes"><i class="bi bi-heart"></i> 6</div>
+              <button type="button" class="btn btn-outline-secondary btn-sm btn-view-details">View details</button>
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="col">
-        <div class="listing-card">
+      <div class="col listing-col" data-category="Herbs &amp; Vegetables" data-location="North" data-price="40" data-likes="30" data-minutes="1440" data-title="Lavender Bundle, 3 Pots">
+        <div class="card listing-card" tabindex="0" role="button"
+             data-title="Lavender Bundle, 3 Pots"
+             data-price="S$40" data-category="Herbs &amp; Vegetables" data-location="North"
+             data-condition="Brand new" data-likes="30" data-time="1 day ago"
+             data-seller="rootsandkeep" data-avatar-bg="#7a5c3e" data-avatar-initials="RK"
+             data-img="https://images.unsplash.com/photo-1466781783364-36c955e42a7f?w=500"
+             data-desc="Bundle of 3 potted lavender plants, great for lining a garden path or bringing pollinators to a balcony. All three are healthy and budding.">
           <div class="listing-seller">
             <div class="seller-avatar" style="background:#7a5c3e;">RK</div>
             <div>
@@ -470,30 +657,503 @@
             </div>
           </div>
           <div class="listing-img-wrap">
-            <img src="https://images.unsplash.com/photo-1466781783364-36c955e42a7f?w=500" alt="Lavender bundle">
-            <span class="verified-badge">Verified Seller</span>
+            <img class="card-img-top" src="https://images.unsplash.com/photo-1466781783364-36c955e42a7f?w=500" alt="Lavender bundle">
+            <span class="badge bg-dark bg-opacity-75 verified-badge"><i class="bi bi-patch-check-fill"></i> Verified Seller</span>
           </div>
-          <div class="listing-body">
-            <div class="listing-title">Lavender Bundle, 3 Pots</div>
-            <div class="listing-price">S$40</div>
-            <div class="listing-condition">Brand new</div>
-            <div class="listing-likes"><i class="bi bi-heart"></i> 30</div>
+          <div class="card-body listing-body">
+            <div class="listing-title card-title">Lavender Bundle, 3 Pots</div>
+            <div class="d-flex justify-content-between align-items-center mb-1">
+              <span class="listing-price">S$40</span>
+              <span class="badge bg-light text-dark border listing-condition">Brand new</span>
+            </div>
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="listing-likes"><i class="bi bi-heart"></i> 30</div>
+              <button type="button" class="btn btn-outline-secondary btn-sm btn-view-details">View details</button>
+            </div>
           </div>
         </div>
       </div>
 
     </div>
+
+    <!-- Shown when filters/search match nothing -->
+    <div class="no-results" id="noResults">
+      <i class="bi bi-emoji-frown fs-1 d-block mb-2"></i>
+      No listings match your filters. Try clearing your search or picking a different category.
+    </div>
+
+    <!-- ============================================================
+         PAGINATION (cosmetic — dataset is a single page of results)
+         ============================================================ -->
+    <nav aria-label="Listing pages" class="mt-4">
+      <ul class="pagination justify-content-center">
+        <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1">Previous</a></li>
+        <li class="page-item active" aria-current="page"><a class="page-link" href="#">1</a></li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+      </ul>
+    </nav>
+  </div>
+
+  <!-- ============================================================
+       LISTING DETAILS MODAL — populated dynamically from the
+       data-* attributes on whichever card was clicked.
+       ============================================================ -->
+  <div class="modal fade" id="listingModal" tabindex="-1" aria-labelledby="listingModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="listingModalLabel">Listing details</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row g-4">
+            <div class="col-md-6">
+              <img id="modalImg" src="" alt="" class="modal-img">
+            </div>
+            <div class="col-md-6">
+              <div class="d-flex justify-content-between align-items-start mb-2">
+                <span class="badge bg-secondary" id="modalCategory">Category</span>
+                <span class="badge bg-light text-dark border" id="modalCondition">Condition</span>
+              </div>
+              <h4 id="modalTitle" class="mb-2">Listing title</h4>
+              <div class="modal-price mb-3" id="modalPrice">S$0</div>
+
+              <ul class="list-group list-group-flush mb-3">
+                <li class="list-group-item d-flex align-items-center gap-2">
+                  <div class="modal-seller-avatar" id="modalAvatar">XX</div>
+                  <div>
+                    <div class="fw-semibold" id="modalSeller">seller</div>
+                    <div class="text-muted small" id="modalTime">posted recently</div>
+                  </div>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                  <span><i class="bi bi-geo-alt me-1"></i>Location</span>
+                  <span id="modalLocation" class="fw-semibold">—</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                  <span><i class="bi bi-heart me-1"></i>Likes</span>
+                  <span id="modalLikes" class="fw-semibold">0</span>
+                </li>
+              </ul>
+
+              <p id="modalDesc" class="text-muted"></p>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-sell"><i class="bi bi-heart me-1"></i>Save</button>
+          <button type="button" class="btn" style="background:var(--gh-forest); color:#fff;"><i class="bi bi-chat-dots me-1"></i>Message Seller</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       SELL AN ITEM MODAL — posts a new listing straight into the
+       grid (client-side only), reusing the same card markup, data
+       attributes, filters, sort and details-modal wiring.
+       ============================================================ -->
+  <div class="modal fade" id="sellModal" tabindex="-1" aria-labelledby="sellModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <form id="sellForm" novalidate>
+          <div class="modal-header">
+            <h5 class="modal-title" id="sellModalLabel"><i class="bi bi-plus-lg me-2"></i>Sell an Item</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="row g-3">
+              <div class="col-12">
+                <label for="sellTitle" class="form-label">Item title</label>
+                <input type="text" class="form-control" id="sellTitle" placeholder="e.g. Potted Peace Lily, 8in" required maxlength="80">
+                <div class="invalid-feedback">Please give your listing a title.</div>
+              </div>
+
+              <div class="col-sm-6">
+                <label for="sellPrice" class="form-label">Price (S$)</label>
+                <div class="input-group">
+                  <span class="input-group-text">S$</span>
+                  <input type="number" class="form-control" id="sellPrice" min="0" step="0.01" placeholder="0.00" required>
+                  <div class="invalid-feedback">Enter a valid price.</div>
+                </div>
+              </div>
+
+              <div class="col-sm-6">
+                <label for="sellCondition" class="form-label">Condition</label>
+                <select class="form-select" id="sellCondition" required>
+                  <option value="Brand new">Brand new</option>
+                  <option value="Like new">Like new</option>
+                  <option value="Good">Good</option>
+                  <option value="Well used">Well used</option>
+                </select>
+              </div>
+
+              <div class="col-sm-6">
+                <label for="sellCategory" class="form-label">Category</label>
+                <select class="form-select" id="sellCategory" required>
+                  <option value="Succulents">Succulents</option>
+                  <option value="Houseplants">Houseplants</option>
+                  <option value="Herbs &amp; Vegetables">Herbs &amp; Vegetables</option>
+                  <option value="Pots &amp; Planters">Pots &amp; Planters</option>
+                  <option value="Tools &amp; Equipment">Tools &amp; Equipment</option>
+                  <option value="Seeds">Seeds</option>
+                  <option value="Soil &amp; Compost">Soil &amp; Compost</option>
+                </select>
+              </div>
+
+              <div class="col-sm-6">
+                <label for="sellLocation" class="form-label">Location</label>
+                <select class="form-select" id="sellLocation" required>
+                  <option value="North">North</option>
+                  <option value="South">South</option>
+                  <option value="East">East</option>
+                  <option value="West">West</option>
+                </select>
+              </div>
+
+              <div class="col-12">
+                <label class="form-label">Photo <span class="text-muted fw-normal">(optional)</span></label>
+
+                <div class="d-flex align-items-start gap-3 flex-wrap">
+                  <div class="flex-grow-1" style="min-width: 220px;">
+                    <input type="file" class="form-control" id="sellImageFile" accept="image/*">
+                    <div class="form-text mb-2">Upload a photo from your device, or paste a URL below. Leave both blank to use a placeholder.</div>
+                    <input type="url" class="form-control" id="sellImage" placeholder="https://...">
+                  </div>
+
+                  <div class="position-relative" id="sellImagePreviewWrap" style="display:none;">
+                    <img id="sellImagePreview" src="" alt="Photo preview" class="rounded border" style="width:96px; height:96px; object-fit:cover;">
+                    <button type="button" class="btn btn-sm btn-danger rounded-circle position-absolute top-0 start-100 translate-middle p-0" id="sellImageClear" style="width:22px; height:22px; line-height:1;" aria-label="Remove photo">
+                      <i class="bi bi-x"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-12">
+                <label for="sellDesc" class="form-label">Description</label>
+                <textarea class="form-control" id="sellDesc" rows="3" placeholder="Tell buyers about your item..." required maxlength="400"></textarea>
+                <div class="invalid-feedback">Add a short description.</div>
+              </div>
+
+              <div class="col-12">
+                <label for="sellSeller" class="form-label">Your seller name</label>
+                <input type="text" class="form-control" id="sellSeller" placeholder="e.g. yourgardenname" required maxlength="30">
+                <div class="invalid-feedback">Let buyers know who's selling.</div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-sell"><i class="bi bi-check-lg me-1"></i>Post Listing</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast confirming a successful post -->
+  <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1080;">
+    <div id="sellToast" class="toast align-items-center text-white border-0" style="background: var(--gh-forest);" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="d-flex">
+        <div class="toast-body"><i class="bi bi-check-circle-fill me-2"></i>Your listing is live!</div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+    </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script>
-    // Simple visual toggle for category pills (no filtering logic wired up yet)
-    document.querySelectorAll('.cat-pill').forEach(pill => {
-      pill.addEventListener('click', () => {
-        document.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('active'));
-        pill.classList.add('active');
+    (function () {
+      const grid = document.getElementById('listingGrid');
+      let cols = Array.from(grid.querySelectorAll('.listing-col'));
+      const noResults = document.getElementById('noResults');
+      const resultsCount = document.getElementById('resultsCount');
+      const sortLabel = document.getElementById('sortLabel');
+
+      let activeCategory = 'all';
+      let currentSort = 'newest';
+
+      // ---------- CATEGORY PILLS ----------
+      document.querySelectorAll('.cat-pill').forEach(pill => {
+        pill.addEventListener('click', () => {
+          document.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('active'));
+          pill.classList.add('active');
+          activeCategory = pill.dataset.category;
+          applyFilters();
+        });
       });
-    });
+
+      // ---------- SEARCH + LOCATION ----------
+      const searchInput = document.getElementById('searchInput');
+      const locationSelect = document.getElementById('locationSelect');
+      document.getElementById('searchBtn').addEventListener('click', applyFilters);
+      searchInput.addEventListener('keyup', (e) => {
+        if (e.key === 'Enter') applyFilters();
+      });
+      locationSelect.addEventListener('change', applyFilters);
+
+      function applyFilters() {
+        const query = searchInput.value.trim().toLowerCase();
+        const location = locationSelect.value;
+        let visibleCount = 0;
+
+        cols.forEach(col => {
+          const matchesCategory = activeCategory === 'all' || col.dataset.category === activeCategory;
+          const matchesLocation = location === 'all' || col.dataset.location === location;
+          const matchesQuery = !query || col.dataset.title.toLowerCase().includes(query);
+          const isVisible = matchesCategory && matchesLocation && matchesQuery;
+          col.style.display = isVisible ? '' : 'none';
+          if (isVisible) visibleCount++;
+        });
+
+        noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+        resultsCount.textContent = visibleCount + (visibleCount === 1 ? ' item' : ' items');
+
+        // re-apply current sort order to whatever is now visible
+        sortListings(currentSort);
+      }
+
+      // ---------- SORTING ----------
+      const sortLabels = {
+        'newest': 'Sort: Newest',
+        'price-asc': 'Sort: Price (Low to High)',
+        'price-desc': 'Sort: Price (High to Low)',
+        'likes-desc': 'Sort: Most Liked',
+        'title-asc': 'Sort: Title (A–Z)'
+      };
+
+      document.querySelectorAll('.sort-option').forEach(option => {
+        option.addEventListener('click', (e) => {
+          e.preventDefault();
+          document.querySelectorAll('.sort-option').forEach(o => o.classList.remove('active'));
+          option.classList.add('active');
+          currentSort = option.dataset.sort;
+          sortLabel.textContent = sortLabels[currentSort];
+          sortListings(currentSort);
+        });
+      });
+
+      function sortListings(mode) {
+        const sorted = [...cols].sort((a, b) => {
+          switch (mode) {
+            case 'price-asc':
+              return parseFloat(a.dataset.price) - parseFloat(b.dataset.price);
+            case 'price-desc':
+              return parseFloat(b.dataset.price) - parseFloat(a.dataset.price);
+            case 'likes-desc':
+              return parseInt(b.dataset.likes, 10) - parseInt(a.dataset.likes, 10);
+            case 'title-asc':
+              return a.dataset.title.localeCompare(b.dataset.title);
+            case 'newest':
+            default:
+              return parseInt(a.dataset.minutes, 10) - parseInt(b.dataset.minutes, 10);
+          }
+        });
+        sorted.forEach(col => grid.appendChild(col));
+      }
+
+      // Initial sort so DOM order matches the "Newest" default label
+      sortListings(currentSort);
+
+      // ---------- DETAILS MODAL ----------
+      const listingModalEl = document.getElementById('listingModal');
+      const listingModal = new bootstrap.Modal(listingModalEl);
+
+      function openListingModal(card) {
+        document.getElementById('modalImg').src = card.dataset.img;
+        document.getElementById('modalImg').alt = card.dataset.title;
+        document.getElementById('modalTitle').textContent = card.dataset.title;
+        document.getElementById('modalPrice').textContent = card.dataset.price;
+        document.getElementById('modalCategory').textContent = card.dataset.category;
+        document.getElementById('modalCondition').textContent = card.dataset.condition;
+        document.getElementById('modalSeller').textContent = card.dataset.seller;
+        document.getElementById('modalTime').textContent = 'Posted ' + card.dataset.time;
+        document.getElementById('modalLocation').textContent = card.dataset.location;
+        document.getElementById('modalLikes').textContent = card.dataset.likes;
+        document.getElementById('modalDesc').textContent = card.dataset.desc;
+
+        const avatar = document.getElementById('modalAvatar');
+        avatar.textContent = card.dataset.avatarInitials;
+        avatar.style.background = card.dataset.avatarBg;
+
+        listingModal.show();
+      }
+
+      // Binds click/keyboard handlers for opening the details modal on a
+      // single card. Called for the original cards and for any new
+      // listing posted through the Sell an Item form.
+      function bindCardModal(card) {
+        card.addEventListener('click', () => openListingModal(card));
+        card.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            openListingModal(card);
+          }
+        });
+      }
+
+      document.querySelectorAll('.listing-card').forEach(bindCardModal);
+
+      // ---------- SELL AN ITEM ----------
+      const sellForm = document.getElementById('sellForm');
+      const sellModalEl = document.getElementById('sellModal');
+      const sellModal = new bootstrap.Modal(sellModalEl);
+      const sellToast = new bootstrap.Toast(document.getElementById('sellToast'));
+
+      const avatarPalette = ['#2f5233', '#7a5c3e', '#4c7a4f', '#8a4f7d', '#c0622b', '#d9a441', '#3d6b8a'];
+      const placeholderImg = 'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=500';
+
+      // ---------- Photo upload preview ----------
+      const sellImageFile = document.getElementById('sellImageFile');
+      const sellImageUrl = document.getElementById('sellImage');
+      const previewWrap = document.getElementById('sellImagePreviewWrap');
+      const previewImg = document.getElementById('sellImagePreview');
+      const clearPreviewBtn = document.getElementById('sellImageClear');
+      let uploadedImageDataUrl = '';
+
+      sellImageFile.addEventListener('change', () => {
+        const file = sellImageFile.files && sellImageFile.files[0];
+        if (!file) {
+          uploadedImageDataUrl = '';
+          previewWrap.style.display = 'none';
+          return;
+        }
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          uploadedImageDataUrl = e.target.result;
+          previewImg.src = uploadedImageDataUrl;
+          previewWrap.style.display = 'block';
+          // an uploaded file takes priority, so clear any typed URL
+          sellImageUrl.value = '';
+        };
+        reader.readAsDataURL(file);
+      });
+
+      sellImageUrl.addEventListener('input', () => {
+        if (sellImageUrl.value.trim()) {
+          // typing a URL clears any uploaded file so there's one clear source
+          sellImageFile.value = '';
+          uploadedImageDataUrl = '';
+          previewImg.src = sellImageUrl.value.trim();
+          previewWrap.style.display = 'block';
+        } else if (!uploadedImageDataUrl) {
+          previewWrap.style.display = 'none';
+        }
+      });
+
+      clearPreviewBtn.addEventListener('click', () => {
+        uploadedImageDataUrl = '';
+        sellImageFile.value = '';
+        sellImageUrl.value = '';
+        previewWrap.style.display = 'none';
+      });
+
+      function initialsFor(name) {
+        const clean = name.trim();
+        if (!clean) return '??';
+        const parts = clean.split(/[\s._-]+/).filter(Boolean);
+        if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+        return (parts[0][0] + parts[1][0]).toUpperCase();
+      }
+
+      function escapeHtml(str) {
+        const div = document.createElement('div');
+        div.textContent = str;
+        return div.innerHTML;
+      }
+
+      sellForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        if (!sellForm.checkValidity()) {
+          sellForm.classList.add('was-validated');
+          return;
+        }
+
+        const title = document.getElementById('sellTitle').value.trim();
+        const price = parseFloat(document.getElementById('sellPrice').value);
+        const condition = document.getElementById('sellCondition').value;
+        const category = document.getElementById('sellCategory').value;
+        const location = document.getElementById('sellLocation').value;
+        const img = uploadedImageDataUrl || document.getElementById('sellImage').value.trim() || placeholderImg;
+        const desc = document.getElementById('sellDesc').value.trim();
+        const seller = document.getElementById('sellSeller').value.trim();
+
+        const initials = initialsFor(seller);
+        const avatarColor = avatarPalette[Math.floor(Math.random() * avatarPalette.length)];
+        const priceDisplay = 'S$' + price.toFixed(2).replace(/\.00$/, '');
+
+        const col = document.createElement('div');
+        col.className = 'col listing-col';
+        col.dataset.category = category;
+        col.dataset.location = location;
+        col.dataset.price = price;
+        col.dataset.likes = '0';
+        col.dataset.minutes = '0';
+        col.dataset.title = title;
+
+        col.innerHTML = `
+          <div class="card listing-card" tabindex="0" role="button"
+               data-title="${escapeHtml(title)}"
+               data-price="${escapeHtml(priceDisplay)}" data-category="${escapeHtml(category)}" data-location="${escapeHtml(location)}"
+               data-condition="${escapeHtml(condition)}" data-likes="0" data-time="Just now"
+               data-seller="${escapeHtml(seller)}" data-avatar-bg="${avatarColor}" data-avatar-initials="${escapeHtml(initials)}"
+               data-img="${escapeHtml(img)}"
+               data-desc="${escapeHtml(desc)}">
+            <div class="listing-seller">
+              <div class="seller-avatar" style="background:${avatarColor};">${escapeHtml(initials)}</div>
+              <div>
+                <div class="seller-name">${escapeHtml(seller)}</div>
+                <div class="seller-time"><i class="bi bi-lightning-charge-fill"></i> Just now</div>
+              </div>
+            </div>
+            <div class="listing-img-wrap">
+              <img class="card-img-top" src="${escapeHtml(img)}" alt="${escapeHtml(title)}">
+              <span class="badge bg-success bg-opacity-90 verified-badge"><i class="bi bi-stars"></i> Your Listing</span>
+            </div>
+            <div class="card-body listing-body">
+              <div class="listing-title card-title">${escapeHtml(title)}</div>
+              <div class="d-flex justify-content-between align-items-center mb-1">
+                <span class="listing-price">${escapeHtml(priceDisplay)}</span>
+                <span class="badge bg-light text-dark border listing-condition">${escapeHtml(condition)}</span>
+              </div>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="listing-likes"><i class="bi bi-heart"></i> 0</div>
+                <button type="button" class="btn btn-outline-secondary btn-sm btn-view-details">View details</button>
+              </div>
+            </div>
+          </div>`;
+
+        grid.prepend(col);
+        cols = Array.from(grid.querySelectorAll('.listing-col'));
+        bindCardModal(col.querySelector('.listing-card'));
+
+        // reset to defaults so the new listing is visible: no active
+        // search text, "All Categories" pill, all locations, newest sort
+        searchInput.value = '';
+        locationSelect.value = 'all';
+        document.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('active'));
+        document.querySelector('.cat-pill[data-category="all"]').classList.add('active');
+        activeCategory = 'all';
+        document.querySelectorAll('.sort-option').forEach(o => o.classList.remove('active'));
+        document.querySelector('.sort-option[data-sort="newest"]').classList.add('active');
+        currentSort = 'newest';
+        sortLabel.textContent = sortLabels['newest'];
+
+        applyFilters();
+
+        sellForm.reset();
+        sellForm.classList.remove('was-validated');
+        uploadedImageDataUrl = '';
+        previewWrap.style.display = 'none';
+        sellModal.hide();
+        sellToast.show();
+      });
+    })();
   </script>
 </body>
 </html>
