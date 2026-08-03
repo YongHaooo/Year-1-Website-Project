@@ -238,8 +238,8 @@
           </li>
 
           <li class="nav-item d-flex align-items-center">
-            <a class="nav-login-icon" href="loginpage.html" aria-label="Log in" aria-current="page" title="Log in">
-              <i class="bi bi-person-circle"></i>
+            <a id="navLoginIcon" class="nav-login-icon" href="loginpage.html" aria-label="Log in" aria-current="page" title="Log in">
+              <i class="bi bi-person-circle" id="navLoginIconGlyph"></i>
             </a>
             <span id="navUserName" class="ms-2 small fw-semibold d-none" style="color: var(--forest);"></span>
           </li>
@@ -265,6 +265,9 @@
       <div class="login-icon">
         <i class="bi bi-flower1"></i>
       </div>
+
+      <!-- ---------- Logged OUT view: the login form ---------- -->
+      <div id="loggedOutView">
       <h1 class="login-title">Welcome back</h1>
       <p class="login-subtitle">Log in to save plants, track your garden, and get personalized tips.</p>
 
@@ -320,6 +323,25 @@
         New to Green Haven?
         <a href="#" data-bs-toggle="modal" data-bs-target="#signupModal">Create an account</a>
       </p>
+      </div>
+      <!-- ---------- /Logged OUT view ---------- -->
+
+      <!-- ---------- Logged IN view: shown once a session exists ---------- -->
+      <div id="loggedInView" class="d-none text-center">
+        <h1 class="login-title">Welcome, <span id="loggedInName">there</span>!</h1>
+        <p class="login-subtitle">You're logged in to Green Haven.</p>
+
+        <div id="logoutAlert" class="alert d-none py-2 px-3 small text-start" role="alert"></div>
+
+        <a href="index.html" class="btn btn-login w-100 mb-2">
+          <i class="bi bi-house-door me-1"></i> Go to homepage
+        </a>
+        <button type="button" class="btn btn-outline-secondary w-100" id="logoutBtn">
+          <span class="spinner-border spinner-border-sm me-2 d-none" id="logoutSpinner" aria-hidden="true"></span>
+          <span id="logoutBtnLabel"><i class="bi bi-box-arrow-right me-1"></i> Log Out</span>
+        </button>
+      </div>
+      <!-- ---------- /Logged IN view ---------- -->
 
     </div>
   </main>
@@ -495,6 +517,12 @@
         } catch {
           return null;
         }
+      },
+
+      logout() {
+        localStorage.removeItem(this._sessionKey);
+        sessionStorage.removeItem(this._sessionKey);
+        return { ok: true };
       }
     };
 
@@ -515,15 +543,76 @@
 
     function refreshNavUserName() {
       const nameEl = document.getElementById('navUserName');
+      const navIcon = document.getElementById('navLoginIcon');
+      const navIconGlyph = document.getElementById('navLoginIconGlyph');
+      const loggedOutView = document.getElementById('loggedOutView');
+      const loggedInView = document.getElementById('loggedInView');
+      const loggedInName = document.getElementById('loggedInName');
       const session = GreenHavenAuth.currentSession();
+
       if (session) {
+        // Nav bar: show name + swap the icon into a "log out" control
         nameEl.textContent = session.name;
         nameEl.classList.remove('d-none');
+        navIcon.setAttribute('href', '#');
+        navIcon.setAttribute('aria-label', 'Log out');
+        navIcon.setAttribute('title', 'Log out');
+        navIconGlyph.classList.remove('bi-person-circle');
+        navIconGlyph.classList.add('bi-box-arrow-right');
+
+        // Login page card: show the logged-in panel instead of the form
+        if (loggedOutView && loggedInView) {
+          loggedOutView.classList.add('d-none');
+          loggedInView.classList.remove('d-none');
+          loggedInName.textContent = session.name;
+        }
       } else {
         nameEl.classList.add('d-none');
+        navIcon.setAttribute('href', 'loginpage.html');
+        navIcon.setAttribute('aria-label', 'Log in');
+        navIcon.setAttribute('title', 'Log in');
+        navIconGlyph.classList.remove('bi-box-arrow-right');
+        navIconGlyph.classList.add('bi-person-circle');
+
+        if (loggedOutView && loggedInView) {
+          loggedOutView.classList.remove('d-none');
+          loggedInView.classList.add('d-none');
+        }
       }
     }
     refreshNavUserName();
+
+    /* ---------- Nav icon: acts as a log-out button once signed in ---------- */
+    document.getElementById('navLoginIcon').addEventListener('click', (event) => {
+      if (GreenHavenAuth.currentSession()) {
+        event.preventDefault();
+        GreenHavenAuth.logout();
+        refreshNavUserName();
+        showToast('You have been logged out.');
+      }
+      // If not logged in, the link's default href (loginpage.html) just works as normal.
+    });
+
+    /* ---------- Log Out button on the logged-in card ---------- */
+    const logoutBtn = document.getElementById('logoutBtn');
+    if (logoutBtn) {
+      logoutBtn.addEventListener('click', () => {
+        const logoutSpinner = document.getElementById('logoutSpinner');
+        const logoutBtnLabel = document.getElementById('logoutBtnLabel');
+        logoutBtn.disabled = true;
+        logoutSpinner.classList.remove('d-none');
+        logoutBtnLabel.textContent = 'Logging out…';
+
+        setTimeout(() => {
+          GreenHavenAuth.logout();
+          refreshNavUserName();
+          logoutBtn.disabled = false;
+          logoutSpinner.classList.add('d-none');
+          logoutBtnLabel.innerHTML = '<i class="bi bi-box-arrow-right me-1"></i> Log Out';
+          showToast('You have been logged out.');
+        }, 400);
+      });
+    }
 
     // Enable Bootstrap tooltips
     document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el => new bootstrap.Tooltip(el));
@@ -583,10 +672,9 @@
         loginSubmitLabel.textContent = 'Log In';
 
         if (result.ok) {
-          showAlert(loginAlert, `Welcome back, ${result.session.name}! You're logged in.`, 'success');
-          loginAlert.classList.remove('d-none');
           loginForm.classList.remove('was-validated');
           loginForm.reset();
+          hideAlert(loginAlert);
           showToast(`Logged in as ${result.session.name}`);
           refreshNavUserName();
         } else {
