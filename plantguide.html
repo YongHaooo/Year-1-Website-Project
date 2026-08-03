@@ -112,11 +112,18 @@
 
     .plant-thumb {
       height: 200px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 4rem;
+      overflow: hidden;
       background: linear-gradient(160deg, var(--parchment), #E4EFE7);
+    }
+    .plant-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.35s ease;
+    }
+    .plant-card:hover .plant-thumb img {
+      transform: scale(1.06);
     }
     .plant-card .card-body { padding: 1.25rem; }
     .plant-card .plant-category {
@@ -265,10 +272,16 @@
     #plantTable .table-plant-name {
       font-weight: 600;
       color: var(--forest);
+      display: flex;
+      align-items: center;
     }
     #plantTable .table-icon {
-      font-size: 1.3rem;
-      margin-right: 0.4rem;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-right: 0.6rem;
+      flex-shrink: 0;
     }
     #plantTable .badge-category {
       background-color: var(--sage);
@@ -286,10 +299,22 @@
       color: white;
       border-bottom: 3px solid var(--marigold);
       padding: 1.25rem 1.5rem;
+      position: relative;
+    }
+    .plant-modal .modal-header-img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      display: block;
+    }
+    .plant-modal .modal-header-text {
+      padding: 1.25rem 1.5rem;
+      background-color: var(--forest);
+      border-bottom: 3px solid var(--marigold);
     }
     .plant-modal .modal-title { font-family: var(--font-display); font-weight: 600; font-size: 1.4rem; margin: 0; }
     .plant-modal .modal-sci { font-style: italic; color: #C9DACD; font-size: 0.9rem; margin: 0.15rem 0 0; }
-    .plant-modal .btn-close { filter: invert(1) grayscale(1) brightness(2); }
+    .plant-modal .btn-close { filter: invert(1) grayscale(1) brightness(2); position: absolute; top: 1rem; right: 1.25rem; z-index: 2; }
     .plant-modal .modal-body { padding: 1.5rem; background-color: var(--parchment); }
     .plant-modal .modal-section { margin-bottom: 1.15rem; }
     .plant-modal .modal-section:last-child { margin-bottom: 0; }
@@ -430,12 +455,13 @@
   <div class="modal fade plant-modal" id="plantModal" tabindex="-1" aria-labelledby="plantModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
-        <div class="modal-header">
-          <div>
+        <div class="modal-header p-0 d-block">
+          <img id="modalPlantImg" src="" alt="" class="modal-header-img">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <div class="modal-header-text">
             <p class="modal-title" id="modalPlantName">—</p>
             <p class="modal-sci" id="modalPlantSci">—</p>
           </div>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <div class="modal-section">
@@ -470,20 +496,21 @@
 
   <script>
     // 1. DATA ACCESS DEFINITIONS (Local Database Store)
+    // `image` fields point to real royalty-free photos (Pixabay Content License, no attribution required)
     const plants = [
-      { id: 1, name: "Rose", category: "flowers", icon: "🌹", difficulty: 2, water: 2, sun: "Full Sun", season: "Late Spring – Summer", scientific: "Rosa spp.", tips: ["Prune in early spring to encourage new blooms", "Water at the base to keep foliage dry", "Feed monthly with a balanced fertiliser during the growing season"], problems: ["Black spot fungus on leaves", "Aphids clustering on new buds", "Powdery mildew in humid weather"], soil: "Well-drained loam enriched with compost, pH 6.0–6.5." },
-      { id: 2, name: "Sunflower", category: "flowers", icon: "🌻", difficulty: 1, water: 2, sun: "Full Sun", season: "Summer", scientific: "Helianthus annuus", tips: ["Sow seeds directly after the last frost", "Stake tall varieties against wind", "Deadhead spent blooms to prolong flowering"], problems: ["Birds and squirrels raiding seed heads", "Stem weakness in heavy wind", "Powdery mildew late in the season"], soil: "Loose, well-drained soil, pH 6.0–7.5." },
-      { id: 3, name: "Tulip", category: "flowers", icon: "🌷", difficulty: 1, water: 1, sun: "Full Sun", season: "Spring", scientific: "Tulipa gesneriana", tips: ["Plant bulbs in autumn, about 15cm deep", "Let foliage die back naturally after flowering", "Avoid overwatering while dormant"], problems: ["Bulb rot in soggy soil", "Squirrels digging up bulbs", "Tulip fire fungal disease"], soil: "Sandy, well-drained soil, pH 6.0–7.0." },
-      { id: 4, name: "Marigold", category: "flowers", icon: "🌼", difficulty: 1, water: 1, sun: "Full Sun", season: "Summer – Autumn", scientific: "Tagetes spp.", tips: ["Pinch growing tips for a bushier plant", "Deadhead regularly for continuous blooms", "Plant alongside vegetables to help deter pests"], problems: ["Spider mites in dry conditions", "Root rot from overwatering", "Slugs on young seedlings"], soil: "Average, well-drained garden soil." },
-      { id: 5, name: "Tomato", category: "vegetables", icon: "🍅", difficulty: 2, water: 3, sun: "Full Sun", season: "Summer", scientific: "Solanum lycopersicum", tips: ["Stake or cage plants early for support", "Water deeply and consistently at the roots", "Pinch off side suckers on indeterminate varieties"], problems: ["Blossom end rot from calcium imbalance", "Early blight spotting the lower leaves", "Hornworm caterpillars stripping foliage"], soil: "Rich, well-drained loam, pH 6.2–6.8." },
-      { id: 6, name: "Carrot", category: "vegetables", icon: "🥕", difficulty: 2, water: 2, sun: "Full Sun", season: "Spring – Autumn", scientific: "Daucus carota", tips: ["Sow seeds directly, thinning to 5cm apart", "Keep soil loose and stone-free for straight roots", "Water evenly to prevent the roots splitting"], problems: ["Forked roots in compacted soil", "Carrot fly larvae tunnelling into roots", "Green shoulders from sun exposure"], soil: "Deep, loose, sandy soil free of stones." },
-      { id: 7, name: "Lettuce", category: "vegetables", icon: "🥬", difficulty: 1, water: 2, sun: "Partial Sun", season: "Spring – Autumn", scientific: "Lactuca sativa", tips: ["Sow successively every two weeks for a steady harvest", "Harvest outer leaves to extend the plant's life", "Provide afternoon shade in hot weather"], problems: ["Bolting to seed in high heat", "Slugs and snails on tender leaves", "Downy mildew in damp conditions"], soil: "Moist, fertile soil rich in organic matter." },
-      { id: 8, name: "Basil", category: "herbs", icon: "🌿", difficulty: 1, water: 2, sun: "Full Sun", season: "Summer", scientific: "Ocimum basilicum", tips: ["Pinch off flower buds to keep leaves tender", "Harvest from the top to encourage bushiness", "Keep away from cold draughts"], problems: ["Fusarium wilt in poorly drained soil", "Aphids on new growth", "Leaves blacken after cold exposure"], soil: "Rich, moist, well-drained soil." },
-      { id: 9, name: "Mint", category: "herbs", icon: "🌱", difficulty: 1, water: 3, sun: "Partial Sun", season: "Spring – Autumn", scientific: "Mentha spp.", tips: ["Grow in a container to stop it spreading", "Keep soil consistently moist", "Trim regularly to keep growth compact"], problems: ["Rust fungus on leaf undersides", "Spreads aggressively via runners", "Spider mites in dry spells"], soil: "Moist, fertile soil; tolerates a wide pH range." },
-      { id: 10, name: "Rosemary", category: "herbs", icon: "🌿", difficulty: 2, water: 1, sun: "Full Sun", season: "Year-round (mild climates)", scientific: "Salvia rosmarinus", tips: ["Let the soil dry out between waterings", "Prune after flowering to maintain shape", "Grow in a free-draining pot if rainfall is heavy"], problems: ["Root rot from overwatering", "Powdery mildew in humid, still air", "Woody stems if left unpruned for years"], soil: "Sandy, free-draining soil, pH 6.0–7.0." },
-      { id: 11, name: "Snake Plant", category: "indoor", icon: "🪴", difficulty: 1, water: 1, sun: "Low Light", season: "Year-round", scientific: "Dracaena trifasciata", tips: ["Water only once the soil is completely dry", "Wipe leaves occasionally to keep pores dust-free", "Avoid cold draughts near windows"], problems: ["Root rot from overwatering", "Leaf splitting under low humidity stress", "Mealybugs at the leaf bases"], soil: "Well-drained cactus or succulent mix." },
-      { id: 12, name: "Pothos", category: "indoor", icon: "🪴", difficulty: 1, water: 2, sun: "Low Light", season: "Year-round", scientific: "Epipremnum aureum", tips: ["Let the top layer of soil dry before watering", "Trim trailing vines to encourage fullness", "Wipe leaves to help them absorb light"], problems: ["Yellowing leaves from overwatering", "Brown tips from low humidity", "Root rot in waterlogged pots"], soil: "Standard, well-drained potting mix." },
-      { id: 13, name: "Peace Lily", category: "indoor", icon: "🪴", difficulty: 2, water: 2, sun: "Partial Sun", season: "Year-round", scientific: "Spathiphyllum wallisii", tips: ["Keep soil lightly moist but never soggy", "Mist the leaves occasionally to raise humidity", "Watch for wilting as a clear watering cue"], problems: ["Brown leaf tips from tap water minerals", "Root rot in poorly drained pots", "Leaf yellowing from too much direct sun"], soil: "Rich, well-drained potting mix." }
+      { id: 1, name: "Rose", category: "flowers", image: "https://cdn.pixabay.com/photo/2023/09/28/08/40/rose-8280989_640.jpg", difficulty: 2, water: 2, sun: "Full Sun", season: "Late Spring – Summer", scientific: "Rosa spp.", tips: ["Prune in early spring to encourage new blooms", "Water at the base to keep foliage dry", "Feed monthly with a balanced fertiliser during the growing season"], problems: ["Black spot fungus on leaves", "Aphids clustering on new buds", "Powdery mildew in humid weather"], soil: "Well-drained loam enriched with compost, pH 6.0–6.5." },
+      { id: 2, name: "Sunflower", category: "flowers", image: "https://cdn.pixabay.com/photo/2024/08/25/02/16/sunflower-8995443_640.jpg", difficulty: 1, water: 2, sun: "Full Sun", season: "Summer", scientific: "Helianthus annuus", tips: ["Sow seeds directly after the last frost", "Stake tall varieties against wind", "Deadhead spent blooms to prolong flowering"], problems: ["Birds and squirrels raiding seed heads", "Stem weakness in heavy wind", "Powdery mildew late in the season"], soil: "Loose, well-drained soil, pH 6.0–7.5." },
+      { id: 3, name: "Tulip", category: "flowers", image: "https://cdn.pixabay.com/photo/2022/02/05/08/13/tulip-6994245_640.jpg", difficulty: 1, water: 1, sun: "Full Sun", season: "Spring", scientific: "Tulipa gesneriana", tips: ["Plant bulbs in autumn, about 15cm deep", "Let foliage die back naturally after flowering", "Avoid overwatering while dormant"], problems: ["Bulb rot in soggy soil", "Squirrels digging up bulbs", "Tulip fire fungal disease"], soil: "Sandy, well-drained soil, pH 6.0–7.0." },
+      { id: 4, name: "Marigold", category: "flowers", image: "https://cdn.pixabay.com/photo/2016/02/27/14/03/french-marigold-1225611_640.jpg", difficulty: 1, water: 1, sun: "Full Sun", season: "Summer – Autumn", scientific: "Tagetes spp.", tips: ["Pinch growing tips for a bushier plant", "Deadhead regularly for continuous blooms", "Plant alongside vegetables to help deter pests"], problems: ["Spider mites in dry conditions", "Root rot from overwatering", "Slugs on young seedlings"], soil: "Average, well-drained garden soil." },
+      { id: 5, name: "Tomato", category: "vegetables", image: "https://cdn.pixabay.com/photo/2019/05/31/11/34/tomato-4241980_640.jpg", difficulty: 2, water: 3, sun: "Full Sun", season: "Summer", scientific: "Solanum lycopersicum", tips: ["Stake or cage plants early for support", "Water deeply and consistently at the roots", "Pinch off side suckers on indeterminate varieties"], problems: ["Blossom end rot from calcium imbalance", "Early blight spotting the lower leaves", "Hornworm caterpillars stripping foliage"], soil: "Rich, well-drained loam, pH 6.2–6.8." },
+      { id: 6, name: "Carrot", category: "vegetables", image: "https://cdn.pixabay.com/photo/2015/12/28/21/40/carrots-1112020_640.jpg", difficulty: 2, water: 2, sun: "Full Sun", season: "Spring – Autumn", scientific: "Daucus carota", tips: ["Sow seeds directly, thinning to 5cm apart", "Keep soil loose and stone-free for straight roots", "Water evenly to prevent the roots splitting"], problems: ["Forked roots in compacted soil", "Carrot fly larvae tunnelling into roots", "Green shoulders from sun exposure"], soil: "Deep, loose, sandy soil free of stones." },
+      { id: 7, name: "Lettuce", category: "vegetables", image: "https://cdn.pixabay.com/photo/2015/12/18/02/34/green-1098147_640.jpg", difficulty: 1, water: 2, sun: "Partial Sun", season: "Spring – Autumn", scientific: "Lactuca sativa", tips: ["Sow successively every two weeks for a steady harvest", "Harvest outer leaves to extend the plant's life", "Provide afternoon shade in hot weather"], problems: ["Bolting to seed in high heat", "Slugs and snails on tender leaves", "Downy mildew in damp conditions"], soil: "Moist, fertile soil rich in organic matter." },
+      { id: 8, name: "Basil", category: "herbs", image: "https://cdn.pixabay.com/photo/2017/10/26/11/15/basil-2890741_640.jpg", difficulty: 1, water: 2, sun: "Full Sun", season: "Summer", scientific: "Ocimum basilicum", tips: ["Pinch off flower buds to keep leaves tender", "Harvest from the top to encourage bushiness", "Keep away from cold draughts"], problems: ["Fusarium wilt in poorly drained soil", "Aphids on new growth", "Leaves blacken after cold exposure"], soil: "Rich, moist, well-drained soil." },
+      { id: 9, name: "Mint", category: "herbs", image: "https://cdn.pixabay.com/photo/2016/04/19/22/47/mint-1340124_640.jpg", difficulty: 1, water: 3, sun: "Partial Sun", season: "Spring – Autumn", scientific: "Mentha spp.", tips: ["Grow in a container to stop it spreading", "Keep soil consistently moist", "Trim regularly to keep growth compact"], problems: ["Rust fungus on leaf undersides", "Spreads aggressively via runners", "Spider mites in dry spells"], soil: "Moist, fertile soil; tolerates a wide pH range." },
+      { id: 10, name: "Rosemary", category: "herbs", image: "https://cdn.pixabay.com/photo/2016/08/10/13/55/rosemary-1583261_640.jpg", difficulty: 2, water: 1, sun: "Full Sun", season: "Year-round (mild climates)", scientific: "Salvia rosmarinus", tips: ["Let the soil dry out between waterings", "Prune after flowering to maintain shape", "Grow in a free-draining pot if rainfall is heavy"], problems: ["Root rot from overwatering", "Powdery mildew in humid, still air", "Woody stems if left unpruned for years"], soil: "Sandy, free-draining soil, pH 6.0–7.0." },
+      { id: 11, name: "Snake Plant", category: "indoor", image: "https://cdn.pixabay.com/photo/2022/09/07/22/42/sansevieria-7439700_640.jpg", difficulty: 1, water: 1, sun: "Low Light", season: "Year-round", scientific: "Dracaena trifasciata", tips: ["Water only once the soil is completely dry", "Wipe leaves occasionally to keep pores dust-free", "Avoid cold draughts near windows"], problems: ["Root rot from overwatering", "Leaf splitting under low humidity stress", "Mealybugs at the leaf bases"], soil: "Well-drained cactus or succulent mix." },
+      { id: 12, name: "Pothos", category: "indoor", image: "https://cdn.pixabay.com/photo/2018/11/15/10/32/plants-3816945_640.jpg", difficulty: 1, water: 2, sun: "Low Light", season: "Year-round", scientific: "Epipremnum aureum", tips: ["Let the top layer of soil dry before watering", "Trim trailing vines to encourage fullness", "Wipe leaves to help them absorb light"], problems: ["Yellowing leaves from overwatering", "Brown tips from low humidity", "Root rot in waterlogged pots"], soil: "Standard, well-drained potting mix." },
+      { id: 13, name: "Peace Lily", category: "indoor", image: "https://cdn.pixabay.com/photo/2018/04/15/23/32/spathiphyllum-3323194_640.jpg", difficulty: 2, water: 2, sun: "Partial Sun", season: "Year-round", scientific: "Spathiphyllum wallisii", tips: ["Keep soil lightly moist but never soggy", "Mist the leaves occasionally to raise humidity", "Watch for wilting as a clear watering cue"], problems: ["Brown leaf tips from tap water minerals", "Root rot in poorly drained pots", "Leaf yellowing from too much direct sun"], soil: "Rich, well-drained potting mix." }
     ];
 
     // Key lookup titles for user readability mapping
@@ -524,7 +551,9 @@
 
       col.innerHTML = `
         <div class="card plant-card h-100">
-          <div class="plant-thumb" aria-hidden="true">${plant.icon}</div>
+          <div class="plant-thumb">
+            <img src="${plant.image}" alt="${plant.name} (${plant.scientific})" loading="lazy">
+          </div>
           <div class="card-body">
             <div class="plant-category">${catLabels[plant.category]}</div>
             <h3 class="card-title h5">${plant.name}</h3>
@@ -561,7 +590,7 @@
       row.dataset.plantId = plant.id;
 
       row.innerHTML = `
-        <td class="table-plant-name"><span class="table-icon">${plant.icon}</span>${plant.name}</td>
+        <td class="table-plant-name"><img class="table-icon" src="${plant.image}" alt="${plant.name}" loading="lazy">${plant.name}</td>
         <td><span class="badge badge-category rounded-pill">${catLabels[plant.category]}</span></td>
         <td>${createDotMeter(plant.difficulty)} ${diffLabels[plant.difficulty]}</td>
         <td>${createDotMeter(plant.water)} ${waterLabels[plant.water]}</td>
@@ -637,6 +666,8 @@
       if (!foundPlant) return;
 
       // Mount properties directly to the text interface components
+      document.getElementById("modalPlantImg").src = foundPlant.image;
+      document.getElementById("modalPlantImg").alt = foundPlant.name;
       document.getElementById("modalPlantName").textContent = foundPlant.name;
       document.getElementById("modalPlantSci").textContent = foundPlant.scientific;
       document.getElementById("modalSoil").textContent = foundPlant.soil;
