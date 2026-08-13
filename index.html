@@ -40,7 +40,7 @@
               <li><a class="dropdown-item" href="#seasons">Seasonal Calendar</a></li>
               <li><a class="dropdown-item" href="#faq">FAQ</a></li>
               <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#checklist">Free Checklist</a></li>
+              <li><a class="dropdown-item" href="#checklist">Beginner Checklist</a></li>
             </ul>
           </li>
           <li class="nav-item">
@@ -229,8 +229,32 @@
       <h2 class="section-title text-center mb-5">Quick Answers</h2>
       <div class="accordion" id="faqAccordion">
         <div class="accordion-item">
-          <h2 class="accordion-header"><button class="accordion-button" data-bs-toggle="collapse" data-bs-target="#faq1">Do I need a garden?</button></h2>
-          <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion"><div class="accordion-body">A sunny windowsill is enough!</div></div>
+          <h2 class="accordion-header"><button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#faq1">Do I need a garden?</button></h2>
+          <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion"><div class="accordion-body">A sunny windowsill is enough!</div></div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header"><button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#faq2">How often should I water my plants?</button></h2>
+          <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion"><div class="accordion-body">It depends on the plant, but a good rule of thumb is to stick a finger an inch into the soil — if it's dry, it's time to water. Check the seasonal calendar above for specifics.</div></div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header"><button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#faq3">What's the easiest plant for a total beginner?</button></h2>
+          <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion"><div class="accordion-body">Succulents, pothos, and sunflowers are all very forgiving and hard to kill — perfect for building confidence.</div></div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header"><button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#faq4">Do I need to buy expensive tools?</button></h2>
+          <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion"><div class="accordion-body">Not at all. A trowel, a watering can, and a pair of gloves will cover almost everything you need to start.</div></div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header"><button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#faq5">How do I know if my plant is getting enough sunlight?</button></h2>
+          <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion"><div class="accordion-body">Leggy, pale, or slow-growing plants usually need more light. Most vegetables and flowering plants want at least 6 hours of direct sun a day.</div></div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header"><button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#faq6">What's the difference between annuals and perennials?</button></h2>
+          <div id="faq6" class="accordion-collapse collapse" data-bs-parent="#faqAccordion"><div class="accordion-body">Annuals complete their life cycle in one growing season and need replanting. Perennials come back year after year with minimal upkeep.</div></div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header"><button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#faq7">Why are my plant's leaves turning yellow?</button></h2>
+          <div id="faq7" class="accordion-collapse collapse" data-bs-parent="#faqAccordion"><div class="accordion-body">Yellow leaves are most often a sign of overwatering. Let the soil dry out a bit more between waterings and make sure your pot drains well.</div></div>
         </div>
       </div>
     </div>
@@ -240,7 +264,7 @@
     <div class="container">
       <h2 class="section-title mb-3">New to Gardening?</h2>
       <button type="button" class="btn btn-hero btn-lg" data-bs-toggle="modal" data-bs-target="#checklistModal">
-        <i class="bi bi-clipboard-check"></i> Get the Free Checklist
+        <i class="bi bi-clipboard-check"></i> Get the Beginner Checklist
       </button>
     </div>
   </section>
@@ -253,10 +277,49 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body">
-          <ul class="list-group list-group-flush mb-3">
-            <li class="list-group-item">A pot with drainage holes</li>
-            <li class="list-group-item">Good quality soil</li>
+          <ul class="list-group list-group-flush mb-3" id="checklistItems">
+            <li class="list-group-item checklist-item">
+              <input class="form-check-input me-2" type="checkbox" id="check1">
+              <label class="form-check-label" for="check1">A pot with drainage holes</label>
+            </li>
+            <li class="list-group-item checklist-item">
+              <input class="form-check-input me-2" type="checkbox" id="check2">
+              <label class="form-check-label" for="check2">Good quality potting soil (not garden dirt)</label>
+            </li>
+            <li class="list-group-item checklist-item">
+              <input class="form-check-input me-2" type="checkbox" id="check3">
+              <label class="form-check-label" for="check3">A watering can or hose with a gentle spray head</label>
+            </li>
+            <li class="list-group-item checklist-item">
+              <input class="form-check-input me-2" type="checkbox" id="check4">
+              <label class="form-check-label" for="check4">A trowel for digging and transplanting</label>
+            </li>
+            <li class="list-group-item checklist-item">
+              <input class="form-check-input me-2" type="checkbox" id="check5">
+              <label class="form-check-label" for="check5">Pruning shears or scissors for trimming</label>
+            </li>
+            <li class="list-group-item checklist-item">
+              <input class="form-check-input me-2" type="checkbox" id="check6">
+              <label class="form-check-label" for="check6">Gardening gloves to protect your hands</label>
+            </li>
+            <li class="list-group-item checklist-item">
+              <input class="form-check-input me-2" type="checkbox" id="check7">
+              <label class="form-check-label" for="check7">A spot with at least 4-6 hours of sunlight</label>
+            </li>
+            <li class="list-group-item checklist-item">
+              <input class="form-check-input me-2" type="checkbox" id="check8">
+              <label class="form-check-label" for="check8">Plant labels so you remember what's what</label>
+            </li>
+            <li class="list-group-item checklist-item">
+              <input class="form-check-input me-2" type="checkbox" id="check9">
+              <label class="form-check-label" for="check9">A basic fertilizer for feeding your plants</label>
+            </li>
+            <li class="list-group-item checklist-item">
+              <input class="form-check-input me-2" type="checkbox" id="check10">
+              <label class="form-check-label" for="check10">Patience — most plants take a few weeks to show progress</label>
+            </li>
           </ul>
+          <p class="small text-muted mb-0"><span id="checklistProgress">0</span> of 10 checked</p>
         </div>
       </div>
     </div>
@@ -295,7 +358,50 @@
           behavior: "smooth"
         });
       });
+
+      // Checklist: click anywhere on a row to toggle its checkbox
+      const checklistItems = document.querySelectorAll("#checklistItems .checklist-item");
+      const progressEl = document.getElementById("checklistProgress");
+
+      function updateProgress() {
+        const checked = document.querySelectorAll("#checklistItems input[type='checkbox']:checked").length;
+        if (progressEl) progressEl.textContent = checked;
+      }
+
+      checklistItems.forEach(function (item) {
+        const checkbox = item.querySelector("input[type='checkbox']");
+
+        function toggleChecked() {
+          item.classList.toggle("checked-item", checkbox.checked);
+          updateProgress();
+        }
+
+        checkbox.addEventListener("change", toggleChecked);
+
+        item.addEventListener("click", function (e) {
+          if (e.target !== checkbox) {
+            checkbox.checked = !checkbox.checked;
+            toggleChecked();
+          }
+        });
+      });
     });
   </script>
+
+  <style>
+    .checklist-item {
+      cursor: pointer;
+      user-select: none;
+      display: flex;
+      align-items: center;
+    }
+    .checklist-item .form-check-input {
+      cursor: pointer;
+    }
+    .checklist-item.checked-item .form-check-label {
+      text-decoration: line-through;
+      color: #8a8a8a;
+    }
+  </style>
 </body>
 </html>
