@@ -153,13 +153,14 @@ h1, h2, h3, .navbar-brand {
   /* "transition" tells the browser: "if certain properties change
      (like on hover, below), don't snap instantly — animate smoothly
      over 0.2 seconds instead." */
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 /* :hover = "only apply these styles while the mouse is over the button."
    Together with the transition above, this creates a small, smooth
    "lift up" animation whenever someone hovers the button. */
 .btn-hero:hover {
+  background-color: #ffd60a; /* brighter yellow than the default marigold, for a punchy hover state */
   transform: translateY(-2px); /* moves the button UP by 2 pixels    */
   box-shadow: 0 6px 16px rgba(0,0,0,0.25); /* adds a soft drop-shadow beneath it */
   color: var(--forest);
@@ -360,4 +361,3 @@ h1, h2, h3, .navbar-brand {
   #photoInput:focus {
   outline: none;
 }
-
