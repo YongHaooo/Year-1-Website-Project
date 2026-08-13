@@ -1,1830 +1,2116 @@
-<!-- ========================================================= -->
-<!-- BASIC HTML SETUP                                          -->
-<!-- ========================================================= -->
+<!-- ======================================================================= -->
+<!-- SECTION 1: WEBPAGE SETUP & HEADERS                                      -->
+<!-- Instructions for the web browser before displaying any visual elements. -->
+<!-- ======================================================================= -->
 
+<!-- Tells the browser that this file is written in modern HTML5. -->
 <!DOCTYPE html>
-<!-- Tells the browser that this file uses modern HTML5. -->
-
+<!-- Starts the webpage and sets the language to English. -->
 <html lang="en">
-<!-- Starts the webpage.
-     lang="en" tells the browser that the webpage is written in English. -->
 
+<!-- Holds hidden setup information that controls how the webpage works. -->
 <head>
-<!-- The <head> contains information about the webpage that
-     usually does not directly appear on the page. -->
 
+  <!-- Helps the browser correctly display standard text, letters, and symbols. -->
   <meta charset="UTF-8" />
-  <!-- Allows the webpage to correctly display characters and symbols. -->
 
+  <!-- Makes sure the webpage resizes neatly on phones, tablets, and computers. -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- Makes the website adjust properly to different screen sizes,
-       such as phones, tablets and computers. -->
 
+  <!-- Sets the title text shown on the top browser tab. -->
   <title>Green Haven | Grow Your Garden, Grow Your Happiness</title>
-  <!-- This is the name shown on the browser tab. -->
 
-
-  <!-- ======================================================= -->
-  <!-- BOOTSTRAP                                                -->
-  <!-- ======================================================= -->
-
+  <!-- Downloads pre-made styling rules (Bootstrap) from the internet to make buttons and layouts look pretty. -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Loads Bootstrap.
-       Bootstrap is a library that gives us ready-made styles
-       and components such as buttons, cards, grids, alerts and menus. -->
 
+  <!-- Downloads visual icons (like flowers, arrows, and stars) from the internet. -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
-  <!-- Loads Bootstrap Icons.
-       This lets us use icons such as flowers, arrows and people. -->
 
-
-  <!-- ======================================================= -->
-  <!-- FONTS                                                     -->
-  <!-- ======================================================= -->
-
+  <!-- Pre-connects to Google's font server to help custom fonts load faster. -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <!-- Connects to Google's font server before loading the fonts.
-       This can help the fonts load faster. -->
 
+  <!-- Downloads custom text fonts (Fraunces and Work Sans) from Google Fonts. -->
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-  <!-- Loads two fonts from Google:
-       Fraunces and Work Sans.
-       These fonts are used to change how the text looks. -->
 
-
-  <!-- ======================================================= -->
-  <!-- OUR OWN CSS FILE                                         -->
-  <!-- ======================================================= -->
-
+  <!-- Connects our own custom design file (style.css) for colors and layout choices. -->
   <link rel="stylesheet" href="style.css">
-  <!-- Connects this HTML file to our own CSS file.
-       CSS controls things such as colours, sizes and positioning. -->
 
-
+  <!-- Creates a space where extra styling rules could be added directly if needed. -->
   <style>
-    /* Extra CSS could be written here.
-       This section is currently empty. */
+  <!-- Ends the extra styling section. -->
   </style>
 
+<!-- Ends the setup information section. -->
 </head>
-<!-- End of the webpage information section. -->
 
 
-<!-- ========================================================= -->
-<!-- START OF THE VISIBLE WEBPAGE                              -->
-<!-- ========================================================= -->
+<!-- ======================================================================= -->
+<!-- SECTION 2: TOP NAVIGATION BAR                                           -->
+<!-- The menu bar pinned to the top of the screen containing links and buttons.-->
+<!-- ======================================================================= -->
 
+<!-- Starts the body, which contains everything visitors can see on the screen. -->
 <body>
-<!-- Everything inside <body> is what the visitor can see
-     and interact with on the webpage. -->
 
-
-  <!-- ======================================================= -->
-  <!-- NAVIGATION BAR                                           -->
-  <!-- ======================================================= -->
-
+  <!-- Creates a navigation bar that stays fixed at the top of the screen when scrolling. -->
   <nav class="navbar navbar-expand-lg fixed-top navbar-custom">
-  <!-- Creates the navigation bar at the top of the webpage.
 
-       navbar = Bootstrap navigation bar
-       navbar-expand-lg = navigation changes layout on smaller screens
-       fixed-top = keeps the navigation at the top while scrolling
-       navbar-custom = our own CSS styling -->
-
+    <!-- Creates a centered box to prevent menu items from stretching too far out to the edges. -->
     <div class="container">
-    <!-- Creates a centered area that keeps the content
-         from becoming too wide. -->
 
+      <!-- Creates a clickable link for the website name/logo that returns to the home page. -->
       <a class="navbar-brand" href="index.html">
-      <!-- Creates the website logo/name.
-           Clicking it takes the user back to index.html. -->
 
+        <!-- Displays a flower icon next to the brand name. -->
         <i class="bi bi-flower1"></i>
-        <!-- Displays a flower icon from Bootstrap Icons. -->
 
+        <!-- The website name text. -->
         Green Haven
-        <!-- The name of our website. -->
 
+      <!-- Closes the logo link. -->
       </a>
 
-
-      <!-- =================================================== -->
-      <!-- MOBILE MENU BUTTON                                   -->
-      <!-- =================================================== -->
-
+      <!-- Creates a clickable button (hamburger icon) that appears on phone screens to open the menu. -->
       <button class="navbar-toggler" type="button"
+              <!-- Tells the browser this button opens and closes a collapsing section. -->
               data-bs-toggle="collapse"
+              <!-- Specifies that clicking this button toggles the section named "navMenu". -->
               data-bs-target="#navMenu">
-      <!-- This button appears on smaller screens.
-           When clicked, it opens or closes the navigation menu. -->
 
+        <!-- Shows the 3-line "hamburger" menu icon image inside the mobile button. -->
         <span class="navbar-toggler-icon"></span>
-        <!-- Displays the hamburger menu icon. -->
 
+      <!-- Closes the mobile menu button. -->
       </button>
 
-
+      <!-- Creates the collapsible container that hides menu options on smaller phone screens. -->
       <div class="collapse navbar-collapse" id="navMenu">
-      <!-- Contains the navigation links.
-           Bootstrap can hide/show this section on smaller screens. -->
 
+        <!-- Starts a list of navigation menu links aligned to the right side. -->
         <ul class="navbar-nav ms-auto align-items-lg-center">
-        <!-- Creates a list of navigation links.
 
-             navbar-nav = Bootstrap navigation styling
-             ms-auto = pushes the links toward the right
-             align-items-lg-center = vertically aligns the links -->
-
+          <!-- Starts the first item in the menu list. -->
           <li class="nav-item">
+            <!-- Creates the link for the Home page. -->
             <a class="nav-link active"
+               <!-- Tells screen readers for visually impaired users that this is the active page. -->
                aria-current="page"
+               <!-- The web address destination for this link. -->
                href="index.html">
+              <!-- Text displayed on screen for this menu link. -->
               Home
+            <!-- Closes the Home link. -->
             </a>
+          <!-- Closes the first menu list item. -->
           </li>
-          <!-- Home link.
-               active means this is the current page. -->
 
-
+          <!-- Starts the second item in the menu list. -->
           <li class="nav-item">
+            <!-- Creates a link leading to the Plant Guide page. -->
             <a class="nav-link" href="plantguide.html">
+              <!-- Text displayed on screen for this menu link. -->
               Plant Guide
+            <!-- Closes the Plant Guide link. -->
             </a>
+          <!-- Closes the second menu list item. -->
           </li>
-          <!-- Takes the visitor to the Plant Guide page. -->
 
-
+          <!-- Starts the third item in the menu list. -->
           <li class="nav-item">
+            <!-- Creates a link leading to the Flea Market page. -->
             <a class="nav-link" href="Flea-market.html">
+              <!-- Text displayed on screen for this menu link. -->
               Flea-market
+            <!-- Closes the Flea Market link. -->
             </a>
+          <!-- Closes the third menu list item. -->
           </li>
-          <!-- Takes the visitor to the Flea-market page. -->
 
-
+          <!-- Starts the fourth item in the menu list. -->
           <li class="nav-item">
+            <!-- Creates a link leading to the Gallery page. -->
             <a class="nav-link" href="gallery.html">
+              <!-- Text displayed on screen for this menu link. -->
               Gallery
+            <!-- Closes the Gallery link. -->
             </a>
+          <!-- Closes the fourth menu list item. -->
           </li>
-          <!-- Takes the visitor to the Gallery page. -->
 
-
+          <!-- Starts the fifth item in the menu list. -->
           <li class="nav-item">
+            <!-- Creates a link leading to the Contact page. -->
             <a class="nav-link" href="contact.html">
+              <!-- Text displayed on screen for this menu link. -->
               Contact
+            <!-- Closes the Contact link. -->
             </a>
+          <!-- Closes the fifth menu list item. -->
           </li>
-          <!-- Takes the visitor to the Contact page. -->
 
-
-          <!-- ================================================= -->
-          <!-- MORE DROPDOWN MENU                                 -->
-          <!-- ================================================= -->
-
+          <!-- Starts a menu item that opens a drop-down list of sub-items. -->
           <li class="nav-item dropdown">
-          <!-- Creates a navigation item containing a dropdown menu. -->
 
+            <!-- Creates a clickable link labeled "More" that opens the drop-down list. -->
             <a class="nav-link dropdown-toggle"
+               <!-- Placeholder link address so the page doesn't reload when clicked. -->
                href="#"
+               <!-- Tells accessibility tools that this acts like a button. -->
                role="button"
+               <!-- Tells the script to reveal the drop-down options when clicked. -->
                data-bs-toggle="dropdown"
+               <!-- Indicates to accessibility tools that the menu is currently closed. -->
                aria-expanded="false">
+              <!-- Text displayed on the screen for this drop-down button. -->
               More
+            <!-- Closes the "More" link button. -->
             </a>
-            <!-- Clicking "More" opens the dropdown menu. -->
 
+            <!-- Creates the drop-down menu list aligned to the right edge. -->
             <ul class="dropdown-menu dropdown-menu-end">
-            <!-- Contains the options inside the dropdown. -->
 
+              <!-- Starts a drop-down list item. -->
               <li>
+                <!-- Creates a link that jumps directly down to the seasonal calendar section on this page. -->
                 <a class="dropdown-item" href="#seasons">
+                  <!-- Text label inside the drop-down list. -->
                   Seasonal Calendar
+                <!-- Closes the dropdown link. -->
                 </a>
+              <!-- Closes the drop-down list item. -->
               </li>
-              <!-- Clicking this moves the user to the Seasonal Calendar. -->
 
+              <!-- Starts a drop-down list item. -->
               <li>
+                <!-- Creates a link that jumps directly down to the FAQ section on this page. -->
                 <a class="dropdown-item" href="#faq">
+                  <!-- Text label inside the drop-down list. -->
                   FAQ
+                <!-- Closes the dropdown link. -->
                 </a>
+              <!-- Closes the drop-down list item. -->
               </li>
-              <!-- Clicking this moves the user to the FAQ section. -->
 
+              <!-- Starts a drop-down list item. -->
               <li>
+                <!-- Displays a subtle horizontal line to separate options in the menu. -->
                 <hr class="dropdown-divider">
+              <!-- Closes the divider item. -->
               </li>
-              <!-- Creates a horizontal dividing line. -->
 
+              <!-- Starts a drop-down list item. -->
               <li>
+                <!-- Creates a link that jumps down to the beginner checklist section on this page. -->
                 <a class="dropdown-item" href="#checklist">
+                  <!-- Text label inside the drop-down list. -->
                   Beginner Checklist
+                <!-- Closes the dropdown link. -->
                 </a>
+              <!-- Closes the drop-down list item. -->
               </li>
-              <!-- Clicking this moves the user to the Beginner Checklist. -->
 
+            <!-- Closes the drop-down menu container. -->
             </ul>
+          <!-- Closes the drop-down wrapper menu item. -->
           </li>
 
-
-          <!-- ================================================= -->
-          <!-- LOGIN ICON                                         -->
-          <!-- ================================================= -->
-
+          <!-- Starts a menu item for logging in. -->
           <li class="nav-item">
 
+            <!-- Creates a clickable icon button leading to the login page. -->
             <a class="nav-login-icon"
                href="loginpage.html"
+               <!-- Label read aloud by screen reader tools for blind visitors. -->
                aria-label="Log in"
+               <!-- Hover text displayed when hovering a mouse over this icon. -->
                title="Log in">
-            <!-- Clicking the icon takes the user to the login page. -->
 
+              <!-- Displays a user profile icon inside the login button link. -->
               <i class="bi bi-person-circle"></i>
-              <!-- Displays a person icon from Bootstrap Icons. -->
 
+            <!-- Closes the login icon link. -->
             </a>
 
+          <!-- Closes the login menu item. -->
           </li>
 
+        <!-- Closes the main navigation link list. -->
         </ul>
-        <!-- End of navigation links. -->
 
+      <!-- Closes the collapsible mobile menu section. -->
       </div>
-      <!-- End of collapsible navigation menu. -->
 
+    <!-- Closes the centered navigation box container. -->
     </div>
-    <!-- End of navigation container. -->
 
+  <!-- Closes the top navigation bar. -->
   </nav>
-  <!-- End of navigation bar. -->
 
 
-  <!-- ======================================================= -->
-  <!-- HERO / WELCOME SECTION                                   -->
-  <!-- ======================================================= -->
+<!-- ======================================================================= -->
+<!-- SECTION 3: HERO / WELCOME BANNER                                        -->
+<!-- The large banner section at the very top of the webpage.                -->
+<!-- ======================================================================= -->
 
+  <!-- Creates a large banner section positioned at the top of the main body content. -->
   <header class="hero d-flex align-items-center">
-  <!-- Creates the large welcome section at the top.
 
-       hero = our own CSS styling
-       d-flex = Bootstrap Flexbox layout
-       align-items-center = vertically centers the content -->
-
+    <!-- Creates a centered box with white text centered horizontally. -->
     <div class="container text-center text-white">
-    <!-- Keeps the content centered and gives it a limited width.
 
-         text-center = centers the text
-         text-white = makes the text white -->
-
+      <!-- Creates a small introductory phrase above the main headline. -->
       <p class="eyebrow">
+        <!-- Introductory subtitle text. -->
         A community for beginner gardeners
+      <!-- Closes the introductory phrase paragraph. -->
       </p>
-      <!-- Small introduction text. -->
 
-
+      <!-- Creates the main primary title of the website in large bold text. -->
       <h1 class="display-3 fw-bold">
+        <!-- Main title phrase part 1. -->
         Grow Your Garden,<br>
+        <!-- Main title phrase part 2 (starts on a new line). -->
         Grow Your Happiness
+      <!-- Closes the main heading element. -->
       </h1>
-      <!-- Main heading of the website.
 
-           <br> means "break line",
-           so "Grow Your Happiness" appears on a new line.
-
-           display-3 = large Bootstrap heading
-           fw-bold = makes the text bold -->
-
-
+      <!-- Creates a short descriptive sentence under the main heading. -->
       <p class="lead mb-4">
+        <!-- Supporting summary text. -->
         Simple guides, honest tips, and a friendly place to start.
+      <!-- Closes the descriptive sentence paragraph. -->
       </p>
-      <!-- Short description below the main heading. -->
 
-
+      <!-- Creates a large styled button link that opens the Plant Guide page. -->
       <a href="plantguide.html" class="btn btn-lg btn-hero">
+        <!-- Text label inside the button. -->
         Start Exploring
+        <!-- Shows a right arrow icon inside the button. -->
         <i class="bi bi-arrow-right"></i>
+      <!-- Closes the button link element. -->
       </a>
-      <!-- Creates a button-looking link.
 
-           Clicking it opens the Plant Guide page.
-
-           btn = Bootstrap button style
-           btn-lg = makes the button larger
-           btn-hero = our own CSS styling
-
-           The arrow is a Bootstrap icon. -->
-
-
-      <!-- =================================================== -->
-      <!-- GROWING PROCESS                                      -->
-      <!-- =================================================== -->
-
+      <!-- Creates a horizontal row containing 3 plant growth stages. -->
       <div class="row justify-content-center mt-5 growth-row">
-      <!-- Creates a row containing the three stages of plant growth. -->
 
+        <!-- Creates a grid box for Stage 1. -->
         <div class="col-4 col-md-3">
-        <!-- Creates one column for the first stage. -->
 
+          <!-- Container box for the first growth step visual. -->
           <div class="growth-step">
+            <!-- Displays a solid circle icon representing a seed. -->
             <i class="bi bi-circle-fill stage-icon"></i>
+            <!-- Label for step 1. -->
             <span>1. Seed</span>
+          <!-- Closes the first growth step box. -->
           </div>
-          <!-- Shows the first stage: Seed. -->
 
+        <!-- Closes the grid box for Stage 1. -->
         </div>
 
-
+        <!-- Creates a grid box for Stage 2. -->
         <div class="col-4 col-md-3">
-        <!-- Creates the second column. -->
 
+          <!-- Container box for the second growth step visual. -->
           <div class="growth-step">
+            <!-- Displays a flower icon representing a sprout. -->
             <i class="bi bi-flower2 stage-icon"></i>
+            <!-- Label for step 2. -->
             <span>2. Sprout</span>
+          <!-- Closes the second growth step box. -->
           </div>
-          <!-- Shows the second stage: Sprout. -->
 
+        <!-- Closes the grid box for Stage 2. -->
         </div>
 
-
+        <!-- Creates a grid box for Stage 3. -->
         <div class="col-4 col-md-3">
-        <!-- Creates the third column. -->
 
+          <!-- Container box for the third growth step visual. -->
           <div class="growth-step">
+            <!-- Displays an open flower icon representing a blooming plant. -->
             <i class="bi bi-flower3 stage-icon"></i>
+            <!-- Label for step 3. -->
             <span>3. Bloom</span>
+          <!-- Closes the third growth step box. -->
           </div>
-          <!-- Shows the third stage: Bloom. -->
 
+        <!-- Closes the grid box for Stage 3. -->
         </div>
 
+      <!-- Closes the growth stages row box. -->
       </div>
-      <!-- End of growth stages. -->
 
+    <!-- Closes the hero content container box. -->
     </div>
-    <!-- End of hero content. -->
 
+  <!-- Closes the main hero welcome banner. -->
   </header>
-  <!-- End of hero section. -->
 
 
-  <!-- ======================================================= -->
-  <!-- TOMATO SEASON ALERT                                      -->
-  <!-- ======================================================= -->
+<!-- ======================================================================= -->
+<!-- SECTION 4: SEASONAL NOTIFICATION ALERT BANNER                           -->
+<!-- A dismissible green banner alerting visitors to tomato season.          -->
+<!-- ======================================================================= -->
 
+  <!-- Creates a centered content container with top spacing. -->
   <div class="container mt-4">
-  <!-- Creates a centered container with some space above it. -->
 
+    <!-- Creates a bright green announcement banner box with rounded corners and shadow. -->
     <div class="alert alert-success alert-dismissible fade show shadow-sm"
+         <!-- Tells accessibility software that this is a pop-up alert message. -->
          role="alert">
-    <!-- Creates a green Bootstrap alert box. -->
 
+      <!-- Displays a calendar icon next to the alert message. -->
       <i class="bi bi-calendar-check me-2"></i>
-      <!-- Calendar icon. -->
 
+      <!-- Displays highlighted bold text inside the alert banner. -->
       <strong>It's tomato season!</strong>
-      <!-- Makes this text bold. -->
 
+      <!-- Displays additional guidance text. -->
       Check the seasonal calendar below.
-      <!-- Message shown to the user. -->
 
-
+      <!-- Creates an 'X' button in the top right corner allowing visitors to close this banner. -->
       <button type="button"
+              <!-- Styling class for standard alert dismiss buttons. -->
               class="btn-close"
+              <!-- Tells the browser that clicking this closes the alert banner box. -->
               data-bs-dismiss="alert"
+              <!-- Screen reader descriptor for visually impaired users. -->
               aria-label="Close">
+      <!-- Closes the dismiss button element. -->
       </button>
-      <!-- Creates an X button.
-           Clicking it closes the alert. -->
 
+    <!-- Closes the alert message banner. -->
     </div>
 
+  <!-- Closes the alert container box. -->
   </div>
-  <!-- End of alert section. -->
 
 
-  <!-- ======================================================= -->
-  <!-- BENEFITS OF GARDENING                                   -->
-  <!-- ======================================================= -->
+<!-- ======================================================================= -->
+<!-- SECTION 5: BENEFITS OF GARDENING                                        -->
+<!-- Highlights 4 main benefits of gardening using cards.                     -->
+<!-- ======================================================================= -->
 
+  <!-- Creates a dedicated content section explaining why gardening is beneficial. -->
   <section class="py-5 section-benefits">
-  <!-- Starts a new section explaining why gardening is useful. -->
 
+    <!-- Creates a centered container box. -->
     <div class="container">
-    <!-- Centers the content. -->
 
+      <!-- Creates a centered heading for this section. -->
       <h2 class="section-title text-center mb-5">
+        <!-- Title text string. -->
         Why People Love Gardening
+      <!-- Closes the section title. -->
       </h2>
-      <!-- Section heading. -->
 
-
+      <!-- Creates a grid that places cards 1 per row on phones and 4 per row on desktop displays. -->
       <div class="row row-cols-1 row-cols-md-4 g-4">
-      <!-- Creates a responsive grid.
 
-           On small screens = 1 card per row.
-           On medium/large screens = 4 cards per row.
-           g-4 = adds space between cards. -->
-
-
-        <!-- ================= CARD 1 ================= -->
-
+        <!-- Grid column for Benefit Card 1. -->
         <div class="col">
+          <!-- Creates a white card spanning equal height with centered text inside. -->
           <div class="card benefit-card h-100 text-center">
 
+            <!-- Creates the padded inner content area of the card. -->
             <div class="card-body">
-              <!-- The inside area of the card. -->
 
+              <!-- Displays a happy smiley face icon. -->
               <i class="bi bi-emoji-smile benefit-icon"></i>
-              <!-- Smiley face icon. -->
 
+              <!-- Card title heading. -->
               <h5 class="card-title">
+                <!-- Benefit title label. -->
                 Stress Relief
+              <!-- Closes the card title. -->
               </h5>
-              <!-- Card title. -->
 
+              <!-- Card description text. -->
               <p class="card-text">
+                <!-- Short detail text. -->
                 A calm, screen-free hobby.
+              <!-- Closes the card description text. -->
               </p>
-              <!-- Card description. -->
 
+            <!-- Closes card body area. -->
             </div>
 
+          <!-- Closes Card 1. -->
           </div>
+        <!-- Closes grid column for Card 1. -->
         </div>
 
-
-        <!-- ================= CARD 2 ================= -->
-
+        <!-- Grid column for Benefit Card 2. -->
         <div class="col">
 
+          <!-- Creates a white card spanning equal height with centered text inside. -->
           <div class="card benefit-card h-100 text-center">
 
+            <!-- Creates the padded inner content area of the card. -->
             <div class="card-body">
 
+              <!-- Displays a wind/fresh air icon. -->
               <i class="bi bi-wind benefit-icon"></i>
-              <!-- Wind icon. -->
 
+              <!-- Card title heading. -->
               <h5 class="card-title">
+                <!-- Benefit title label. -->
                 Better Air
+              <!-- Closes the card title. -->
               </h5>
 
+              <!-- Card description text. -->
               <p class="card-text">
+                <!-- Short detail text. -->
                 Plants freshen the air.
+              <!-- Closes the card description text. -->
               </p>
 
+            <!-- Closes card body area. -->
             </div>
 
+          <!-- Closes Card 2. -->
           </div>
 
+        <!-- Closes grid column for Card 2. -->
         </div>
 
-
-        <!-- ================= CARD 3 ================= -->
-
+        <!-- Grid column for Benefit Card 3. -->
         <div class="col">
 
+          <!-- Creates a white card spanning equal height with centered text inside. -->
           <div class="card benefit-card h-100 text-center">
 
+            <!-- Creates the padded inner content area of the card. -->
             <div class="card-body">
 
+              <!-- Displays a harvest basket icon. -->
               <i class="bi bi-basket benefit-icon"></i>
-              <!-- Basket icon. -->
 
+              <!-- Card title heading. -->
               <h5 class="card-title">
+                <!-- Benefit title label. -->
                 Fresh Food
+              <!-- Closes the card title. -->
               </h5>
 
+              <!-- Card description text. -->
               <p class="card-text">
+                <!-- Short detail text. -->
                 Grow your own tomatoes.
+              <!-- Closes the card description text. -->
               </p>
 
+            <!-- Closes card body area. -->
             </div>
 
+          <!-- Closes Card 3. -->
           </div>
 
+        <!-- Closes grid column for Card 3. -->
         </div>
 
-
-        <!-- ================= CARD 4 ================= -->
-
+        <!-- Grid column for Benefit Card 4. -->
         <div class="col">
 
+          <!-- Creates a white card spanning equal height with centered text inside. -->
           <div class="card benefit-card h-100 text-center">
 
+            <!-- Creates the padded inner content area of the card. -->
             <div class="card-body">
 
+              <!-- Displays a globe/nature icon. -->
               <i class="bi bi-globe-asia-australia benefit-icon"></i>
-              <!-- Globe icon. -->
 
+              <!-- Card title heading. -->
               <h5 class="card-title">
+                <!-- Benefit title label. -->
                 Help Nature
+              <!-- Closes the card title. -->
               </h5>
 
+              <!-- Card description text. -->
               <p class="card-text">
+                <!-- Short detail text. -->
                 Supports bees and birds.
+              <!-- Closes the card description text. -->
               </p>
 
+            <!-- Closes card body area. -->
             </div>
 
+          <!-- Closes Card 4. -->
           </div>
 
+        <!-- Closes grid column for Card 4. -->
         </div>
 
+      <!-- Closes the card grid container row. -->
       </div>
-      <!-- End of four benefit cards. -->
 
+    <!-- Closes centered container box. -->
     </div>
 
+  <!-- Closes the benefits section. -->
   </section>
-  <!-- End of gardening benefits section. -->
 
 
-  <!-- ======================================================= -->
-  <!-- SEASONAL SPOTLIGHT                                      -->
-  <!-- ======================================================= -->
+<!-- ======================================================================= -->
+<!-- SECTION 6: SEASONAL SPOTLIGHT (TABBED TABLES)                           -->
+<!-- Switchable tabs showing plant advice for Spring, Summer, Rainy, & Indoor-->
+<!-- ======================================================================= -->
 
+  <!-- Creates a section with a light green background and anchor target named 'seasons'. -->
   <section class="py-5 bg-light-green" id="seasons">
-  <!-- Section containing gardening information based on seasons.
 
-       id="seasons" gives this section a name.
-       Links such as href="#seasons" can jump here. -->
-
+    <!-- Container wrapper. -->
     <div class="container">
 
+      <!-- Section title heading. -->
       <h2 class="section-title text-center mb-4">
+        <!-- Section title text label. -->
         Seasonal Spotlight
+      <!-- Closes section title heading. -->
       </h2>
 
-
-      <!-- =================================================== -->
-      <!-- SEASON BUTTONS                                       -->
-      <!-- =================================================== -->
-
+      <!-- Creates a row of centered tab buttons shaped like pills for selecting seasons. -->
       <ul class="nav nav-pills justify-content-center mb-4"
+          <!-- Element identification name. -->
           id="seasonTabs">
-      <!-- Creates the four clickable season buttons. -->
 
+        <!-- List item for the Spring tab button. -->
         <li class="nav-item">
+          <!-- Button that opens the Spring tab view (selected by default). -->
           <button class="nav-link active"
+                  <!-- Instructs the browser to handle this as a tab button. -->
                   data-bs-toggle="pill"
+                  <!-- Tells the button to reveal the panel named 'spring'. -->
                   data-bs-target="#spring">
+            <!-- Label shown on the button. -->
             Spring
+          <!-- Closes button element. -->
           </button>
+        <!-- Closes Spring tab list item. -->
         </li>
-        <!-- Clicking Spring displays the Spring information. -->
 
-
+        <!-- List item for the Summer tab button. -->
         <li class="nav-item">
+          <!-- Button that opens the Summer tab view. -->
           <button class="nav-link"
+                  <!-- Instructs the browser to handle this as a tab button. -->
                   data-bs-toggle="pill"
+                  <!-- Tells the button to reveal the panel named 'summer'. -->
                   data-bs-target="#summer">
+            <!-- Label shown on the button. -->
             Summer
+          <!-- Closes button element. -->
           </button>
+        <!-- Closes Summer tab list item. -->
         </li>
-        <!-- Clicking Summer displays Summer information. -->
 
-
+        <!-- List item for the Rainy tab button. -->
         <li class="nav-item">
+          <!-- Button that opens the Rainy tab view. -->
           <button class="nav-link"
+                  <!-- Instructs the browser to handle this as a tab button. -->
                   data-bs-toggle="pill"
+                  <!-- Tells the button to reveal the panel named 'rainy'. -->
                   data-bs-target="#rainy">
+            <!-- Label shown on the button. -->
             Rainy
+          <!-- Closes button element. -->
           </button>
+        <!-- Closes Rainy tab list item. -->
         </li>
-        <!-- Clicking Rainy displays Rainy information. -->
 
-
+        <!-- List item for the Indoor tab button. -->
         <li class="nav-item">
+          <!-- Button that opens the Indoor tab view. -->
           <button class="nav-link"
+                  <!-- Instructs the browser to handle this as a tab button. -->
                   data-bs-toggle="pill"
+                  <!-- Tells the button to reveal the panel named 'indoor'. -->
                   data-bs-target="#indoor">
+            <!-- Label shown on the button. -->
             Indoor
+          <!-- Closes button element. -->
           </button>
+        <!-- Closes Indoor tab list item. -->
         </li>
-        <!-- Clicking Indoor displays Indoor information. -->
 
+      <!-- Closes season selection tab buttons list. -->
       </ul>
 
-
+      <!-- Container holding all tab content tables. -->
       <div class="tab-content">
-      <!-- Holds the information for each season. -->
 
-
-        <!-- ================= SPRING ================= -->
-
+        <!-- Spring tab panel container (visible by default). -->
         <div class="tab-pane fade show active" id="spring">
-        <!-- This is the Spring tab.
-             It is shown first because it has "active". -->
 
+          <!-- Creates a white data table with zebra-striped alternating rows. -->
           <table class="table table-striped align-middle bg-white">
-          <!-- Creates a Bootstrap table. -->
 
+            <!-- Defines the top header row block of the table. -->
             <thead>
-            <!-- Contains the table headings. -->
 
+              <!-- Table header row. -->
               <tr>
+                <!-- Column header title 1. -->
                 <th>Best Plant</th>
+                <!-- Column header title 2. -->
                 <th>Water</th>
+                <!-- Column header title 3. -->
                 <th>Tip</th>
+              <!-- Closes header row. -->
               </tr>
 
+            <!-- Closes table head block. -->
             </thead>
 
-
+            <!-- Table content body block. -->
             <tbody>
-            <!-- Contains the actual table information. -->
 
+              <!-- Spring Row 1. -->
               <tr>
+                <!-- Cell value for plant name. -->
                 <td>Tomatoes</td>
+                <!-- Cell value for water frequency. -->
                 <td>Every 2 days</td>
+                <!-- Cell value for plant tip. -->
                 <td>Sow directly after frost.</td>
+              <!-- Closes Spring Row 1. -->
               </tr>
 
+              <!-- Spring Row 2. -->
               <tr>
+                <!-- Cell value for plant name. -->
                 <td>Tulips</td>
+                <!-- Cell value for water frequency. -->
                 <td>Low, weekly</td>
+                <!-- Cell value for plant tip. -->
                 <td>Plant bulbs pointy-side up.</td>
+              <!-- Closes Spring Row 2. -->
               </tr>
 
+              <!-- Spring Row 3. -->
               <tr>
+                <!-- Cell value for plant name. -->
                 <td>Carrots</td>
+                <!-- Cell value for water frequency. -->
                 <td>Every 2-3 days</td>
+                <!-- Cell value for plant tip. -->
                 <td>Loosen soil deeply before sowing.</td>
+              <!-- Closes Spring Row 3. -->
               </tr>
 
+              <!-- Spring Row 4. -->
               <tr>
+                <!-- Cell value for plant name. -->
                 <td>Lettuce</td>
+                <!-- Cell value for water frequency. -->
                 <td>Every 2-3 days</td>
+                <!-- Cell value for plant tip. -->
                 <td>Keep in partial sun to avoid bolting.</td>
+              <!-- Closes Spring Row 4. -->
               </tr>
 
+            <!-- Closes Spring table body. -->
             </tbody>
 
+          <!-- Closes Spring table. -->
           </table>
 
+        <!-- Closes Spring tab panel. -->
         </div>
 
-
-        <!-- ================= SUMMER ================= -->
-
+        <!-- Summer tab panel container (hidden until clicked). -->
         <div class="tab-pane fade" id="summer">
 
+          <!-- Creates a white data table with zebra-striped alternating rows. -->
           <table class="table table-striped align-middle bg-white">
 
+            <!-- Defines the top header row block of the table. -->
             <thead>
+              <!-- Table header row. -->
               <tr>
+                <!-- Column header title 1. -->
                 <th>Best Plant</th>
+                <!-- Column header title 2. -->
                 <th>Water</th>
+                <!-- Column header title 3. -->
                 <th>Tip</th>
+              <!-- Closes header row. -->
               </tr>
+            <!-- Closes table head block. -->
             </thead>
 
+            <!-- Table content body block. -->
             <tbody>
 
+              <!-- Summer Row 1. -->
               <tr>
+                <!-- Cell value for plant name. -->
                 <td>Sunflowers</td>
+                <!-- Cell value for water frequency. -->
                 <td>Daily</td>
+                <!-- Cell value for plant tip. -->
                 <td>Give full sun all day.</td>
+              <!-- Closes Summer Row 1. -->
               </tr>
 
+              <!-- Summer Row 2. -->
               <tr>
+                <!-- Cell value for plant name. -->
                 <td>Marigolds</td>
+                <!-- Cell value for water frequency. -->
                 <td>Low, weekly</td>
+                <!-- Cell value for plant tip. -->
                 <td>Deadhead to keep blooms coming.</td>
+              <!-- Closes Summer Row 2. -->
               </tr>
 
+              <!-- Summer Row 3. -->
               <tr>
+                <!-- Cell value for plant name. -->
                 <td>Basil</td>
+                <!-- Cell value for water frequency. -->
                 <td>Every 2-3 days</td>
+                <!-- Cell value for plant tip. -->
                 <td>Pinch off flowers to keep leaves tender.</td>
+              <!-- Closes Summer Row 3. -->
               </tr>
 
+              <!-- Summer Row 4. -->
               <tr>
+                <!-- Cell value for plant name. -->
                 <td>Roses</td>
+                <!-- Cell value for water frequency. -->
                 <td>Weekly, deep soak</td>
+                <!-- Cell value for plant tip. -->
                 <td>Water at the base to prevent leaf spot.</td>
+              <!-- Closes Summer Row 4. -->
               </tr>
 
+            <!-- Closes Summer table body. -->
             </tbody>
 
+          <!-- Closes Summer table. -->
           </table>
 
+        <!-- Closes Summer tab panel. -->
         </div>
 
-
-        <!-- ================= RAINY ================= -->
-
+        <!-- Rainy tab panel container (hidden until clicked). -->
         <div class="tab-pane fade" id="rainy">
 
+          <!-- Creates a white data table with zebra-striped alternating rows. -->
           <table class="table table-striped align-middle bg-white">
 
+            <!-- Defines the top header row block of the table. -->
             <thead>
+              <!-- Table header row. -->
               <tr>
+                <!-- Column header title 1. -->
                 <th>Best Plant</th>
+                <!-- Column header title 2. -->
                 <th>Water</th>
+                <!-- Column header title 3. -->
                 <th>Tip</th>
+              <!-- Closes header row. -->
               </tr>
+            <!-- Closes table head block. -->
             </thead>
 
+            <!-- Table content body block. -->
             <tbody>
 
+              <!-- Rainy Row 1. -->
               <tr>
+                <!-- Cell value for plant name. -->
                 <td>Herbs</td>
+                <!-- Cell value for water frequency. -->
                 <td>When dry</td>
+                <!-- Cell value for plant tip. -->
                 <td>Watch out for root rot.</td>
+              <!-- Closes Rainy Row 1. -->
               </tr>
 
+              <!-- Rainy Row 2. -->
               <tr>
+                <!-- Cell value for plant name. -->
                 <td>Mint</td>
+                <!-- Cell value for water frequency. -->
                 <td>Daily</td>
+                <!-- Cell value for plant tip. -->
                 <td>Grow in a pot so it can't spread out of control.</td>
+              <!-- Closes Rainy Row 2. -->
               </tr>
 
+              <!-- Rainy Row 3. -->
               <tr>
+                <!-- Cell value for plant name. -->
                 <td>Rosemary</td>
+                <!-- Cell value for water frequency. -->
                 <td>Low, when dry</td>
+                <!-- Cell value for plant tip. -->
                 <td>Ensure sharp drainage during wet spells.</td>
+              <!-- Closes Rainy Row 3. -->
               </tr>
 
+            <!-- Closes Rainy table body. -->
             </tbody>
 
+          <!-- Closes Rainy table. -->
           </table>
 
+        <!-- Closes Rainy tab panel. -->
         </div>
 
-
-        <!-- ================= INDOOR ================= -->
-
+        <!-- Indoor tab panel container (hidden until clicked). -->
         <div class="tab-pane fade" id="indoor">
 
+          <!-- Creates a white data table with zebra-striped alternating rows. -->
           <table class="table table-striped align-middle bg-white">
 
+            <!-- Defines the top header row block of the table. -->
             <thead>
+              <!-- Table header row. -->
               <tr>
+                <!-- Column header title 1. -->
                 <th>Best Plant</th>
+                <!-- Column header title 2. -->
                 <th>Water</th>
+                <!-- Column header title 3. -->
                 <th>Tip</th>
+              <!-- Closes header row. -->
               </tr>
+            <!-- Closes table head block. -->
             </thead>
 
+            <!-- Table content body block. -->
             <tbody>
 
+              <!-- Indoor Row 1. -->
               <tr>
+                <!-- Cell value for plant name. -->
                 <td>Succulents</td>
+                <!-- Cell value for water frequency. -->
                 <td>1-2 weeks</td>
+                <!-- Cell value for plant tip. -->
                 <td>Bright indirect light.</td>
+              <!-- Closes Indoor Row 1. -->
               </tr>
 
+              <!-- Indoor Row 2. -->
               <tr>
+                <!-- Cell value for plant name. -->
                 <td>Snake Plant</td>
+                <!-- Cell value for water frequency. -->
                 <td>Every 2-3 weeks</td>
+                <!-- Cell value for plant tip. -->
                 <td>Tolerates low light and neglect well.</td>
+              <!-- Closes Indoor Row 2. -->
               </tr>
 
+              <!-- Indoor Row 3. -->
               <tr>
+                <!-- Cell value for plant name. -->
                 <td>Pothos</td>
+                <!-- Cell value for water frequency. -->
                 <td>Weekly</td>
+                <!-- Cell value for plant tip. -->
                 <td>Let soil dry between waterings.</td>
+              <!-- Closes Indoor Row 3. -->
               </tr>
 
+              <!-- Indoor Row 4. -->
               <tr>
+                <!-- Cell value for plant name. -->
                 <td>Peace Lily</td>
+                <!-- Cell value for water frequency. -->
                 <td>Weekly</td>
+                <!-- Cell value for plant tip. -->
                 <td>Drooping leaves are a sign it needs water.</td>
+              <!-- Closes Indoor Row 4. -->
               </tr>
 
+            <!-- Closes Indoor table body. -->
             </tbody>
 
+          <!-- Closes Indoor table. -->
           </table>
 
+        <!-- Closes Indoor tab panel. -->
         </div>
 
+      <!-- Closes tab content container. -->
       </div>
-      <!-- End of seasonal tabs. -->
 
+    <!-- Closes container box. -->
     </div>
 
+  <!-- Closes Seasonal Spotlight section. -->
   </section>
-  <!-- End of Seasonal Spotlight. -->
 
 
-  <!-- ======================================================= -->
-  <!-- FEATURED PLANTS                                          -->
-  <!-- ======================================================= -->
+<!-- ======================================================================= -->
+<!-- SECTION 7: FEATURED PLANTS SHOWCASE                                     -->
+<!-- Cards presenting specific plants with care difficulty meters.            -->
+<!-- ======================================================================= -->
 
+  <!-- Creates a section showcasing featured plant cards. -->
   <section class="py-5">
 
+    <!-- Container wrapper box. -->
     <div class="container">
 
+      <!-- Centered section title. -->
       <h2 class="section-title text-center mb-5">
+        <!-- Title text. -->
         Featured Plants
+      <!-- Closes section title. -->
       </h2>
 
-
+      <!-- Responsive grid displaying 1 column on phones, 2 on small screens, and 3 on computers. -->
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
-      <!-- Creates a responsive grid for the plant cards.
 
-           Small screens = 1 card
-           Medium screens = 2 cards
-           Larger screens = 3 cards -->
-
-
-        <!-- ================= ROSE CARD ================= -->
-
+        <!-- Column box for Plant 1 (Rose). -->
         <div class="col">
 
+          <!-- Card frame spanning full height. -->
           <div class="card plant-card h-100">
 
+            <!-- Container that lets us position the difficulty tag over the image. -->
             <div class="position-relative">
 
+              <!-- Displays the image for the Rose plant. -->
               <img
                 src="https://cdn.pixabay.com/photo/2023/09/28/08/40/rose-8280989_640.jpg"
+                <!-- Fits image neatly onto the top of the card. -->
                 class="card-img-top"
+                <!-- Text description read aloud if the image fails to load. -->
                 alt="Rose">
-              <!-- Displays the Rose picture.
 
-                   alt="Rose" describes the image if
-                   the image cannot be displayed. -->
-
-
+              <!-- Displays a yellow badge tag reading "Medium" in the top-right corner of the image. -->
               <span class="badge bg-warning text-dark position-absolute top-0 end-0 m-2">
+                <!-- Difficulty tag text. -->
                 Medium
+              <!-- Closes badge tag. -->
               </span>
-              <!-- Shows a yellow "Medium" difficulty label. -->
 
+            <!-- Closes relative image box. -->
             </div>
 
-
+            <!-- Card text area box. -->
             <div class="card-body">
 
+              <!-- Title for Plant Card 1. -->
               <h5 class="card-title">
+                <!-- Plant name label. -->
                 Rose
+              <!-- Closes card title. -->
               </h5>
 
+              <!-- Muted text paragraph displaying plant care icon shortcuts. -->
               <p class="card-text small text-muted">
+                <!-- Sun icon with hover label reading "Full sun". -->
                 <i class="bi bi-sun" title="Full sun"></i>
+                <!-- Droplet icon with hover label reading "Weekly". -->
                 <i class="bi bi-droplet" title="Weekly"></i>
+              <!-- Closes icons paragraph. -->
               </p>
-              <!-- Shows icons telling the user about sunlight
-                   and watering requirements. -->
 
-
+              <!-- Creates a progress bar container track. -->
               <div class="progress">
 
+                <!-- Fills the progress bar to 55% with a yellow difficulty indicator color. -->
                 <div class="progress-bar bg-warning text-dark"
                      role="progressbar"
                      style="width: 55%"
                      aria-valuenow="55"
                      aria-valuemin="0"
                      aria-valuemax="100">
+                  <!-- Text label inside the progress bar fill. -->
                   55%
+                <!-- Closes progress bar fill element. -->
                 </div>
 
+              <!-- Closes progress bar track. -->
               </div>
-              <!-- Creates a progress bar showing 55% difficulty. -->
 
-
+              <!-- Difficulty label text rendered below progress bar. -->
               <p class="small text-muted mb-0 mt-1">
                 Difficulty: Medium
+              <!-- Closes difficulty label text paragraph. -->
               </p>
 
+            <!-- Closes card body area. -->
             </div>
 
+          <!-- Closes Rose plant card. -->
           </div>
 
+        <!-- Closes column for Rose plant card. -->
         </div>
 
-
-        <!-- ================= SUNFLOWER CARD ================= -->
-
+        <!-- Column box for Plant 2 (Sunflower). -->
         <div class="col">
 
+          <!-- Card frame spanning full height. -->
           <div class="card plant-card h-100">
 
+            <!-- Container that lets us position the difficulty tag over the image. -->
             <div class="position-relative">
 
+              <!-- Displays the image for the Sunflower plant. -->
               <img
                 src="https://cdn.pixabay.com/photo/2024/08/25/02/16/sunflower-8995443_640.jpg"
+                <!-- Fits image neatly onto the top of the card. -->
                 class="card-img-top"
+                <!-- Text description read aloud if the image fails to load. -->
                 alt="Sunflower">
 
+              <!-- Displays a green badge tag reading "Easy" in the top-right corner of the image. -->
               <span class="badge bg-success position-absolute top-0 end-0 m-2">
+                <!-- Difficulty tag text. -->
                 Easy
+              <!-- Closes badge tag. -->
               </span>
-              <!-- Green badge showing that the plant is easy. -->
 
+            <!-- Closes relative image box. -->
             </div>
 
-
+            <!-- Card text area box. -->
             <div class="card-body">
 
+              <!-- Title for Plant Card 2. -->
               <h5 class="card-title">
+                <!-- Plant name label. -->
                 Sunflower
+              <!-- Closes card title. -->
               </h5>
 
+              <!-- Muted text paragraph displaying plant care icon shortcuts. -->
               <p class="card-text small text-muted">
+                <!-- Sun icon with hover label reading "Full sun". -->
                 <i class="bi bi-sun" title="Full sun"></i>
+                <!-- Droplet icon with hover label reading "Twice weekly". -->
                 <i class="bi bi-droplet" title="Twice weekly"></i>
+              <!-- Closes icons paragraph. -->
               </p>
 
-
+              <!-- Creates a progress bar container track. -->
               <div class="progress">
 
+                <!-- Fills the progress bar to 40% with a green difficulty indicator color. -->
                 <div class="progress-bar bg-success"
                      role="progressbar"
                      style="width: 40%"
                      aria-valuenow="40"
                      aria-valuemin="0"
                      aria-valuemax="100">
+                  <!-- Text label inside the progress bar fill. -->
                   40%
+                <!-- Closes progress bar fill element. -->
                 </div>
 
+              <!-- Closes progress bar track. -->
               </div>
 
+              <!-- Difficulty label text rendered below progress bar. -->
               <p class="small text-muted mb-0 mt-1">
                 Difficulty: Easy
+              <!-- Closes difficulty label text paragraph. -->
               </p>
 
+            <!-- Closes card body area. -->
             </div>
 
+          <!-- Closes Sunflower plant card. -->
           </div>
 
+        <!-- Closes column for Sunflower plant card. -->
         </div>
 
-
-        <!-- ================= ROSEMARY CARD ================= -->
-
+        <!-- Column box for Plant 3 (Rosemary). -->
         <div class="col">
 
+          <!-- Card frame spanning full height. -->
           <div class="card plant-card h-100">
 
+            <!-- Container that lets us position the difficulty tag over the image. -->
             <div class="position-relative">
 
+              <!-- Displays the image for the Rosemary plant. -->
               <img
                 src="https://cdn.pixabay.com/photo/2016/08/10/13/55/rosemary-1583261_640.jpg"
+                <!-- Fits image neatly onto the top of the card. -->
                 class="card-img-top"
+                <!-- Text description read aloud if the image fails to load. -->
                 alt="Rosemary">
 
+              <!-- Displays a green badge tag reading "Easy" in the top-right corner of the image. -->
               <span class="badge bg-success position-absolute top-0 end-0 m-2">
+                <!-- Difficulty tag text. -->
                 Easy
+              <!-- Closes badge tag. -->
               </span>
 
+            <!-- Closes relative image box. -->
             </div>
 
-
+            <!-- Card text area box. -->
             <div class="card-body">
 
+              <!-- Title for Plant Card 3. -->
               <h5 class="card-title">
+                <!-- Plant name label. -->
                 Rosemary
+              <!-- Closes card title. -->
               </h5>
 
+              <!-- Muted text paragraph displaying plant care icon shortcuts. -->
               <p class="card-text small text-muted">
+                <!-- Sun icon with hover label reading "Full sun". -->
                 <i class="bi bi-sun" title="Full sun"></i>
+                <!-- Droplet icon with hover label reading "Sparingly". -->
                 <i class="bi bi-droplet" title="Sparingly"></i>
+              <!-- Closes icons paragraph. -->
               </p>
 
-
+              <!-- Creates a progress bar container track. -->
               <div class="progress">
 
+                <!-- Fills the progress bar to 35% with a green difficulty indicator color. -->
                 <div class="progress-bar bg-success"
                      role="progressbar"
                      style="width: 35%"
                      aria-valuenow="35"
                      aria-valuemin="0"
                      aria-valuemax="100">
+                  <!-- Text label inside the progress bar fill. -->
                   35%
+                <!-- Closes progress bar fill element. -->
                 </div>
 
+              <!-- Closes progress bar track. -->
               </div>
 
+              <!-- Difficulty label text rendered below progress bar. -->
               <p class="small text-muted mb-0 mt-1">
                 Difficulty: Easy
+              <!-- Closes difficulty label text paragraph. -->
               </p>
 
+            <!-- Closes card body area. -->
             </div>
 
+          <!-- Closes Rosemary plant card. -->
           </div>
 
+        <!-- Closes column for Rosemary plant card. -->
         </div>
 
+      <!-- Closes plant grid row container. -->
       </div>
-      <!-- End of plant cards. -->
 
-
+      <!-- Container centered box holding the call-to-action button. -->
       <div class="text-center mt-4">
 
+        <!-- Button link leading to the main Plant Guide page. -->
         <a href="plantguide.html" class="btn btn-outline-forest">
+          <!-- Button label text display. -->
           See All Plants
+        <!-- Closes button link. -->
         </a>
 
+      <!-- Closes text center box. -->
       </div>
-      <!-- Button that takes the user to the complete Plant Guide. -->
 
+    <!-- Closes main container box. -->
     </div>
 
+  <!-- Closes Featured Plants section. -->
   </section>
-  <!-- End of Featured Plants section. -->
 
 
-  <!-- ======================================================= -->
-  <!-- TESTIMONIAL CAROUSEL                                    -->
-  <!-- ======================================================= -->
+<!-- ======================================================================= -->
+<!-- SECTION 8: TESTIMONIAL CAROUSEL SLIDER                                  -->
+<!-- Automatically rotating user reviews slide box.                          -->
+<!-- ======================================================================= -->
 
+  <!-- Creates a section with light green background for review quotes. -->
   <section class="py-5 bg-light-green">
 
+    <!-- Centered container wrapper. -->
     <div class="container">
 
+      <!-- Creates a slide show component (carousel) that automatically rotates content. -->
       <div id="testimonialCarousel"
            class="carousel slide"
            data-bs-ride="carousel">
-      <!-- Creates a Bootstrap carousel.
-           A carousel is a section that can show different pieces
-           of content one after another. -->
 
-
+        <!-- Inner box wrapping all slide panels with centered text alignment. -->
         <div class="carousel-inner text-center">
-        <!-- Contains all of the slides. -->
 
-
+          <!-- First review slide (active and visible first). -->
           <div class="carousel-item active">
+            <!-- Large italicized quote text. -->
             <p class="fs-4 fst-italic">
               "Helped grow my first tomatoes!"
+            <!-- Closes quote paragraph. -->
             </p>
 
+            <!-- Muted reviewer name and star rating. -->
             <p class="text-muted">
               ★★★★★ — Sarah
+            <!-- Closes reviewer signature paragraph. -->
             </p>
+          <!-- Closes first testimonial slide panel. -->
           </div>
-          <!-- First testimonial. -->
 
-
+          <!-- Second review slide panel. -->
           <div class="carousel-item">
 
+            <!-- Large italicized quote text. -->
             <p class="fs-4 fst-italic">
               "Gardening guide made for beginners."
+            <!-- Closes quote paragraph. -->
             </p>
 
+            <!-- Muted reviewer name and star rating. -->
             <p class="text-muted">
               ★★★★★ — Marcus
+            <!-- Closes reviewer signature paragraph. -->
             </p>
 
+          <!-- Closes second testimonial slide panel. -->
           </div>
-          <!-- Second testimonial. -->
 
+        <!-- Closes inner carousel container box. -->
         </div>
 
+      <!-- Closes interactive carousel slider component. -->
       </div>
 
+    <!-- Closes container wrapper. -->
     </div>
 
+  <!-- Closes Testimonial section. -->
   </section>
-  <!-- End of testimonial section. -->
 
 
-  <!-- ======================================================= -->
-  <!-- FAQ SECTION                                             -->
-  <!-- ======================================================= -->
+<!-- ======================================================================= -->
+<!-- SECTION 9: FREQUENTLY ASKED QUESTIONS (FAQ ACCORDION)                   -->
+<!-- Expandable/collapsible Q&A dropdown boxes.                              -->
+<!-- ======================================================================= -->
 
+  <!-- Creates an FAQ section with a page jump link ID named 'faq'. -->
   <section class="py-5" id="faq">
 
+    <!-- Container wrapper. -->
     <div class="container">
 
+      <!-- Section title heading. -->
       <h2 class="section-title text-center mb-5">
+        <!-- Title text label. -->
         Quick Answers
+      <!-- Closes section title heading. -->
       </h2>
 
-
+      <!-- Container grouping expandable accordion question boxes. -->
       <div class="accordion" id="faqAccordion">
-      <!-- Creates a Bootstrap accordion.
-           An accordion lets the user click a question
-           to reveal its answer. -->
 
-
-        <!-- ================= QUESTION 1 ================= -->
-
+        <!-- FAQ Item 1. -->
         <div class="accordion-item">
 
+          <!-- Question header container. -->
           <h2 class="accordion-header">
 
+            <!-- Clickable question button targeting section #faq1. -->
             <button class="accordion-button collapsed"
                     data-bs-toggle="collapse"
                     data-bs-target="#faq1">
+              <!-- Question 1 text. -->
               Do I need a garden?
+            <!-- Closes question button. -->
             </button>
 
+          <!-- Closes Question 1 header. -->
           </h2>
 
+          <!-- Collapsible panel holding Answer 1. -->
           <div id="faq1"
                class="accordion-collapse collapse"
                data-bs-parent="#faqAccordion">
 
+            <!-- Padded text box containing answer details. -->
             <div class="accordion-body">
+              <!-- Answer 1 text. -->
               A sunny windowsill is enough!
+            <!-- Closes answer text box. -->
             </div>
 
+          <!-- Closes collapsible panel for Answer 1. -->
           </div>
 
+        <!-- Closes FAQ Item 1. -->
         </div>
 
-
-        <!-- ================= QUESTION 2 ================= -->
-
+        <!-- FAQ Item 2. -->
         <div class="accordion-item">
 
+          <!-- Question header container. -->
           <h2 class="accordion-header">
 
+            <!-- Clickable question button targeting section #faq2. -->
             <button class="accordion-button collapsed"
                     data-bs-toggle="collapse"
                     data-bs-target="#faq2">
+              <!-- Question 2 text. -->
               How often should I water my plants?
+            <!-- Closes question button. -->
             </button>
 
+          <!-- Closes Question 2 header. -->
           </h2>
 
+          <!-- Collapsible panel holding Answer 2. -->
           <div id="faq2"
                class="accordion-collapse collapse"
                data-bs-parent="#faqAccordion">
 
+            <!-- Padded text box containing answer details. -->
             <div class="accordion-body">
+              <!-- Answer 2 text. -->
               It depends on the plant, but a good rule of thumb
               is to stick a finger an inch into the soil —
               if it's dry, it's time to water.
               Check the seasonal calendar above for specifics.
+            <!-- Closes answer text box. -->
             </div>
 
+          <!-- Closes collapsible panel for Answer 2. -->
           </div>
 
+        <!-- Closes FAQ Item 2. -->
         </div>
 
-
-        <!-- ================= QUESTION 3 ================= -->
-
+        <!-- FAQ Item 3. -->
         <div class="accordion-item">
 
+          <!-- Question header container. -->
           <h2 class="accordion-header">
 
+            <!-- Clickable question button targeting section #faq3. -->
             <button class="accordion-button collapsed"
                     data-bs-toggle="collapse"
                     data-bs-target="#faq3">
+              <!-- Question 3 text. -->
               What's the easiest plant for a total beginner?
+            <!-- Closes question button. -->
             </button>
 
+          <!-- Closes Question 3 header. -->
           </h2>
 
+          <!-- Collapsible panel holding Answer 3. -->
           <div id="faq3"
                class="accordion-collapse collapse"
                data-bs-parent="#faqAccordion">
 
+            <!-- Padded text box containing answer details. -->
             <div class="accordion-body">
+              <!-- Answer 3 text. -->
               Succulents, pothos, and sunflowers are all
               very forgiving and hard to kill — perfect
               for building confidence.
+            <!-- Closes answer text box. -->
             </div>
 
+          <!-- Closes collapsible panel for Answer 3. -->
           </div>
 
+        <!-- Closes FAQ Item 3. -->
         </div>
 
-
-        <!-- ================= QUESTION 4 ================= -->
-
+        <!-- FAQ Item 4. -->
         <div class="accordion-item">
 
+          <!-- Question header container. -->
           <h2 class="accordion-header">
 
+            <!-- Clickable question button targeting section #faq4. -->
             <button class="accordion-button collapsed"
                     data-bs-toggle="collapse"
                     data-bs-target="#faq4">
+              <!-- Question 4 text. -->
               Do I need to buy expensive tools?
+            <!-- Closes question button. -->
             </button>
 
+          <!-- Closes Question 4 header. -->
           </h2>
 
+          <!-- Collapsible panel holding Answer 4. -->
           <div id="faq4"
                class="accordion-collapse collapse"
                data-bs-parent="#faqAccordion">
 
+            <!-- Padded text box containing answer details. -->
             <div class="accordion-body">
+              <!-- Answer 4 text. -->
               Not at all. A trowel, a watering can,
               and a pair of gloves will cover almost
               everything you need to start.
+            <!-- Closes answer text box. -->
             </div>
 
+          <!-- Closes collapsible panel for Answer 4. -->
           </div>
 
+        <!-- Closes FAQ Item 4. -->
         </div>
 
-
-        <!-- ================= QUESTION 5 ================= -->
-
+        <!-- FAQ Item 5. -->
         <div class="accordion-item">
 
+          <!-- Question header container. -->
           <h2 class="accordion-header">
 
+            <!-- Clickable question button targeting section #faq5. -->
             <button class="accordion-button collapsed"
                     data-bs-toggle="collapse"
                     data-bs-target="#faq5">
+              <!-- Question 5 text. -->
               How do I know if my plant is getting enough sunlight?
+            <!-- Closes question button. -->
             </button>
 
+          <!-- Closes Question 5 header. -->
           </h2>
 
+          <!-- Collapsible panel holding Answer 5. -->
           <div id="faq5"
                class="accordion-collapse collapse"
                data-bs-parent="#faqAccordion">
 
+            <!-- Padded text box containing answer details. -->
             <div class="accordion-body">
+              <!-- Answer 5 text. -->
               Leggy, pale, or slow-growing plants usually
               need more light.
+            <!-- Closes answer text box. -->
             </div>
 
+          <!-- Closes collapsible panel for Answer 5. -->
           </div>
 
+        <!-- Closes FAQ Item 5. -->
         </div>
 
-
-        <!-- ================= QUESTION 6 ================= -->
-
+        <!-- FAQ Item 6. -->
         <div class="accordion-item">
 
+          <!-- Question header container. -->
           <h2 class="accordion-header">
 
+            <!-- Clickable question button targeting section #faq6. -->
             <button class="accordion-button collapsed"
                     data-bs-toggle="collapse"
                     data-bs-target="#faq6">
+              <!-- Question 6 text. -->
               What's the difference between annuals and perennials?
+            <!-- Closes question button. -->
             </button>
 
+          <!-- Closes Question 6 header. -->
           </h2>
 
+          <!-- Collapsible panel holding Answer 6. -->
           <div id="faq6"
                class="accordion-collapse collapse"
                data-bs-parent="#faqAccordion">
 
+            <!-- Padded text box containing answer details. -->
             <div class="accordion-body">
+              <!-- Answer 6 text. -->
               Annuals complete their life cycle in one growing
               season and need replanting.
               Perennials come back year after year.
+            <!-- Closes answer text box. -->
             </div>
 
+          <!-- Collapsible panel holding Answer 6. -->
           </div>
 
+        <!-- Closes FAQ Item 6. -->
         </div>
 
-
-        <!-- ================= QUESTION 7 ================= -->
-
+        <!-- FAQ Item 7. -->
         <div class="accordion-item">
 
+          <!-- Question header container. -->
           <h2 class="accordion-header">
 
+            <!-- Clickable question button targeting section #faq7. -->
             <button class="accordion-button collapsed"
                     data-bs-toggle="collapse"
                     data-bs-target="#faq7">
+              <!-- Question 7 text. -->
               Why are my plant's leaves turning yellow?
+            <!-- Closes question button. -->
             </button>
 
+          <!-- Closes Question 7 header. -->
           </h2>
 
+          <!-- Collapsible panel holding Answer 7. -->
           <div id="faq7"
                class="accordion-collapse collapse"
                data-bs-parent="#faqAccordion">
 
+            <!-- Padded text box containing answer details. -->
             <div class="accordion-body">
+              <!-- Answer 7 text. -->
               Yellow leaves are most often a sign of overwatering.
+            <!-- Closes answer text box. -->
             </div>
 
+          <!-- Closes collapsible panel for Answer 7. -->
           </div>
 
+        <!-- Closes FAQ Item 7. -->
         </div>
 
+      <!-- Closes accordion grouped container. -->
       </div>
-      <!-- End of FAQ accordion. -->
 
+    <!-- Closes container box. -->
     </div>
 
+  <!-- Closes FAQ section. -->
   </section>
-  <!-- End of FAQ section. -->
 
 
-  <!-- ======================================================= -->
-  <!-- BEGINNER CHECKLIST BUTTON                               -->
-  <!-- ======================================================= -->
+<!-- ======================================================================= -->
+<!-- SECTION 10: CHECKLIST POP-UP TRIGGER BUTTON                             -->
+<!-- Button section encouraging visitors to open the checklist modal.         -->
+<!-- ======================================================================= -->
 
+  <!-- Creates a centered section inviting users to open the beginner checklist. -->
   <section class="py-5 bg-light-green text-center" id="checklist">
 
+    <!-- Centered container wrapper. -->
     <div class="container">
 
+      <!-- Section title heading. -->
       <h2 class="section-title mb-3">
+        <!-- Title text. -->
         New to Gardening?
+      <!-- Closes section title heading. -->
       </h2>
 
+      <!-- Large button that opens the pop-up modal box named 'checklistModal'. -->
       <button type="button"
               class="btn btn-hero btn-lg"
               data-bs-toggle="modal"
               data-bs-target="#checklistModal">
-      <!-- Clicking this button opens the checklist popup. -->
 
+        <!-- Shows a clipboard icon inside the button text. -->
         <i class="bi bi-clipboard-check"></i>
+        <!-- Label display text inside button. -->
         Get the Beginner Checklist
 
+      <!-- Closes modal trigger button. -->
       </button>
 
+    <!-- Closes container wrapper. -->
     </div>
 
+  <!-- Closes section. -->
   </section>
 
 
-  <!-- ======================================================= -->
-  <!-- CHECKLIST POPUP / MODAL                                 -->
-  <!-- ======================================================= -->
+<!-- ======================================================================= -->
+<!-- SECTION 11: POP-UP MODAL WINDOW (INTERACTIVE CHECKLIST)                 -->
+<!-- Overlay dialog containing interactive checkboxes and completion tally.  -->
+<!-- ======================================================================= -->
 
+  <!-- Creates a pop-up overlay box (modal) that stays hidden until requested. -->
   <div class="modal fade"
        id="checklistModal"
        tabindex="-1"
        aria-hidden="true">
-  <!-- Creates a popup window called a modal.
 
-       The modal starts hidden.
-       It appears when the user clicks the checklist button. -->
-
-
+    <!-- Controls the width and centers the pop-up window on screen. -->
     <div class="modal-dialog modal-dialog-centered">
-    <!-- Controls the size and position of the popup. -->
 
-
+      <!-- Creates the white card frame for the pop-up window content. -->
       <div class="modal-content">
-      <!-- Contains everything inside the popup. -->
 
-
+        <!-- Top header area of the pop-up window. -->
         <div class="modal-header">
 
+          <!-- Title displayed at the top of the pop-up window. -->
           <h5 class="modal-title">
             Beginner Checklist
+          <!-- Closes pop-up window title. -->
           </h5>
 
+          <!-- Creates an 'X' button in top right corner to close the pop-up window. -->
           <button type="button"
                   class="btn-close"
                   data-bs-dismiss="modal">
+          <!-- Closes close button element. -->
           </button>
-          <!-- X button used to close the popup. -->
 
+        <!-- Closes pop-up window top header. -->
         </div>
 
-
+        <!-- Main body content area inside the pop-up window. -->
         <div class="modal-body">
-        <!-- Contains the main content of the popup. -->
 
-
+          <!-- Creates a vertical list of checklist items. -->
           <ul class="list-group list-group-flush mb-3"
               id="checklistItems">
-          <!-- Creates a Bootstrap list for the checklist items. -->
 
-
-            <!-- ================= CHECKBOX 1 ================= -->
-
+            <!-- Checklist Item 1. -->
             <li class="list-group-item checklist-item">
 
+              <!-- Checkbox input square. -->
               <input class="form-check-input me-2"
                      type="checkbox"
                      id="check1">
-              <!-- Creates the first checkbox. -->
 
+              <!-- Text label linked to Checkbox 1. -->
               <label class="form-check-label" for="check1">
                 A pot with drainage holes
+              <!-- Closes label 1. -->
               </label>
-              <!-- Text displayed beside the checkbox. -->
 
+            <!-- Closes Checklist Item 1. -->
             </li>
 
-
-            <!-- ================= CHECKBOX 2 ================= -->
-
+            <!-- Checklist Item 2. -->
             <li class="list-group-item checklist-item">
 
+              <!-- Checkbox input square. -->
               <input class="form-check-input me-2"
                      type="checkbox"
                      id="check2">
 
+              <!-- Text label linked to Checkbox 2. -->
               <label class="form-check-label" for="check2">
                 Good quality potting soil (not garden dirt)
+              <!-- Closes label 2. -->
               </label>
 
+            <!-- Closes Checklist Item 2. -->
             </li>
 
-
-            <!-- ================= CHECKBOX 3 ================= -->
-
+            <!-- Checklist Item 3. -->
             <li class="list-group-item checklist-item">
 
+              <!-- Checkbox input square. -->
               <input class="form-check-input me-2"
                      type="checkbox"
                      id="check3">
 
+              <!-- Text label linked to Checkbox 3. -->
               <label class="form-check-label" for="check3">
                 A watering can or hose with a gentle spray head
+              <!-- Closes label 3. -->
               </label>
 
+            <!-- Closes Checklist Item 3. -->
             </li>
 
-
-            <!-- ================= CHECKBOX 4 ================= -->
-
+            <!-- Checklist Item 4. -->
             <li class="list-group-item checklist-item">
 
+              <!-- Checkbox input square. -->
               <input class="form-check-input me-2"
                      type="checkbox"
                      id="check4">
 
+              <!-- Text label linked to Checkbox 4. -->
               <label class="form-check-label" for="check4">
                 A trowel for digging and transplanting
+              <!-- Closes label 4. -->
               </label>
 
+            <!-- Closes Checklist Item 4. -->
             </li>
 
-
-            <!-- ================= CHECKBOX 5 ================= -->
-
+            <!-- Checklist Item 5. -->
             <li class="list-group-item checklist-item">
 
+              <!-- Checkbox input square. -->
               <input class="form-check-input me-2"
                      type="checkbox"
                      id="check5">
 
+              <!-- Text label linked to Checkbox 5. -->
               <label class="form-check-label" for="check5">
                 Pruning shears or scissors for trimming
+              <!-- Closes label 5. -->
               </label>
 
+            <!-- Closes Checklist Item 5. -->
             </li>
 
-
-            <!-- ================= CHECKBOX 6 ================= -->
-
+            <!-- Checklist Item 6. -->
             <li class="list-group-item checklist-item">
 
+              <!-- Checkbox input square. -->
               <input class="form-check-input me-2"
                      type="checkbox"
                      id="check6">
 
+              <!-- Text label linked to Checkbox 6. -->
               <label class="form-check-label" for="check6">
                 Gardening gloves to protect your hands
+              <!-- Closes label 6. -->
               </label>
 
+            <!-- Closes Checklist Item 6. -->
             </li>
 
-
-            <!-- ================= CHECKBOX 7 ================= -->
-
+            <!-- Checklist Item 7. -->
             <li class="list-group-item checklist-item">
 
+              <!-- Checkbox input square. -->
               <input class="form-check-input me-2"
                      type="checkbox"
                      id="check7">
 
+              <!-- Text label linked to Checkbox 7. -->
               <label class="form-check-label" for="check7">
                 A spot with at least 4-6 hours of sunlight
+              <!-- Closes label 7. -->
               </label>
 
+            <!-- Closes Checklist Item 7. -->
             </li>
 
-
-            <!-- ================= CHECKBOX 8 ================= -->
-
+            <!-- Checklist Item 8. -->
             <li class="list-group-item checklist-item">
 
+              <!-- Checkbox input square. -->
               <input class="form-check-input me-2"
                      type="checkbox"
                      id="check8">
 
+              <!-- Text label linked to Checkbox 8. -->
               <label class="form-check-label" for="check8">
                 Plant labels so you remember what's what
+              <!-- Closes label 8. -->
               </label>
 
+            <!-- Closes Checklist Item 8. -->
             </li>
 
-
-            <!-- ================= CHECKBOX 9 ================= -->
-
+            <!-- Checklist Item 9. -->
             <li class="list-group-item checklist-item">
 
+              <!-- Checkbox input square. -->
               <input class="form-check-input me-2"
                      type="checkbox"
                      id="check9">
 
+              <!-- Text label linked to Checkbox 9. -->
               <label class="form-check-label" for="check9">
                 A basic fertilizer for feeding your plants
+              <!-- Closes label 9. -->
               </label>
 
+            <!-- Closes Checklist Item 9. -->
             </li>
 
-
-            <!-- ================= CHECKBOX 10 ================= -->
-
+            <!-- Checklist Item 10. -->
             <li class="list-group-item checklist-item">
 
+              <!-- Checkbox input square. -->
               <input class="form-check-input me-2"
                      type="checkbox"
                      id="check10">
 
+              <!-- Text label linked to Checkbox 10. -->
               <label class="form-check-label" for="check10">
                 Patience — most plants take a few weeks to show progress
+              <!-- Closes label 10. -->
               </label>
 
+            <!-- Closes Checklist Item 10. -->
             </li>
 
+          <!-- Closes item checklist list container. -->
           </ul>
 
-
+          <!-- Text paragraph showing progress counting completed items. -->
           <p class="small text-muted mb-0">
+            <!-- Dynamic number span updated by JavaScript logic. -->
             <span id="checklistProgress">0</span>
+            <!-- Descriptor label text. -->
             of 10 checked
+          <!-- Closes progress counter text paragraph. -->
           </p>
-          <!-- Shows how many checklist items the user has checked. -->
 
+        <!-- Closes pop-up window main content body. -->
         </div>
 
+      <!-- Closes white card frame. -->
       </div>
 
+    <!-- Closes pop-up centering container. -->
     </div>
 
+  <!-- Closes pop-up window overlay element. -->
   </div>
-  <!-- End of checklist popup. -->
 
 
-  <!-- ======================================================= -->
-  <!-- FOOTER                                                   -->
-  <!-- ======================================================= -->
+<!-- ======================================================================= -->
+<!-- SECTION 12: WEBPAGE FOOTER                                              -->
+<!-- The bottom bar containing copyright notice and ownership info.          -->
+<!-- ======================================================================= -->
 
+  <!-- Creates the dark footer bar at the bottom of the webpage. -->
   <footer class="footer text-center text-white py-4">
-  <!-- Creates the bottom section of the webpage. -->
 
+    <!-- Container wrapper box. -->
     <div class="container">
 
+      <!-- Small muted paragraph containing copyright statement. -->
       <p class="small mb-0">
+        <!-- Text display featuring the copyright © symbol. -->
         &copy; 2026 Green Haven.
+      <!-- Closes copyright paragraph text. -->
       </p>
-      <!-- Copyright text.
-           &copy; displays the copyright symbol ©. -->
 
+    <!-- Closes container box. -->
     </div>
 
+  <!-- Closes bottom footer section. -->
   </footer>
 
 
-  <!-- ======================================================= -->
-  <!-- BACK TO TOP BUTTON                                       -->
-  <!-- ======================================================= -->
+<!-- ======================================================================= -->
+<!-- SECTION 13: BACK TO TOP FLOATING BUTTON                                 -->
+<!-- Floating arrow button that takes visitors back up to the top.           -->
+<!-- ======================================================================= -->
 
+  <!-- Floating action button positioned at the bottom-right corner to jump back to top. -->
   <button id="backToTop"
           class="btn btn-hero back-to-top"
           title="Back to top">
-  <!-- Creates a button that will allow the user
-       to quickly return to the top of the webpage. -->
 
+    <!-- Displays an upward pointing arrow icon inside the button. -->
     <i class="bi bi-arrow-up"></i>
-    <!-- Displays an upward arrow icon. -->
 
+  <!-- Closes floating back to top button. -->
   </button>
 
 
-  <!-- ======================================================= -->
-  <!-- JAVASCRIPT FILES                                         -->
-  <!-- ======================================================= -->
+<!-- ======================================================================= -->
+<!-- SECTION 14: JAVASCRIPT LIBRARIES & CUSTOM INTERACTIVE SCRIPTS           -->
+<!-- Code controlling interactivity (popups, scroll buttons, calculations).  -->
+<!-- ======================================================================= -->
 
+  <!-- Loads external Bootstrap JavaScript to power components like dropdowns, menus, and pop-ups. -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <!-- Loads Bootstrap's JavaScript.
-       This is needed for things like:
-       - dropdown menus
-       - popups
-       - tabs
-       - accordion
-       - mobile navigation -->
 
-
+  <!-- Loads our custom JavaScript file named main.js. -->
   <script src="main.js"></script>
-  <!-- Loads our own JavaScript file.
-       This file can contain additional website behaviour. -->
 
-
-  <!-- ======================================================= -->
-  <!-- OUR JAVASCRIPT                                           -->
-  <!-- ======================================================= -->
-
+  <!-- Starts an inline script section for page-specific interactive code. -->
   <script>
 
+    // Tells the browser to wait until the HTML visual elements are fully loaded before running script code.
     document.addEventListener("DOMContentLoaded", function () {
-    <!-- Waits until the webpage has completely loaded
-         before running this JavaScript. -->
 
-
+      // Finds the "Back to Top" button on the page and saves it as a reusable variable named backToTopBtn.
       const backToTopBtn =
+        // Locates element using its unique ID name "backToTop".
         document.getElementById("backToTop");
-      <!-- Finds the Back to Top button in the HTML
-           and stores it inside a variable. -->
 
-
-      // =====================================================
-      // SHOW OR HIDE BACK-TO-TOP BUTTON
-      // =====================================================
-
+      // Listens for whenever the visitor scrolls up or down on the screen.
       window.addEventListener("scroll", function () {
-      <!-- Runs this code whenever the user scrolls. -->
 
-
+        // Checks if the visitor has scrolled down more than 400 pixels from the top.
         if (window.scrollY > 400) {
-        <!-- Checks whether the user has scrolled more than 400 pixels. -->
 
-
+          // Makes the "Back to Top" button visible on screen.
           backToTopBtn.style.display = "flex";
-          <!-- Shows the button. -->
 
-
+        // Runs if the visitor is near the top of the page (scrolled less than 400 pixels).
         } else {
 
+          // Hides the "Back to Top" button off screen.
           backToTopBtn.style.display = "none";
-          <!-- Hides the button if the user has not
-               scrolled far enough. -->
 
+        // Ends checking scroll position.
         }
 
+      // Ends the scroll listening task.
       });
 
-
-      // =====================================================
-      // BACK TO TOP BUTTON
-      // =====================================================
-
+      // Listens for a mouse click on the "Back to Top" button.
       backToTopBtn.addEventListener("click", function () {
-      <!-- Waits for the user to click the Back to Top button. -->
 
-
+        // Tells the browser window to scroll all the way back to the top.
         window.scrollTo({
+          // Sets the destination scroll position to the very top (pixel coordinate 0).
           top: 0,
+          // Tells the page to scroll up smoothly instead of jumping instantly.
           behavior: "smooth"
+        // Closes scroll settings.
         });
-        <!-- Moves the page to the very top.
 
-             top: 0 means the top of the webpage.
-             smooth means it scrolls there smoothly. -->
-
+      // Ends the button click listening task.
       });
 
-
-      // =====================================================
-      // CHECKLIST
-      // =====================================================
-
+      // Finds all 10 checklist rows inside the pop-up modal.
       const checklistItems =
+        // Selects all elements matching the container class name ".checklist-item".
         document.querySelectorAll(
           "#checklistItems .checklist-item"
         );
-      <!-- Finds every checklist item. -->
 
-
+      // Finds the counter text element that displays completed item totals (e.g., "0").
       const progressEl =
+        // Locates element using its unique ID name "checklistProgress".
         document.getElementById("checklistProgress");
-      <!-- Finds the number that shows how many
-           checklist items have been completed. -->
 
-
+      // Defines a custom calculation task named updateProgress to count checked boxes.
       function updateProgress() {
-      <!-- Creates a function called updateProgress.
-           A function is a reusable block of code. -->
 
-
+        // Counts how many checkboxes currently have checkmarks inside them.
         const checked =
+          // Searches for all checked checkbox inputs and calculates the total length.
           document.querySelectorAll(
             "#checklistItems input[type='checkbox']:checked"
           ).length;
-        <!-- Counts how many checkboxes are currently checked. -->
 
-
+        // Makes sure the progress counter element exists on screen before editing it.
         if (progressEl) {
-        <!-- Makes sure the progress number exists. -->
 
-
+          // Replaces the displayed number on screen with our newly calculated count total.
           progressEl.textContent = checked;
-          <!-- Changes the displayed number to match
-               the number of checked boxes. -->
 
+        // Ends existence check.
         }
 
+      // Ends updateProgress task definition.
       }
 
-
+      // Loops through each of the 10 checklist items one by one to configure click handlers.
       checklistItems.forEach(function (item) {
-      <!-- Goes through every checklist item one at a time. -->
 
-
+        // Finds the specific checkbox box inside the current list item row.
         const checkbox =
+          // Query selector targeting the checkbox input.
           item.querySelector("input[type='checkbox']");
-        <!-- Finds the checkbox inside the current checklist item. -->
 
-
+        // Defines a helper task named toggleChecked to handle styling and counting.
         function toggleChecked() {
-        <!-- Creates a function that handles checking/unchecking. -->
 
-
+          // Crosses out the text if checked, or removes cross-out styling if unchecked.
           item.classList.toggle(
             "checked-item",
             checkbox.checked
           );
-          <!-- Adds the "checked-item" CSS class when
-               the checkbox is checked.
-               Removes it when it is unchecked. -->
 
-
+          // Runs our counter update task to refresh the "X of 10 checked" total on screen.
           updateProgress();
-          <!-- Updates the number of completed items. -->
 
+        // Ends toggleChecked task definition.
         }
 
-
+        // Listens for directly checking or unchecking the square checkbox control.
         checkbox.addEventListener(
           "change",
           toggleChecked
         );
-        <!-- Runs toggleChecked whenever the checkbox changes. -->
 
-
+        // Listens for clicks anywhere on the list item row box.
         item.addEventListener("click", function (e) {
-        <!-- Allows the user to click the whole row,
-             not just the tiny checkbox. -->
 
-
+          // Checks if the user clicked the row background text instead of directly on the checkbox box.
           if (e.target !== checkbox) {
-          <!-- Checks whether the user clicked somewhere
-               other than the actual checkbox. -->
 
-
+            // Reverses the checkbox state (if unchecked -> check it; if checked -> uncheck it).
             checkbox.checked = !checkbox.checked;
-            <!-- Changes the checkbox:
-                 checked becomes unchecked,
-                 unchecked becomes checked. -->
 
-
+            // Runs our helper task to update text strikethrough styling and total progress text.
             toggleChecked();
-            <!-- Updates the appearance and progress number. -->
 
+          // Ends row click check.
           }
 
+        // Ends row item listener.
         });
 
+      // Ends item loop.
       });
 
+    // Ends DOMContentLoaded initialization wrapper.
     });
 
+  <!-- Closes script tag block. -->
   </script>
 
 
-  <!-- ======================================================= -->
-  <!-- EXTRA CSS FOR CHECKLIST                                 -->
-  <!-- ======================================================= -->
+<!-- ======================================================================= -->
+<!-- SECTION 15: CUSTOM STYLING FOR CHECKLIST INTERACTION                    -->
+<!-- Design rules controlling how checked items appear (strikethrough text). -->
+<!-- ======================================================================= -->
 
+  <!-- Opens custom CSS styling section for checklist row behaviors. -->
   <style>
 
+    /* Design rules applied to each row item in the checklist modal. */
     .checklist-item {
+      /* Changes cursor to a hand pointer when hovering over a row. */
       cursor: pointer;
-      /* Changes the mouse cursor to a pointer
-         when hovering over a checklist row. */
 
+      /* Prevents text from being highlighted when double-clicking a row. */
       user-select: none;
-      /* Prevents the user from accidentally selecting
-         the checklist text. */
 
+      /* Lines up the checkbox and text neatly next to each other. */
       display: flex;
-      /* Places the checkbox and text next to each other. */
 
+      /* Centers the checkbox vertically alongside the text. */
       align-items: center;
-      /* Vertically centers the checkbox and text. */
+    /* Closes styling rules for .checklist-item. */
     }
 
-
+    /* Design rules applied specifically to the square input checkbox inside each row. */
     .checklist-item .form-check-input {
+      /* Shows hand pointer cursor when hovering directly over the checkbox. */
       cursor: pointer;
-      /* Shows the pointer cursor when hovering
-         over the checkbox. */
+    /* Closes styling rules for checkbox input. */
     }
 
-
+    /* Design rules applied to the text label of completed/checked items. */
     .checklist-item.checked-item .form-check-label {
 
+      /* Draws a horizontal strikethrough line through completed item text. */
       text-decoration: line-through;
-      /* Draws a line through the checklist text
-         when the item is completed. */
 
+      /* Changes completed text color to a muted grey. */
       color: #8a8a8a;
-      /* Changes completed text to grey. */
 
+    /* Closes completed item styling rules. */
     }
 
+  <!-- Closes styling section. -->
   </style>
 
-
+<!-- Closes visible webpage body. -->
 </body>
-<!-- End of everything visible on the webpage. -->
 
-
+<!-- Closes root webpage HTML tag. -->
 </html>
-<!-- End of the HTML document. -->
