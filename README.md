@@ -10,8 +10,11 @@ Assisted with structuring modular CSS variables (`:root`), refining colour acces
 **JavaScript Refactoring & Interactivity:**
 Provided assistance with client-side functionality, including multi-criteria filtering logic, `FileReader` API integration for upload previews, and modal data population.
 
+**Internal Storage**
+AI helped in internal storage functionality for the Login page, including storing login/session information using browser storage.
+
 **Documentation & Code Annotation:**
-Helped generate structured, beginner-friendly CSS/JavaScript comments and organise project documentation, including the `README.md` and presentation scripts.
+Helped generate structured, beginner-friendly CSS/JavaScript comments and organise project documentation.
 
 ## Human Ownership & Contribution
 
