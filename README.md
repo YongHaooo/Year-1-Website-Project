@@ -23,4 +23,4 @@ This project was completed collaboratively between **YongHao and Javen**.
 * **YongHao's contributions:** Home page, Flea Market page, and Login page.
 * **Javen's contributions:** Plant Guide page, Gallery page, and Contact page.
 
-Both team members were responsible for reviewing, testing, modifying, and integrating the code for their respective pages. All AI-suggested code snippets, layout structures, and logic patterns were reviewed and adapted manually to ensure they met the project requirements, followed semantic HTML5 standards, and maintained responsive and user-friendly design.
+Both team members were responsible for reviewing, testing, modifying, and integrating the code for their respective pages. All AI-suggested code snippets, layout structures, and logic patterns were reviewed and adapted manually to ensure they met the project requirements, and maintained responsive and user-friendly design.
